@@ -10,15 +10,15 @@
    <center>
       <Pane prefHeight="49.0" prefWidth="247.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="Button8" layoutX="249.0" layoutY="260.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="55.0" prefWidth="54.0" />
-            <Button fx:id="Button7" layoutX="169.0" layoutY="262.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="51.0" prefWidth="57.0" />
-            <Button fx:id="Button6" layoutX="322.0" layoutY="188.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="52.0" prefWidth="52.0" />
-            <Button fx:id="Button5" layoutX="248.0" layoutY="187.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="54.0" prefWidth="55.0" />
-            <Button fx:id="Button4" layoutX="167.0" layoutY="188.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="51.0" prefWidth="60.0" />
-            <Button fx:id="Button3" layoutX="320.0" layoutY="111.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="51.0" prefWidth="56.0" />
-            <Button fx:id="Button1" layoutX="169.0" layoutY="110.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="53.0" prefWidth="58.0" />
-            <Button fx:id="Button2" layoutX="248.0" layoutY="110.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="52.0" prefWidth="55.0" />
-            <Button fx:id="Button9" layoutX="323.0" layoutY="260.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="55.0" prefWidth="51.0" />
+            <Button fx:id="7" layoutX="249.0" layoutY="260.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="55.0" prefWidth="54.0" />
+            <Button fx:id="6" layoutX="169.0" layoutY="262.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="51.0" prefWidth="57.0" />
+            <Button fx:id="5" layoutX="322.0" layoutY="188.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="52.0" prefWidth="52.0" />
+            <Button fx:id="4" layoutX="248.0" layoutY="187.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="54.0" prefWidth="55.0" />
+            <Button fx:id="3" layoutX="167.0" layoutY="188.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="51.0" prefWidth="60.0" />
+            <Button fx:id="2" layoutX="320.0" layoutY="111.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="51.0" prefWidth="56.0" />
+            <Button fx:id="0" layoutX="169.0" layoutY="110.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="53.0" prefWidth="58.0" />
+            <Button fx:id="1" layoutX="248.0" layoutY="110.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="52.0" prefWidth="55.0" />
+            <Button fx:id="8" layoutX="323.0" layoutY="260.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="55.0" prefWidth="51.0" />
         
             <Label fx:id="play" layoutX="172.0" layoutY="48.0" prefHeight="31.0" prefWidth="185.0" text="Ready to play!!" >
                <font>
