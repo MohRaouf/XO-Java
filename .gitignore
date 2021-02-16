@@ -25,3 +25,5 @@ hs_err_pid*
 /XOServer/nbproject/private/
 /XOServer/build/
 /XOServer/dist/
+/XOClient/build/
+/XOClient/dist/
