@@ -42,6 +42,8 @@
                   <Button mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="80.0" prefWidth="125.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                </children>
             </GridPane>
+            <Label fx:id="player1" layoutX="112.0" layoutY="21.0" text="player1:" />
+            <Label fx:id="player2" layoutX="444.0" layoutY="21.0" text="player2:" />
             
          </children>
       </Pane>
