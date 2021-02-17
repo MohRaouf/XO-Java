@@ -20,12 +20,25 @@ import javafx.scene.layout.GridPane;
  * @author ITI
  */
 public class FXMLDocumentController implements Initializable {
-
+   
+    String player1_name; 
+    String Player2_name;
+    boolean is_online = false;
     int X_or_O = 0;int row,column;
     boolean isWin = false;boolean ReadyToplay=false;
     char MatrixOfXO[][];
+    public FXMLDocumentController(){
+        System.out.println("offline");
+    }
+    public FXMLDocumentController(String player1,String Player2 ,boolean is_online){
+        player1_name=player1;
+        Player2_name=Player2;
+        if(is_online==true){
+            System.out.println("online");
+        }
+    }
     @FXML
-    private Label play;
+   private Label play;
    public GridPane GridpaneForButton;
    public Button PlayButton;
     @FXML
