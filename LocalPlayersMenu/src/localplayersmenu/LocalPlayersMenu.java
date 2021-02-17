@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package xobybutton;
+package localplayersmenu;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -13,9 +13,9 @@ import javafx.stage.Stage;
 
 /**
  *
- * @author ITI
+ * @author mohamedbassiouny
  */
-public class XObyButton extends Application {
+public class LocalPlayersMenu extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {

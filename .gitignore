@@ -25,3 +25,9 @@ hs_err_pid*
 /XOServer/nbproject/private/
 /XOServer/build/
 /XOServer/dist/
+/twoPlayersMenu/nbproject/private/
+/twoPlayersMenu/dist/
+/twoPlayersMenu/build/
+/LocalPlayersMenu/nbproject/private/
+/LocalPlayersMenu/build/
+/LocalPlayersMenu/dist/
