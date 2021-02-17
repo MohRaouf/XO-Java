@@ -1,0 +1,11 @@
+#bp{
+    -fx-background-color:#252525;
+}
+.label{
+       -fx-text-fill:#6930c3;
+       -fx-background-radius: 20;
+   }
+#register{
+     -fx-background-radius: 10;
+    -fx-background-color:#6930c3; 
+}
