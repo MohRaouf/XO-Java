@@ -28,7 +28,7 @@ import javafx.util.Duration;
  *
  * @author mohamedbassiouny
  */
-public class FXMLDocumentController implements Initializable {
+public class PlayersLocalMenuController implements Initializable {
     
     @FXML
     private TextField player1Name;
