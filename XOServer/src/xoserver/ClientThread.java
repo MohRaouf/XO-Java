@@ -14,14 +14,14 @@ class ClientThread extends Thread {
 
     DataInputStream dis;
     PrintStream ps;
-    String playerUsername;
+    String playerUsername="Player";
     String opponent;
     FXMLDocumentController controls;
     boolean authenticated;
     static List<ClientThread> clientsList = new ArrayList<ClientThread>();
 
-    public ClientThread(Socket clientSocket,FXMLDocumentController _controls) {
-        this.controls=_controls;
+    public ClientThread(Socket clientSocket, FXMLDocumentController _controls) {
+        this.controls = _controls;
         try {
             dis = new DataInputStream(clientSocket.getInputStream());
             ps = new PrintStream(clientSocket.getOutputStream());
@@ -38,32 +38,17 @@ class ClientThread extends Thread {
             while (true) {
                 String clientMsg = dis.readLine();
                 if (clientMsg != null) {
-                    System.out.println(clientMsg);
-                    this.controls.received_data_area.appendText(clientMsg+"\n");
-                    if (clientMsg.contains("#login") || clientMsg.contains("#register")) {
-                        String username = clientMsg.split(",")[1];
-                        String password = clientMsg.split(",")[2];
-                        if (clientMsg.contains("#login")) {
-                            //Authenticate user
-                            if (authenticate(username, password)) {
-                                this.playerUsername = username;
-                                authenticated = true;
-                                //Confirm
-                                this.ps.println("#done");
-                            } else {
-                                this.ps.println("#no");
-                            }
-                        } else if (clientMsg.contains("#register")) {
-                            //register user
-                            if (register(username, password)) {
-                                this.playerUsername = username;
-                                authenticated = true;
-                                //Confirm
-                                this.ps.println("#done");
-                            } else {
-                                this.ps.println("#no");
-                            }
-                        }
+                    this.controls.received_data_area.appendText(this.playerUsername+" : "+clientMsg + "\n");
+                    //String with # means the authentication message
+                    if (clientMsg.contains("#")) {
+                        //authorize the player either login or register
+                        authorize(clientMsg);
+                    } else if (clientMsg.equals("get info")) {
+                        //get the players info from the DB, send formatted info string
+                        sendInfo();
+                    } else if (clientMsg.contains("$")) {
+                        //get the players info from the DB, send formatted info string
+                        requestGame(clientMsg);
                     } else {
                         if (authenticated) {
                             //if has opponent forward the msg to the opponent
@@ -86,6 +71,92 @@ class ClientThread extends Thread {
         }
     }
 
+    public void requestGame(String playerMsg) {
+        //filter the message either a request with player name $player or respond to game request $yes,player
+        String opponentName = (playerMsg.contains("$yes")) ? playerMsg.split(",")[1] : playerMsg.split("\\$")[1];
+        //Find the opponent Thread using stream
+        Optional< ClientThread> findOpponentThread = clientsList.stream().filter(client -> client.playerUsername.equals(opponentName)).findFirst();
+        ClientThread opponentThread;
+        if (findOpponentThread.isPresent()) {          //if Online
+            opponentThread = findOpponentThread.get(); //set reference to the opponent thread
+            if (!playerMsg.contains("$yes")) {         // if received message = $opponentUsername
+                //Find the opponent Thread using stream
+                opponentThread.ps.println("$" + this.playerUsername);   //send the player name who asked to play to his opponent
+            } else { // received message = $yes,opponentUsername
+                String startGame = "$yes," + opponentName + ",x," + this.playerUsername + ",o,"; //game info
+                opponentThread.ps.println(startGame);   //send yes and game info to both players
+                this.ps.println(startGame);
+
+                //initail Game Object 
+                //VVVVVVVVVVVVVVVVVVV
+                /////////////////////
+            }
+        } else {
+            this.ps.println("$offline");  //not available - Offline
+        }
+
+    }
+
+    //Send the Game Info : Available - Status - Score
+    public void sendInfo() {
+        try {
+            Statement stmt = dbConnection.createStatement();
+            String query = "select * from players_info order by score desc ;";
+            ResultSet rs = stmt.executeQuery(query);
+            List<String> infoList = new ArrayList<>();
+            while (rs.next()) {
+                String playerInfo;
+                String username = rs.getString(1);
+                //check if the player of the record is online
+                boolean isOnline = clientsList.stream().anyMatch(client -> client.playerUsername.equals(username));
+                if (isOnline) {
+                    playerInfo = username + "|" + "online" + "|" + rs.getString(3);
+                } else {
+                    playerInfo = username + "|" + "offline" + "|" + rs.getString(3);
+                }
+                infoList.add(playerInfo);
+            }
+            //format the final string to match @player1|status|score,player2|status|score,.....
+            String info = "@" + String.join(",", infoList);
+            //send the info string back to the player
+            this.ps.println(info);
+
+        } catch (SQLException sqlEx) {
+            sqlEx.printStackTrace();
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    //Authorize the client either by login or new registraion
+    public void authorize(String playerMsg) {
+        String username = playerMsg.split(",")[1];
+        String password = playerMsg.split(",")[2];
+        if (playerMsg.contains("#login")) {
+            //Authenticate user
+            if (authenticate(username, password)) {
+                this.playerUsername = username;
+                authenticated = true;
+                //Confirm
+                this.ps.println("#done");
+            } else {
+                this.ps.println("#no");
+            }
+        } else if (playerMsg.contains("#register")) {
+            //register user
+            if (register(username, password)) {
+                this.playerUsername = username;
+                authenticated = true;
+                //Confirm
+                this.ps.println("#done");
+            } else {
+                this.ps.println("#no");
+            }
+        }
+    }
+
+    //Authorize with login
     public boolean authenticate(String username, String password) {
         try {
             Statement stmt = dbConnection.createStatement();
@@ -93,7 +164,6 @@ class ClientThread extends Thread {
             ResultSet rs = stmt.executeQuery(query);
             while (rs.next()) {
                 if (username.equals(rs.getString(1))) {
-
                     return true;
                 }
             }
@@ -106,6 +176,7 @@ class ClientThread extends Thread {
         return false;
     }
 
+    //Authorize with Register
     public boolean register(String username, String password) {
         try {
             Statement stmt = dbConnection.createStatement();
