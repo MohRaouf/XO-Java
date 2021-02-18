@@ -29,7 +29,6 @@ import javafx.util.Duration;
  * @author mohamedbassiouny
  */
 public class PlayersLocalMenuController implements Initializable {
-    
     @FXML
     private TextField player1Name;
     @FXML
@@ -46,10 +45,11 @@ public class PlayersLocalMenuController implements Initializable {
     private ToggleButton player2XButton;
     @FXML
     private ToggleButton player2OButton;
+    @FXML
+    private BorderPane parent;
       /**
      *
      */
-    private  LocalPlayer player1;
     @FXML
     private void handleNextAction(ActionEvent event) throws Exception  {
         String firstPlayerName=player1Name.getText();
@@ -59,17 +59,27 @@ public class PlayersLocalMenuController implements Initializable {
         secondWarning.setVisible(false);
         if(firstPlayerName.length()<3){
             showErrorMessage(firstWarning,"please enter player 1 name");
+             return;
         }
         else if( !player1XButton.selectedProperty().getValue()&&!player1OButton.selectedProperty().getValue()){
             showErrorMessage(firstWarning,"please select player 1 Symbol");
+             return;
         }
         if(secondPlayerName.length()<3){
             showErrorMessage(secondWarning,"please enter player 2 name");
+             return;
         }
         
         else if( !player2XButton.selectedProperty().getValue()&&!player2OButton.selectedProperty().getValue()){
              showErrorMessage(secondWarning,"please select player 2 symbol");
+             return;
         }
+            //send data to Game Logic Class 
+            Player.player1Name=firstPlayerName;
+            Player.player2Name=secondPlayerName;
+            Player.player1Symbol='x';
+            Parent root2 = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));  
+            parent.getChildren().add(root2);
     }
     @FXML
     private void handleXButtonsPlayer1(ActionEvent event){
@@ -92,7 +102,6 @@ public class PlayersLocalMenuController implements Initializable {
         secondWarning.setVisible(false);
     }
     private void showErrorMessage(Text messageContainer,String message){
-        
         messageContainer.setText(message);
         messageContainer.setVisible(true);
     }
