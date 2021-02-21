@@ -11,11 +11,10 @@ import java.util.ArrayList;
 import static xoserver.FXMLDocumentController.dbConnection;
 
 class ClientThread extends Thread {
-
     DataInputStream dis;
     PrintStream ps;
-    String playerUsername="Player";
-    String opponent;
+    String playerUsername = "Player";
+    ClientThread opponentThread;
     FXMLDocumentController controls;
     boolean authenticated;
     static List<ClientThread> clientsList = new ArrayList<ClientThread>();
@@ -38,7 +37,7 @@ class ClientThread extends Thread {
             while (true) {
                 String clientMsg = dis.readLine();
                 if (clientMsg != null) {
-                    this.controls.received_data_area.appendText(this.playerUsername+" : "+clientMsg + "\n");
+                    this.controls.received_data_area.appendText(this.playerUsername + " : " + clientMsg + "\n");
                     //String with # means the authentication message
                     if (clientMsg.contains("#")) {
                         //authorize the player either login or register
@@ -47,13 +46,14 @@ class ClientThread extends Thread {
                         //get the players info from the DB, send formatted info string
                         sendInfo();
                     } else if (clientMsg.contains("$")) {
-                        //get the players info from the DB, send formatted info string
+                        //game request or accept is detected
                         requestGame(clientMsg);
+                    } else if (clientMsg.contains("=")) {
+                        //get the players info from the DB, send formatted info string
+                        gameResultAction(clientMsg);
                     } else {
-                        if (authenticated) {
-                            //if has opponent forward the msg to the opponent
-                            sendMsgToOpponent(clientMsg, this.opponent);
-                        }
+                        //game move detected forward to the opponent
+                        this.opponentThread.ps.println(clientMsg);
                     }
                 }
             }
@@ -68,6 +68,22 @@ class ClientThread extends Thread {
                 ex.printStackTrace();
             }
             e.printStackTrace();
+        }
+    }
+
+    public void gameResultAction(String playerMsg) {
+        try {
+            PreparedStatement pst = dbConnection.prepareStatement("update players_info set score=score+? where username=?;");
+            pst.setString(2, this.playerUsername);        
+            if (playerMsg.equals("=win")) pst.setInt(1,20);
+            else if (playerMsg.equals("=lose")) pst.setInt(1,5);
+            else pst.setInt(1,-5);     
+            pst.executeUpdate();
+        } catch (SQLException sqlEx) {
+            sqlEx.printStackTrace();
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
 
@@ -87,9 +103,9 @@ class ClientThread extends Thread {
                 opponentThread.ps.println(startGame);   //send yes and game info to both players
                 this.ps.println(startGame);
 
-                //initail Game Object 
-                //VVVVVVVVVVVVVVVVVVV
-                /////////////////////
+                //assign the players Thread to both players objects
+                this.opponentThread = opponentThread;
+                opponentThread.opponentThread = this;
             }
         } else {
             this.ps.println("$offline");  //not available - Offline
