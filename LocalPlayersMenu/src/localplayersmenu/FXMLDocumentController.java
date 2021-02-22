@@ -225,10 +225,8 @@ public class FXMLDocumentController implements Initializable {
          GridpaneForButton.getChildren().forEach((node) -> {
              ((Button)node).setText("");
             });
-         Game = new GameLogic(false,"phoebe", "Pola",'X');
+          Game = new GameLogic(false,Player.player1Name, Player.player2Name,Player.player1Symbol);
         }
-       
-      
     }
 
    

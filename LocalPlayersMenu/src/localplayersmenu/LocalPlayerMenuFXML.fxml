@@ -9,21 +9,21 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane fx:id="parent" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="localplayersmenu.PlayersLocalMenuController">
+<BorderPane fx:id="parent" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #f7f6e7 #f7f6e7;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="localplayersmenu.LocalPlayersMenuController">
    <left>
-      <AnchorPane prefHeight="400.0" prefWidth="294.0" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="400.0" prefWidth="294.0" style="-fx-background-color: #f7f6e7 #f7f6e7;" BorderPane.alignment="CENTER">
          <children>
             <Label id="Player1XButton" fx:id="Player1XButton" alignment="CENTER" layoutX="84.0" layoutY="38.0" prefHeight="47.0" prefWidth="138.0" text="Player1">
                <font>
                   <Font size="37.0" />
                </font>
             </Label>
-            <ToggleButton fx:id="player1XButton" layoutX="42.0" layoutY="218.0" mnemonicParsing="false" onAction="#handleXButtonsPlayer1" prefHeight="67.0" prefWidth="72.0" text="X">
+            <ToggleButton fx:id="player1XButton" layoutX="42.0" layoutY="218.0" mnemonicParsing="false" onAction="#handleXButtonsPlayer1" prefHeight="67.0" prefWidth="72.0" style="-fx-background-color: #9fb8ad;" text="X" textFill="#08048a">
                <font>
                   <Font name="System Bold" size="40.0" />
                </font>
             </ToggleButton>
-            <ToggleButton fx:id="player1OButton" layoutX="155.0" layoutY="218.0" mnemonicParsing="false" onAction="#handleOButtonsPlayer1" prefHeight="67.0" prefWidth="72.0" text="O">
+            <ToggleButton fx:id="player1OButton" layoutX="155.0" layoutY="218.0" mnemonicParsing="false" onAction="#handleOButtonsPlayer1" prefHeight="67.0" prefWidth="72.0" style="-fx-background-color: #9fb8ad;" text="O" textFill="#ff5700">
                <font>
                   <Font name="System Bold" size="40.0" />
                </font>
@@ -45,12 +45,12 @@
                   <Font size="37.0" />
                </font>
             </Label>
-            <ToggleButton fx:id="player2XButton" layoutX="50.0" layoutY="222.0" mnemonicParsing="false" onAction="#handleXButtonsPlayer2" prefHeight="67.0" prefWidth="72.0" text="X">
+            <ToggleButton fx:id="player2XButton" layoutX="50.0" layoutY="222.0" mnemonicParsing="false" onAction="#handleXButtonsPlayer2" prefHeight="67.0" prefWidth="72.0" style="-fx-background-color: #9fb8ad;" text="X" textFill="#08048a">
                <font>
                   <Font name="System Bold" size="40.0" />
                </font>
             </ToggleButton>
-            <ToggleButton fx:id="player2OButton" layoutX="165.0" layoutY="222.0" mnemonicParsing="false" onAction="#handleOButtonsPlayer2" prefHeight="67.0" prefWidth="72.0" text="O">
+            <ToggleButton fx:id="player2OButton" layoutX="165.0" layoutY="222.0" mnemonicParsing="false" onAction="#handleOButtonsPlayer2" prefHeight="67.0" prefWidth="72.0" style="-fx-background-color: #9fb8ad;" text="O" textFill="#ff5700">
                <font>
                   <Font name="System Bold" size="40.0" />
                </font>
@@ -67,7 +67,10 @@
    <bottom>
       <AnchorPane prefHeight="57.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
-            <Button layoutX="237.0" layoutY="6.0" mnemonicParsing="false" onAction="#handleNextAction" prefHeight="45.0" prefWidth="113.0" text="Next" />
+            <Button layoutX="237.0" layoutY="6.0" mnemonicParsing="false" onAction="#handleNextAction" prefHeight="45.0" prefWidth="113.0" style="-fx-background-color: #03506f;" text="Next" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font></Button>
          </children>
       </AnchorPane>
    </bottom>
