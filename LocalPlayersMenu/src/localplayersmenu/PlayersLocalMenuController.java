@@ -7,22 +7,15 @@ package localplayersmenu;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.animation.Interpolator;
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
-import javafx.util.Duration;
 
 /**
  *
@@ -78,7 +71,11 @@ public class PlayersLocalMenuController implements Initializable {
             Player.player1Name=firstPlayerName;
             Player.player2Name=secondPlayerName;
             Player.player1Symbol='x';
-            Parent root2 = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));  
+           // Parent root2 = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));  
+            FXMLFriendController controller= new FXMLFriendController();
+            FXMLLoader  loader = new FXMLLoader(getClass().getResource("FXMLDocument.fxml"));
+             loader.setController(controller);
+            Parent root2 = loader.load();
             parent.getChildren().add(root2);
     }
     @FXML

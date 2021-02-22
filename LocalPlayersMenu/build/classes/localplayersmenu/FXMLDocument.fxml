@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="xobybutton.FXMLDocumentController">
+<AnchorPane fx:id="mainPane" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #f7f6e7;">
          <children>
@@ -35,7 +35,7 @@
                        <font>
                         <Font name="Arial Black" size="37.0" />
                      </font></Button>
-                  <Button mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="83.0" prefWidth="105.0" style="-fx-background-radius: 0; -fx-background-color: #f7f6e7;" styleClass="ButtonXo" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.valignment="TOP">
+                  <Button mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="83.0" prefWidth="105.0" style="-fx-background-radius: 0; -fx-background-color: #f7f6e7;" styleClass="ButtonXo" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="0" GridPane.valignment="TOP">
                        <font>
                         <Font name="Arial Black" size="37.0" />
                      </font></Button>
