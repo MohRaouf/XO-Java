@@ -7,10 +7,12 @@ package secscene;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.AnchorPane;
 
@@ -31,6 +33,10 @@ public class scenetwocontroller implements Initializable {
     private RadioButton pc;
     @FXML
     private Button register;
+    
+   
+       
+    
 
     /**
      * Initializes the controller class.

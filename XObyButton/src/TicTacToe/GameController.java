@@ -13,8 +13,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TextArea;
 
 /**
- *
- * @author ITI
+ *  
+ *  @author ITI
  */
 class GameLogic {
  
@@ -47,6 +47,7 @@ class GameLogic {
    } 
    //this is The common between the 2 constructor  
    // adding Elems to matrix
+   
    {
    elem_addedTo_matrix = 0;
         matrix_XO = new int[3][3];
