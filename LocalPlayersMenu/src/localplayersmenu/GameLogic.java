@@ -18,13 +18,13 @@ public class GameLogic {
  public String Player2Color;
  int CountToFull;
  int MatrixOfXO[][];
- boolean checkGlobal;
  public static int scoreOfPlayer1;
  public static int scoreOfPlayer2;
-   GameLogic(boolean isGlobal,String player1Name,String player2Name,char Player1Pattern){
+ boolean youWillStart ;
+   GameLogic(String player1Name,String player2Name,char Player1Pattern){
       player1 = player1Name;
       player2 = player2Name;
-      checkGlobal = isGlobal;
+     
       
       if( 'X' == Character.toUpperCase(Player1Pattern)  ){
           player1symbol = 'X';
@@ -45,6 +45,10 @@ public class GameLogic {
        MatrixOfXO[i][j] = 0;
     }
 }
+   }
+   GameLogic(String Player1N ,String Player2N , char Player1Ptn , boolean firstPlayer){
+       this(Player1N,Player2N,Player1Ptn);
+       youWillStart=firstPlayer;
    }
     public int checkWinner(int PlayerNum, int index) {
         int countx = 0;int county = 0; int row=0;int column=0;

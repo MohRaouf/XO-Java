@@ -107,7 +107,6 @@ public class FXMLFriendController implements Initializable {
           cupOfwinner.setVisible(false);
         play.setTextFill(Color.valueOf(Game.Player1Color));
        play.setText(Game.player1+" turn");
-      intArray = new int[]{ 0,1,2,3,4,5,6,7,8 };
       if(Winner==1)
       {  X_or_O = 0;
       play.setTextFill(Color.valueOf(Game.Player1Color));
@@ -122,7 +121,7 @@ public class FXMLFriendController implements Initializable {
          GridpaneForButton.getChildren().forEach((node) -> {
              ((Button)node).setText("");
             });
-         Game = new GameLogic(false,Player.player1Name, Player.player2Name,Player.player1Symbol);
+         Game = new GameLogic(Player.player1Name, Player.player2Name,Player.player1Symbol);
         }
        
       
@@ -131,8 +130,8 @@ public class FXMLFriendController implements Initializable {
    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        Game = new GameLogic(false,Player.player1Name, Player.player2Name,Player.player1Symbol);
-  
+        Game = new GameLogic(Player.player1Name, Player.player2Name,Player.player1Symbol);
+ 
         GameLogic.scoreOfPlayer1=0;
         GameLogic.scoreOfPlayer2=0;
       player1Lb.setText(Game.player1);
