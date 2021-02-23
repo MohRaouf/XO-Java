@@ -16,6 +16,7 @@ import javafx.stage.StageStyle;
  */
 public class ClientGui extends Application {
     
+    
     @Override
     public void start(Stage primaryStage) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("TicTacToe_Interface.fxml"));

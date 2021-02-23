@@ -46,6 +46,7 @@ FontAwesomeIcon:hover{
 .text-field {
     -fx-border-color:#383e56;
     -fx-background-color:#16334f;
+    -fx-text-fill:#ffffff;
 }
 #loginbtn{
     -fx-background-radius: 10;

@@ -1,4 +1,3 @@
-
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -18,6 +17,9 @@ import javafx.stage.Stage;
  * @author Aalaa Habib
  */
 public class TicTacToe_InterfaceController implements Initializable {
+    static Client client;
+    String playerName="";
+    String playerPassword="";
     validation valid = new validation();
 
     @FXML
@@ -49,6 +51,20 @@ public class TicTacToe_InterfaceController implements Initializable {
           if(!check_pass)
              passError.setText("Password must be 8 digit at least upTo 20");
     }
+    public String sendData_login(){
+         String Data;
+         playerName     = userName.getText();
+         playerPassword = password.getText();
+         Data= "#login"+","+playerName+","+playerPassword;
+         return Data;
+    }
+    public String SendData_Register(){
+         String Data;
+         playerName     = userName.getText();
+         playerPassword = password.getText();
+         Data= "#Register"+","+playerName+","+playerPassword;
+         return Data;
+    }
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -57,15 +73,15 @@ public class TicTacToe_InterfaceController implements Initializable {
 
     @FXML
     private void min(MouseEvent event) {
-        System.err.println("min");
-        Stage s = (Stage)((Node)event.getSource()).getScene().getWindow();
+       // System.err.println("min");
+       Stage s = (Stage)((Node)event.getSource()).getScene().getWindow();
         s.setIconified(true);
     }
 
     @FXML
     private void max(MouseEvent event) {
-        Stage s = (Stage)((Node)event.getSource()).getScene().getWindow();
-        s.setFullScreen(true);
+        //Stage s = (Stage)((Node)event.getSource()).getScene().getWindow();
+        //s.setFullScreen(true);
     }
     
 
@@ -80,8 +96,10 @@ public class TicTacToe_InterfaceController implements Initializable {
     {
        try{
            validation();
-           clientSocket client = new clientSocket(); 
-           
+          
+           client=new Client("127.0.0.1",4433);
+           client.ps.print(sendData_login());
+           System.out.println(sendData_login());
        }
        catch (Exception ex) {
         }
@@ -91,6 +109,11 @@ public class TicTacToe_InterfaceController implements Initializable {
     @FXML
     private void register(){
         validation();
+        client=new Client("127.0.0.1",4433);
+        client.start();
+        client.ps.print(sendData_login());
+        
+        
     }
     
 }
