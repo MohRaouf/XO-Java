@@ -247,6 +247,8 @@ public class GameController implements Initializable {
                            
                            
                             //SelectedButton.setText(Character.toString(Game.player1_symbol));  
+                            //>3
+                            //3
                                while( oneArrayIndex>=3)
                                 {
                                        oneArrayIndex-=3;

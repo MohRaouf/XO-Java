@@ -15,7 +15,10 @@ FontAwesomeIcon:hover{
     -fx-text-fill:#ffffff;
     -fx-background-color:#28527a;
 }
-.play:hover{
+.play:hover,
+.login:hover,
+#login:hover
+{
      -fx-background-color:#f14668;
      -fx-cursor: hand;
 }

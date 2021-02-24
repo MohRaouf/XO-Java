@@ -22,7 +22,7 @@ public class ClientGui extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("TicTacToe_Interface.fxml"));
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
-        primaryStage.initStyle(StageStyle.TRANSPARENT);
+        //primaryStage.initStyle(StageStyle.TRANSPARENT);
         primaryStage.show();
     }
 

@@ -1,4 +1,3 @@
-import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -21,14 +20,14 @@ public class TicTacToe_InterfaceController implements Initializable {
     String playerName="";
     String playerPassword="";
     validation valid = new validation();
-
+/*
     @FXML
     private FontAwesomeIcon minBtn;
     @FXML
     private FontAwesomeIcon maxBtn;
     @FXML
     private FontAwesomeIcon closeBtn;
-    
+    */
     @FXML
     public TextField userName; 
     public TextField password;
