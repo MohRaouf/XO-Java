@@ -15,7 +15,7 @@
    <top>
       <HBox alignment="TOP_RIGHT" prefHeight="39.0" prefWidth="600.0" style="-fx-background-color: #28527a;" BorderPane.alignment="CENTER">
          <children>
-            <FontAwesomeIcon fx:id="minBtn" fill="WHITE" iconName="MINUS" onMouseClicked="#min" size="1.5em">
+           <!-- <FontAwesomeIcon fx:id="minBtn" fill="WHITE" iconName="MINUS" onMouseClicked="#min" size="1.5em">
                <HBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </HBox.margin>
@@ -29,7 +29,7 @@
                <HBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </HBox.margin>
-            </FontAwesomeIcon>
+            </FontAwesomeIcon>-->
          </children>
       </HBox>
    </top>
@@ -58,12 +58,10 @@
                   <Font size="23.0" />
                </font>
             </Label>
-            <TextField fx:id="userName" layoutX="104.0" layoutY="130.0" promptText="username" styleClass="text-field" />
-            <PasswordField fx:id="password" layoutX="103.0" layoutY="182.0" promptText="password" />
+            <TextField fx:id="userName" layoutX="48.0" layoutY="130.0" prefHeight="26.0" prefWidth="208.0" promptText="username" styleClass="text-field" />
+            <PasswordField fx:id="password" layoutX="51.0" layoutY="182.0" prefHeight="26.0" prefWidth="204.0" promptText="password" />
             <AnchorPane layoutX="92.0" layoutY="90.0" prefHeight="4.0" prefWidth="117.0" style="-fx-background-color: #28527a;" />
             <Button id="login" fx:id="loginBtn" layoutX="37.0" layoutY="260.0" mnemonicParsing="false" onAction="#login" prefHeight="32.0" prefWidth="111.0" text="login" />
-            <FontAwesomeIcon fill="#28527a" iconName="USER" layoutX="52.0" layoutY="153.0" size="2em" wrappingWidth="23.449999809265137" />
-            <FontAwesomeIcon fill="#28527a" iconName="LOCK" layoutX="55.0" layoutY="205.0" size="2em" text="" />
             <Button id="register" fx:id="registerBtn" layoutX="168.0" layoutY="260.0" mnemonicParsing="false" onAction="#register" prefHeight="32.0" prefWidth="101.0" styleClass="login" text="Register" />
             <Label id="errorLb" fx:id="errorLb" layoutX="37.0" layoutY="330.0" styleClass="error" textAlignment="CENTER" />
          </children>

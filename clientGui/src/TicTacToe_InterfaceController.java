@@ -97,9 +97,9 @@ public class TicTacToe_InterfaceController implements Initializable {
        try{
            validation();
           
-           client=new Client("127.0.0.1",4433);
+           /*client=new Client("127.0.0.1",4433);
            client.ps.print(sendData_login());
-           System.out.println(sendData_login());
+           System.out.println(sendData_login());*/
        }
        catch (Exception ex) {
         }
@@ -109,9 +109,9 @@ public class TicTacToe_InterfaceController implements Initializable {
     @FXML
     private void register(){
         validation();
-        client=new Client("127.0.0.1",4433);
+      /*  client=new Client("127.0.0.1",4433);
         client.start();
-        client.ps.print(sendData_login());
+        client.ps.print(sendData_login());*/
         
         
     }
