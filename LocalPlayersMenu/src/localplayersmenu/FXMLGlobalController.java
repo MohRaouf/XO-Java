@@ -4,100 +4,73 @@
  * and open the template in the editor.
  */
 package localplayersmenu;
-
+import java.net.*;
+import java.io.*;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.Random;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
-import java.net.*;
-import java.io.*;
+import localplayersmenu.Player;
 /**
  *
  * @author ITI
  */
-public class FXMLGlobalController extends Thread implements Initializable{
+public class FXMLGLobalController extends Thread implements Initializable {
 
-    int X_or_O = 0;int row,column;int index,oneArrayIndex;int rowComp=0;int colComp=0;
-    int Winner = 0;boolean PlayAgain=false; int[] intArray ; String  Received;
-    char yourSymbol;
-    char anotherSymbol;
-    int yourNumber;
-    String yourColor;
-    String anotherColor;
-    Socket mySocket;
+   int row,column;int index,oneArrayIndex;int rowComp=0;int colComp=0;
+    int Winner = 0;boolean PlayAgain=true; int[] intArray ;boolean waitServer=false;String Received;
+  GameLogic Game ; Socket mySocket;boolean waitToChange = false;
     DataInputStream Datais;
     PrintStream ps;
-  GameLogic Game ;
     @FXML
    public Label play,player1Lb,player2Lb,Pattern1,Pattern2,score1,score2;
    public GridPane GridpaneForButton;
    public Button PlayButton;
    public ImageView celebratedImg,cupOfwinner,LoseImage;
    public AnchorPane mainPane;
-    public TextArea server_tx;
+   
     @FXML
     private void handleButtonAction(ActionEvent event) {
-       try {
-          
+      try {
             if ( PlayAgain==false) {
-                 if(Received != ""){
-                     
                 if( Winner == 0 ){
-                   
+                    
                 Button SelectedButton = (Button) event.getSource();
                        row = GridPane.getRowIndex(SelectedButton);
                          column = GridPane.getColumnIndex(SelectedButton);
                           oneArrayIndex = (row)*3 + column;
-                         
-                  if ("".equals(SelectedButton.getText())) {           
-                         SelectedButton.setTextFill(Color.valueOf(yourColor));
-                        SelectedButton.setText(Character.toString(yourSymbol));  
+                            if ("".equals(SelectedButton.getText())&& Received!="") {
+                             if(Game.youNumber==1){
+                                   SelectedButton.setTextFill(Color.valueOf(Game.Player1Color));
+                        SelectedButton.setText(Character.toString(Game.player1symbol));  
                     Winner=Game.checkWinner(1,oneArrayIndex);
                     System.out.println(Winner);
-                      play.setTextFill(Color.valueOf(anotherColor));
-                    play.setText(anotherColor+" turn"); 
-                     ps.println(oneArrayIndex+","+Winner);
+                      play.setTextFill(Color.valueOf(Game.Player2Color));
+                    play.setText(Game.player2+" turn");
+                    ps.println(">"+oneArrayIndex);
                      Received="";
-                  }
-                    
-               if(Winner != 0){
-                    switch (Winner) {
-                        case 1:
-                            play.setTextFill(Color.valueOf(Game.Player1Color));
-                            play.setText(Game.player1+" is the Winner");
-                            score1.setText(Integer.toString(++GameLogic.scoreOfPlayer1));
-                            if(yourNumber==Winner){
-                            celebratedImg.setVisible(true);
-                            cupOfwinner.setVisible(true);}
-                            else LoseImage.setVisible(true);
-                            break;
-                        case 2:
-                            play.setTextFill(Color.valueOf(Game.Player2Color));
-                            play.setText(Game.player2+" is the Winner");
-                              score2.setText(Integer.toString(++GameLogic.scoreOfPlayer2));
-                              if(yourNumber==Winner){
-                              celebratedImg.setVisible(true);
-                              cupOfwinner.setVisible(true);}
-                              else LoseImage.setVisible(true);
-                            break;
-                        case 3:
-                            play.setText("There is no Winner");
-                            break;
-                    }
-                PlayAgain=true;
-                 PlayButton.setDisable(false);
-                }
+                             }else{
+                                SelectedButton.setTextFill(Color.valueOf(Game.Player2Color));
+                        SelectedButton.setText(Character.toString(Game.player2symbol));  
+                    Winner=Game.checkWinner(1,oneArrayIndex);
+                    System.out.println(Winner);
+                      play.setTextFill(Color.valueOf(Game.Player1Color));
+                    play.setText(Game.player1+" turn");
+                       ps.println(">"+oneArrayIndex);
+                        Received="";     }}
+                   checkTheWinner();
             }}
-            }
 
         } catch (Exception ex) {
         }
@@ -105,21 +78,29 @@ public class FXMLGlobalController extends Thread implements Initializable{
 
    @FXML
     private void handlePlayAction(ActionEvent event) {
-      if(PlayAgain==true){
+        PlayAgain=false;
+   /*   if(PlayAgain==true){
           celebratedImg.setVisible(false);
           cupOfwinner.setVisible(false);
-          LoseImage.setVisible(false);
+        play.setTextFill(Color.valueOf(Game.Player1Color));
+       play.setText(Game.player1+" turn");
+      intArray = new int[]{ 0,1,2,3,4,5,6,7,8 };
+      if(Winner==1)
+      {  X_or_O = 0;
       play.setTextFill(Color.valueOf(Game.Player1Color));
-      play.setText(Game.player1+" turn");
-    
+      play.setText(Game.player1+" turn");}
+      else if(Winner==2)
+      { X_or_O = 1;
+      play.setTextFill(Color.valueOf(Game.Player2Color));
+       play.setText(Game.player2+" turn");}
         PlayAgain=false;
          Winner=0;
          PlayButton.setDisable(true);
          GridpaneForButton.getChildren().forEach((node) -> {
              ((Button)node).setText("");
             });
-         Game = new GameLogic(Player.player1Name, Player.player2Name,Player.player1Symbol,true);
-        }
+         Game = new GameLogic(Player.player1Name, Player.player2Name,Player.player1Symbol,Player.player2Symbol);
+        }*/
        
       
     }
@@ -127,32 +108,17 @@ public class FXMLGlobalController extends Thread implements Initializable{
    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-             try{
+        Game = new GameLogic(Player.player1Name, Player.player2Name,Player.player1Symbol,Player.player2Symbol);
+          try{
              mySocket = new Socket(InetAddress.getLocalHost(),4800);
               Datais = new DataInputStream(mySocket.getInputStream());
               ps = new PrintStream(mySocket.getOutputStream());}catch(IOException ex){
              ex.printStackTrace();
          } start();
-        Game = new GameLogic(Player.player1Name, Player.player2Name,Player.player1Symbol,true);
-        if(Game.youWillStart==true){
-            yourSymbol= Game.player1symbol;
-            yourColor = Game.Player1Color;
-            anotherSymbol=Game.player2symbol;
-            anotherColor=Game.Player2Color;
-            yourNumber=1;
-        } else{
-            yourSymbol= Game.player2symbol;
-            yourColor = Game.Player2Color;
-            anotherSymbol=Game.player1symbol;
-            anotherColor=Game.Player1Color;
-            yourNumber=2;
-                    }
-        
+     
+      
         GameLogic.scoreOfPlayer1=0;
         GameLogic.scoreOfPlayer2=0;
-        PlayButton.setDisable(true);
-        play.setTextFill(Color.valueOf(Game.Player1Color));
-       play.setText(Game.player1+" turn");
       player1Lb.setText(Game.player1);
       player2Lb.setText(Game.player2);
       Pattern1.setTextFill(Color.valueOf(Game.Player1Color));
@@ -164,31 +130,92 @@ public class FXMLGlobalController extends Thread implements Initializable{
       score1.setText(Integer.toString(GameLogic.scoreOfPlayer1));
       score2.setText(Integer.toString(GameLogic.scoreOfPlayer2));
     }
-
     @Override
   public void run(){
       try{
        while(true){
        
-           Received = Datais.readUTF();
-            String[] words=Received.split(","); //-1,0  
-                      Winner = Integer.parseInt(words[1]);
-                      index=Integer.parseInt(words[0]);
-                      if(index != -1){
-                       while( index>=3){
-                        index-=3;
-                         rowComp++;
-                      }  colComp=index;
-                    System.out.println(rowComp+"--"+colComp);
-                      GridpaneForButton.getChildren().forEach((node) -> {
-                           if(GridPane.getColumnIndex(node)==colComp && GridPane.getRowIndex(node)==rowComp){
-                               ((Button)node).setTextFill(Color.valueOf(anotherColor));
-                          ((Button)node).setText(Character.toString(anotherSymbol));
-                         System.out.println(rowComp+"**"+colComp);
-                          }
-            });}
-       }}catch(Exception ex){
-            ex.printStackTrace();
+         Received = Datais.readLine();
+        char ReceivedIndex = Received.charAt(1);
+         index=Integer.parseInt(String.valueOf(ReceivedIndex)); 
+         System.out.println("****"+index);
+          Platform.runLater(() -> {
+                  DrawReceived(index);
+                        });  
+        
+          
+       }}catch(IOException | NumberFormatException ex){
         }
  }
+void DrawReceived(int Index){
+   while( Index>3){
+                        Index-=3;
+                         rowComp++;
+                      }  colComp=Index;
+                    
+                    System.out.println(rowComp+"--"+colComp);
+                   GridpaneForButton.getChildren().forEach((node) -> {
+                        if(GridPane.getColumnIndex(node)==colComp && GridPane.getRowIndex(node)==rowComp){
+                            if("".equals(((Button)node).getText())){
+                            if(Game.youNumber==1)
+                            {   ((Button)node).setTextFill(Color.valueOf(Game.Player2Color));
+                            ((Button)node).setText(Character.toString(Game.player2symbol));
+                            play.setTextFill(Color.valueOf(Game.Player1Color));
+                            play.setText(Game.player1+" turn");
+                            Winner=Game.checkWinner(2, index);
+                            checkTheWinner();}
+                            else if(Game.youNumber==2)
+                            {
+                                ((Button)node).setTextFill(Color.valueOf(Game.Player1Color));
+                            ((Button)node).setText(Character.toString(Game.player1symbol));
+                            play.setTextFill(Color.valueOf(Game.Player2Color));
+                            play.setText(Game.player2+" turn");
+                            Winner=Game.checkWinner(1, index);
+                            checkTheWinner();
+                            
+                            }
+                            System.out.println(rowComp+"**"+colComp);}
+                          
+                        }
+                    }
+                        );  
+                   rowComp=0;colComp=0;
+  }
+void checkTheWinner(){
+          if(Winner != 0){
+                    switch (Winner) {
+                        case 1:
+                            if(Game.youNumber==1){
+                            play.setTextFill(Color.valueOf(Game.Player1Color));
+                            play.setText(Game.player1+" is the Winner");
+                            score1.setText(Integer.toString(++GameLogic.scoreOfPlayer1));
+                            celebratedImg.setVisible(true);
+                            cupOfwinner.setVisible(true);}
+                            else{
+                                play.setTextFill(Color.valueOf(Game.Player2Color));
+                            play.setText(" You lose.....");
+                            LoseImage.setVisible(true);
+                            }
+                            break;
+                        case 2:
+                            if(Game.youNumber==2){
+                            play.setTextFill(Color.valueOf(Game.Player2Color));
+                            play.setText(Game.player2+" is the Winner");
+                              score2.setText(Integer.toString(++GameLogic.scoreOfPlayer2));
+                              celebratedImg.setVisible(true);
+                              cupOfwinner.setVisible(true);}
+                            else{
+                                 play.setTextFill(Color.valueOf(Game.Player1Color));
+                            play.setText(" You lose.....");
+                            LoseImage.setVisible(true);
+                            }
+                            break;
+                        case 3:
+                            play.setText("There is no Winner");
+                            break;
+                    }
+                PlayAgain=true;
+                 PlayButton.setDisable(false);
+                }
+}
 }

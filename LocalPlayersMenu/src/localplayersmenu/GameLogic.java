@@ -20,24 +20,18 @@ public class GameLogic {
  int MatrixOfXO[][];
  public static int scoreOfPlayer1;
  public static int scoreOfPlayer2;
- boolean youWillStart ;
-   GameLogic(String player1Name,String player2Name,char Player1Pattern){
+ int  youNumber ;
+   GameLogic(String player1Name,String player2Name,char Player1Pattern,char Player2Pattern){
       player1 = player1Name;
       player2 = player2Name;
-     
+    
+      youNumber=1;
       
-      if( 'X' == Character.toUpperCase(Player1Pattern)  ){
-          player1symbol = 'X';
-          player2symbol = 'O';
+          player1symbol = Player1Pattern;
+          player2symbol = Player2Pattern;
           Player1Color = "#03506f";
           Player2Color = "#fb743e";
           
-       } else {
-           player1symbol = 'O';
-          player2symbol = 'X';
-           Player2Color = "#03506f";
-          Player1Color = "#fb743e";
-        }
       CountToFull=0;
        MatrixOfXO = new int[3][3];
            for(int i = 0; i < 3; i++){
@@ -46,10 +40,7 @@ public class GameLogic {
     }
 }
    }
-   GameLogic(String Player1N ,String Player2N , char Player1Ptn , boolean firstPlayer){
-       this(Player1N,Player2N,Player1Ptn);
-       youWillStart=firstPlayer;
-   }
+ 
     public int checkWinner(int PlayerNum, int index) {
         int countx = 0;int county = 0; int row=0;int column=0;
         int countDiagLeft=0;

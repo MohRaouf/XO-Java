@@ -70,9 +70,10 @@ public class PlayersLocalMenuController implements Initializable {
             //send data to Game Logic Class 
             Player.player1Name=firstPlayerName;
             Player.player2Name=secondPlayerName;
-            Player.player1Symbol='x';
+            Player.player1Symbol='X';
+            Player.player2Symbol='O';
            // Parent root2 = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));  
-            FXMLFriendController controller= new FXMLFriendController();
+            FXMLGLobalController controller= new FXMLGLobalController();
             FXMLLoader  loader = new FXMLLoader(getClass().getResource("FXMLDocument.fxml"));
              loader.setController(controller);
             Parent root2 = loader.load();

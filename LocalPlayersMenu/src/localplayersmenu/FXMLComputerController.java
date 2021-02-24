@@ -4,7 +4,8 @@
  * and open the template in the editor.
  */
 package localplayersmenu;
-
+import java.net.*;
+import java.io.*;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.Random;
@@ -140,7 +141,7 @@ public class FXMLComputerController implements Initializable {
          GridpaneForButton.getChildren().forEach((node) -> {
              ((Button)node).setText("");
             });
-         Game = new GameLogic(Player.player1Name, Player.player2Name,Player.player1Symbol);
+         Game = new GameLogic(Player.player1Name, Player.player2Name,Player.player1Symbol,Player.player2Symbol);
         }
        
       
@@ -149,7 +150,7 @@ public class FXMLComputerController implements Initializable {
    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        Game = new GameLogic(Player.player1Name, Player.player2Name,Player.player1Symbol);
+        Game = new GameLogic(Player.player1Name, Player.player2Name,Player.player1Symbol,Player.player2Symbol);
        
         GameLogic.scoreOfPlayer1=0;
         GameLogic.scoreOfPlayer2=0;
@@ -164,6 +165,6 @@ public class FXMLComputerController implements Initializable {
       score1.setText(Integer.toString(GameLogic.scoreOfPlayer1));
       score2.setText(Integer.toString(GameLogic.scoreOfPlayer2));
     }
-
+ 
 
 }

@@ -121,7 +121,7 @@ public class FXMLFriendController implements Initializable {
          GridpaneForButton.getChildren().forEach((node) -> {
              ((Button)node).setText("");
             });
-         Game = new GameLogic(Player.player1Name, Player.player2Name,Player.player1Symbol);
+         Game = new GameLogic(Player.player1Name, Player.player2Name,Player.player1Symbol,Player.player2Symbol);
         }
        
       
@@ -130,7 +130,7 @@ public class FXMLFriendController implements Initializable {
    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        Game = new GameLogic(Player.player1Name, Player.player2Name,Player.player1Symbol);
+        Game = new GameLogic(Player.player1Name, Player.player2Name,Player.player1Symbol,Player.player2Symbol);
  
         GameLogic.scoreOfPlayer1=0;
         GameLogic.scoreOfPlayer2=0;
