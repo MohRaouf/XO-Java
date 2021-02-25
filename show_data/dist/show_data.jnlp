@@ -8,9 +8,7 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="lib\fontawesomefx-8.1.jar" size="179086" download="eager" />
-    <jar href="lib\jfoenix-1.0.0.jar" size="2186636" download="eager" />
-    <jar href="show_data.jar" size="10010" download="eager" />
+    <jar href="show_data.jar" size="76077" download="eager" />
   </resources>
   <applet-desc  width="800" height="600" main-class="com.javafx.main.NoJavaFXFallback"  name="show_data" >
     <param name="requiredFXVersion" value="8.0+"/>

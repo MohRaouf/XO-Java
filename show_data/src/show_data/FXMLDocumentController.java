@@ -13,14 +13,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
-
 /**
  *
  * @author esraa abou alkassem
@@ -39,44 +35,37 @@ public class FXMLDocumentController implements Initializable {
     private void handleButtonAction(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("sce2.fxml"));
         Parent root = loader.load();
+         //Parent root2 = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));  
+        ///make root to scene of game root2222
         Sce2Controller scencontroller = loader.getController();
         //String s="@"+tf.getText()+"|online|200";
-
+          scencontroller.login_user("esraa");
+          ///////show info
         if (tf.getText().contains("@")) {
             String[] list = (tf.getText()).split("[@]");
             String listplayer = list[1];
             System.out.println(listplayer);
-//            String[] player=(listplayer).split("[,]");
-//            for(int i=0;i<player.length;i++){
-//             
-//            
-//            }
-            //String[] arrOfStr = (listplayer).split("[|]");
             scencontroller.showInformation(listplayer);
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.initStyle(StageStyle.UNDECORATED);
-            stage.setTitle("window scene2");
-            stage.show();
-
-        } else if (tf.getText().contains("$")) {
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.initStyle(StageStyle.UNDECORATED);
-            stage.setTitle("window scene2");
-            stage.show();
+            ap1.getChildren().add(root);
+             } 
+        ////////////// accept to play
+        else if (tf.getText().startsWith("$yes")) {
+            String[] list = (tf.getText()).split("[$]yes,");
+            String listplayer = list[1];
+            ap1.getChildren().add(root);
+            System.out.println(listplayer);
+            scencontroller.play_game(listplayer);
+            
+        }
+        ///////////// ask to play
+        else if (tf.getText().contains("$")) {
+            ap1.getChildren().add(root);
             String[] list = (tf.getText()).split("[$]");
             String listplayer = list[1];
             System.out.println(listplayer);
             scencontroller.ask_to_play(listplayer);
 
         }
-
-//        Stage stage=new Stage();
-//        stage.setScene(new Scene(root));
-//        stage.initStyle(StageStyle.UNDECORATED);
-//        stage.setTitle("window scene2");
-//        stage.show();
     }
 
     @Override
