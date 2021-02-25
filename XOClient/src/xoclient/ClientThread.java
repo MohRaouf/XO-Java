@@ -1,9 +1,12 @@
 package xoclient;
 
 import java.io.DataInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Platform;
 
 public class ClientThread extends Thread {
@@ -13,6 +16,7 @@ public class ClientThread extends Thread {
     PrintStream ps;
 
     LoginController loginController;
+    public DashboardController dashboardController;
 
     public ClientThread(String ip, int port, LoginController _loginController) {
         try {
@@ -38,12 +42,18 @@ public class ClientThread extends Thread {
         while (true) {
             try {
                 String msg = dis.readLine();
+                System.out.println("Received Message : " + msg);
                 if (msg != null) {
                     if (msg.contains("#")) {
                         loginResult(msg);
+                    } else if (msg.startsWith("@")) {
+                        populateInfo(msg);
+                    } else if (msg.startsWith("$yes")) {
+                        gameInfo(msg);
+                    } else if (msg.startsWith("$")) {
+                        offerToPlay(msg);
                     }
                 }
-                System.out.println(msg);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -55,6 +65,37 @@ public class ClientThread extends Thread {
             @Override
             public void run() {
                 loginController.authorizeResult(msg);
+            }
+        });
+    }
+
+    private void populateInfo(String msg) {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    dashboardController.showInformation(msg);
+                } catch (FileNotFoundException ex) {
+                    Logger.getLogger(ClientThread.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
+    }
+
+    private void offerToPlay(String msg) {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                dashboardController.ask_to_play(msg);
+            }
+        });
+    }
+
+    private void gameInfo(String msg) {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                dashboardController.play_game(msg);
             }
         });
     }

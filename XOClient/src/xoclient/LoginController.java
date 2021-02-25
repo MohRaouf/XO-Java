@@ -42,7 +42,6 @@ public class LoginController implements Initializable {
     boolean login = false;
 
     Stage primaryStage;
-
     public LoginController(Stage _primaryStage) {
         this.primaryStage = _primaryStage;
     }
@@ -152,17 +151,17 @@ public class LoginController implements Initializable {
         alert.showAndWait().ifPresent(rs -> {
             if (rs == ButtonType.OK) {
                 try {
-                    System.out.println("Pressed OK.");
-                    FXMLLoader loader = new FXMLLoader();
-                    Parent root = (Parent) loader.load(getClass().getResource("Temp.fxml").openStream());
-                    TempController tempController = new TempController();
-                    loader.setController(tempController);
-                    
-                    primaryStage.setTitle("XO Temp Controller");
-                    Scene scene = new Scene(root);
+
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("Dashboard.fxml"));
+                    // Create a controller instance
+                    DashboardController dashboardController = new DashboardController(primaryStage,playerName);
+                    // Set it in the FXMLLoader
+                    loader.setController(dashboardController);
+                    primaryStage.setTitle("XO Dashboard");
+                    Scene scene = new Scene((Parent) loader.load());
                     primaryStage.setScene(scene);
-                    //primaryStage.initStyle(StageStyle.TRANSPARENT);
-                    primaryStage.show();
+//                    primaryStage.show();
+                    
                 } catch (IOException ex) {
                     Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
                 }

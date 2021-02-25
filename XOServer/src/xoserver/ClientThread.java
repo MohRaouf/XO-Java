@@ -103,8 +103,9 @@ class ClientThread extends Thread {
             if (!playerMsg.contains("$yes")) {         // if received message = $opponentUsername
                 //Find the opponent Thread using stream
                 opponentThread.ps.println("$" + this.playerUsername);   //send the player name who asked to play to his opponent
+                System.out.println(this.playerUsername);
             } else { // received message = $yes,opponentUsername
-                String startGame = "$yes," + opponentName + ",x," + this.playerUsername + ",o,"; //game info
+                String startGame = "$yes," + opponentName + ",X," + this.playerUsername + ",O"; //game info
                 opponentThread.ps.println(startGame);   //send yes and game info to both players
                 this.ps.println(startGame);
 
