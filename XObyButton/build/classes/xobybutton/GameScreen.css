@@ -1,0 +1,9 @@
+.root{
+    -fx-background: #f7f6e7;
+}
+
+.PlayButton{
+    -fx-text-fill: rgb(49, 89, 23);
+    -fx-border-color: rgb(49, 89, 23);
+    -fx-border-radius: 5;
+}

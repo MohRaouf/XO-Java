@@ -16,10 +16,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
-import localplayersmenu.Player;
 
 /**
  *
@@ -112,7 +110,6 @@ public class FXMLDocumentController implements Initializable {
    public Label play,player1Lb,player2Lb,Pattern1,Pattern2,score1,score2;
    public GridPane GridpaneForButton;
    public Button PlayButton;
-   public ImageView celebratedImg,cupOfwinner;
   
     @FXML
     private void handleButtonAction(ActionEvent event) {
@@ -192,16 +189,14 @@ public class FXMLDocumentController implements Initializable {
                         case 1:
                             play.setTextFill(Color.valueOf(Game.Player1Color));
                             play.setText(Game.player1+" is the Winner");
+                           
                             score1.setText(Integer.toString(++GameLogic.scoreOfPlayer1));
-                            celebratedImg.setVisible(true);
-                            cupOfwinner.setVisible(true);
+     
                             break;
                         case 2:
                             play.setTextFill(Color.valueOf(Game.Player2Color));
                             play.setText(Game.player2+" is the Winner");
                               score2.setText(Integer.toString(++GameLogic.scoreOfPlayer2));
-                              celebratedImg.setVisible(true);
-                              cupOfwinner.setVisible(true);
                             break;
                         case 3:
                             play.setText("There is no Winner");
@@ -219,26 +214,17 @@ public class FXMLDocumentController implements Initializable {
    @FXML
     private void handlePlayAction(ActionEvent event) {
       if(PlayAgain==true){
-          celebratedImg.setVisible(false);
-          cupOfwinner.setVisible(false);
+        Winner=0;
         play.setTextFill(Color.valueOf(Game.Player1Color));
-       play.setText(Game.player1+" turn");
+      play.setText(Game.player1+" turn");
       intArray = new int[]{ 0,1,2,3,4,5,6,7,8 };
-      if(Winner==1)
-      {  X_or_O = 0;
-      play.setTextFill(Color.valueOf(Game.Player1Color));
-      play.setText(Game.player1+" turn");}
-      else if(Winner==2)
-      { X_or_O = 1;
-      play.setTextFill(Color.valueOf(Game.Player2Color));
-       play.setText(Game.player2+" turn");}
+       X_or_O = 0;
         PlayAgain=false;
-         Winner=0;
          PlayButton.setDisable(true);
          GridpaneForButton.getChildren().forEach((node) -> {
              ((Button)node).setText("");
             });
-         Game = new GameLogic(false,Player.player1Name, Player.player2Name,Player.player1Symbol);
+         Game = new GameLogic(false,"phoebe", "Pola",'X');
         }
        
       
@@ -247,7 +233,7 @@ public class FXMLDocumentController implements Initializable {
    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        Game = new GameLogic(false,Player.player1Name, Player.player2Name,Player.player1Symbol);
+        Game = new GameLogic(false,"phoebe", "Pola",'X');
         GameLogic.scoreOfPlayer1=0;
         GameLogic.scoreOfPlayer2=0;
       player1Lb.setText(Game.player1);
