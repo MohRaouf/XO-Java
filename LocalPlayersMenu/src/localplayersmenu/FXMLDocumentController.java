@@ -97,8 +97,7 @@ class GameLogic {
               }
               return 0;
           }
-         
-        
+
     }
 
 }
@@ -246,8 +245,6 @@ public class FXMLDocumentController implements Initializable {
       score1.setText(Integer.toString(GameLogic.scoreOfPlayer1));
       score2.setText(Integer.toString(GameLogic.scoreOfPlayer2));
     }
-
-
 }
 /**if (isWin == true) {
             if (pattern == 'X') {
