@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import static xoserver.FXMLDocumentController.dbConnection;
 
 class ClientThread extends Thread {
+
     DataInputStream dis;
     PrintStream ps;
     String playerUsername = "Player";
@@ -74,10 +75,14 @@ class ClientThread extends Thread {
     public void gameResultAction(String playerMsg) {
         try {
             PreparedStatement pst = dbConnection.prepareStatement("update players_info set score=score+? where username=?;");
-            pst.setString(2, this.playerUsername);        
-            if (playerMsg.equals("=win")) pst.setInt(1,20);
-            else if (playerMsg.equals("=lose")) pst.setInt(1,5);
-            else pst.setInt(1,-5);     
+            pst.setString(2, this.playerUsername);
+            if (playerMsg.equals("=win")) {
+                pst.setInt(1, 20);
+            } else if (playerMsg.equals("=lose")) {
+                pst.setInt(1, 5);
+            } else {
+                pst.setInt(1, -5);
+            }
             pst.executeUpdate();
         } catch (SQLException sqlEx) {
             sqlEx.printStackTrace();
@@ -201,14 +206,13 @@ class ClientThread extends Thread {
                 if (username.equals(rs.getString(1))) {
                     return false;
                 }
-                PreparedStatement pst = dbConnection.prepareStatement("insert into players_info values (?,md5(?),?);");
-                pst.setString(1, username);
-                pst.setString(2, password);
-                pst.setInt(3, 0);
-                if (pst.executeUpdate() > 0) {
-                    System.out.println("inserted Successfully");
-                }
-
+            }
+            PreparedStatement pst = dbConnection.prepareStatement("insert into players_info values (?,md5(?),?);");
+            pst.setString(1, username);
+            pst.setString(2, password);
+            pst.setInt(3, 0);
+            if (pst.executeUpdate() > 0) {
+                System.out.println("inserted Successfully");
             }
         } catch (SQLException sqlEx) {
             sqlEx.printStackTrace();
@@ -219,11 +223,11 @@ class ClientThread extends Thread {
         return true;
     }
 
-    static void sendMsgToOpponent(String msg, String opponent) {
-        for (ClientThread clientThread : ClientThread.clientsList) {
-            if (clientThread.opponent != null && clientThread.playerUsername == opponent) {
-                clientThread.ps.println(msg);
-            }
-        }
-    }
+//    static void sendMsgToOpponent(String msg, String opponent) {
+//        for (ClientThread clientThread : ClientThread.clientsList) {
+//            if (clientThread.opponent != null && clientThread.playerUsername == opponent) {
+//                clientThread.ps.println(msg);
+//            }
+//        }
+//    }
 }
