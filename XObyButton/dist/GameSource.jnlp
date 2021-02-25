@@ -8,7 +8,11 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
+<<<<<<< HEAD:XObyButton/dist/GameSource.jnlp
     <jar href="GameSource.jar" size="8120" download="eager" />
+=======
+    <jar href="XObyButton.jar" size="6763" download="eager" />
+>>>>>>> db615a6a844f27201cb310602b57a560787b8f34:XObyButton/dist/XObyButton.jnlp
   </resources>
   <applet-desc  width="800" height="600" main-class="com.javafx.main.NoJavaFXFallback"  name="GameSource" >
     <param name="requiredFXVersion" value="8.0+"/>
