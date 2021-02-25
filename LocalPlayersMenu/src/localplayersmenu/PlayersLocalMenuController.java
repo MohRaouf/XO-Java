@@ -73,8 +73,8 @@ public class PlayersLocalMenuController implements Initializable {
             Player.player1Symbol='X';
             Player.player2Symbol='O';
            // Parent root2 = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));  
-            FXMLGLobalController controller= new FXMLGLobalController();
-            FXMLLoader  loader = new FXMLLoader(getClass().getResource("FXMLDocument.fxml"));
+            GameGLobalController controller= new GameGLobalController();
+            FXMLLoader  loader = new FXMLLoader(getClass().getResource("FXMLGameDocument.fxml"));
              loader.setController(controller);
             Parent root2 = loader.load();
             parent.getChildren().add(root2);
