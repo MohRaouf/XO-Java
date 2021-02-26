@@ -30,7 +30,7 @@ public class ClientThread extends Thread {
             ex.printStackTrace();
         }
     }
-    
+  
     public void sendMsg(String msg) {
         try {
             ps.println(msg);
@@ -38,7 +38,7 @@ public class ClientThread extends Thread {
             e.printStackTrace();
         }
     }
-    
+  
     public void run() {
         while (true) {
             try {
@@ -55,6 +55,7 @@ public class ClientThread extends Thread {
                         offerToPlay(msg);
                     } else if (msg.startsWith(">")) {
                         gameMove(msg);
+
                     }
                 }
             } catch (Exception e) {
@@ -62,7 +63,6 @@ public class ClientThread extends Thread {
             }
         }
     }
-    
     private void loginResult(String msg) {
         Platform.runLater(new Runnable() {
             @Override
@@ -71,7 +71,6 @@ public class ClientThread extends Thread {
             }
         });
     }
-    
     private void populateInfo(String msg) {
         Platform.runLater(new Runnable() {
             @Override
@@ -84,7 +83,7 @@ public class ClientThread extends Thread {
             }
         });
     }
-    
+  
     private void offerToPlay(String msg) {
         Platform.runLater(new Runnable() {
             @Override
@@ -93,7 +92,7 @@ public class ClientThread extends Thread {
             }
         });
     }
-    
+  
     private void gameInfo(String msg) {
         Platform.runLater(new Runnable() {
             @Override
