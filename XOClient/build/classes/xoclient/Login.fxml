@@ -28,7 +28,7 @@
                <font>
                   <Font size="15.0" />
                </font></Button>
-            <Button id="register" fx:id="registerBtn11" layoutX="58.0" layoutY="183.0" mnemonicParsing="false" onAction="#register" prefHeight="32.0" prefWidth="172.0" styleClass="play" text="Play With AI" AnchorPane.leftAnchor="58.0" AnchorPane.rightAnchor="58.0">
+            <Button id="register" fx:id="registerBtn11" layoutX="58.0" layoutY="183.0" mnemonicParsing="false" onAction="#playWithAi" prefHeight="32.0" prefWidth="172.0" styleClass="play" text="Play With AI" AnchorPane.leftAnchor="58.0" AnchorPane.rightAnchor="58.0">
                <font>
                   <Font size="15.0" />
                </font></Button>
