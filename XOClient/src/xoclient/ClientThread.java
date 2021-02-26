@@ -10,14 +10,15 @@ import java.util.logging.Logger;
 import javafx.application.Platform;
 
 public class ClientThread extends Thread {
-
+    
     Socket mySocket;
     DataInputStream dis;
     PrintStream ps;
-
+    
     LoginController loginController;
     public DashboardController dashboardController;
-
+    public GameGLobalController gameController;
+    
     public ClientThread(String ip, int port, LoginController _loginController) {
         try {
             mySocket = new Socket(ip, port);
@@ -29,7 +30,7 @@ public class ClientThread extends Thread {
             ex.printStackTrace();
         }
     }
-
+  
     public void sendMsg(String msg) {
         try {
             ps.println(msg);
@@ -37,7 +38,7 @@ public class ClientThread extends Thread {
             e.printStackTrace();
         }
     }
-
+  
     public void run() {
         while (true) {
             try {
@@ -52,6 +53,9 @@ public class ClientThread extends Thread {
                         gameInfo(msg);
                     } else if (msg.startsWith("$")) {
                         offerToPlay(msg);
+                    } else if (msg.startsWith(">")) {
+                        gameMove(msg);
+
                     }
                 }
             } catch (Exception e) {
@@ -59,7 +63,6 @@ public class ClientThread extends Thread {
             }
         }
     }
-
     private void loginResult(String msg) {
         Platform.runLater(new Runnable() {
             @Override
@@ -68,7 +71,6 @@ public class ClientThread extends Thread {
             }
         });
     }
-
     private void populateInfo(String msg) {
         Platform.runLater(new Runnable() {
             @Override
@@ -81,7 +83,7 @@ public class ClientThread extends Thread {
             }
         });
     }
-
+  
     private void offerToPlay(String msg) {
         Platform.runLater(new Runnable() {
             @Override
@@ -90,14 +92,27 @@ public class ClientThread extends Thread {
             }
         });
     }
-
+  
     private void gameInfo(String msg) {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                dashboardController.play_game(msg);
+                try {
+                    dashboardController.play_game(msg);
+                } catch (IOException ex) {
+                    Logger.getLogger(ClientThread.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
-
+    
+    private void gameMove(String msg) {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                gameController.DrawReceived(msg);
+            }
+        });
+    }
+    
 }

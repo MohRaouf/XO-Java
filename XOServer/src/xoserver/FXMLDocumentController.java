@@ -35,7 +35,6 @@ public class FXMLDocumentController implements Initializable {
         //Connect to the DB
         DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
         dbConnection = DriverManager.getConnection("jdbc:mysql://localhost:3306/xo_database", "root", "root");
-
         //Start listening on a separate Thread to not block the GUI
         Thread listenThread = new Thread(() -> startListening());
         listenThread.start();

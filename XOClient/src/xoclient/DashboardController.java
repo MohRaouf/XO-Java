@@ -7,6 +7,7 @@ package xoclient;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.StringTokenizer;
@@ -215,23 +216,33 @@ public class DashboardController implements Initializable {
         //a.show();
     }
 
-    public void play_game(String listplayer) {
+    public void play_game(String listplayer) throws IOException {
         /// FXMLFriendController controller= new FXMLFriendController();//move to global game scene
 
-        String cleanGameInfo = listplayer.split("$yes,")[1];
-        String[] player = (cleanGameInfo).split("[,]");
+        String cleanGameInfo = listplayer.split("\\$yes,")[1];
+        String[] player = (cleanGameInfo).split(",");
         for (int i = 0; i < player.length; i++) {
-            System.out.println(player[i]);
+            System.out.println("-->"+player[i]);
         }
         //controller.send_data(player[0],player[1],player[2],player[3])
-//                    FXMLLoader loader = new FXMLLoader(getClass().getResource("Dashboard.fxml"));
-//                    // Create a controller instance
-//                    DashboardController dashboardController = new DashboardController(primaryStage,playerName);
-//                    // Set it in the FXMLLoader
-//                    loader.setController(dashboardController);
-//                    primaryStage.setTitle("XO Dashboard");
-//                    Scene scene = new Scene((Parent) loader.load());
-//                    primaryStage.setScene(scene);
+        
+         FXMLLoader loader = new FXMLLoader(getClass().getResource("GameScreen.fxml"));
+                    // Create a controller instance
+                    GameGLobalController gameController = new GameGLobalController(primaryStage,username,player[0],player[1].charAt(0),player[2],player[3].charAt(0));
+                    //System.out.println(username+"+"+player[0]+"+"+player[1].charAt(0)+"+"+player[2]+"+"+player[3].charAt(0));
+                    // Set it in the FXMLLoader
+                    loader.setController(gameController);
+                    primaryStage.setTitle("XO Global Game");
+                    Scene scene = new Scene((Parent) loader.load());
+                    primaryStage.setScene(scene);
+         /* GameGLobalController Controller = new GameGLobalController(primaryStage);
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLGameDocument.fxml"));
+                      loader.setController(Controller);
+                      Scene scene = new Scene((Parent) loader.load());
+                    primaryStage.setScene(scene);*/
+                   //   Create a controller instance*
+                
+//                 
     }
 
     @FXML
