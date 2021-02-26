@@ -42,6 +42,7 @@ public class LoginController implements Initializable {
     boolean login = false;
 
     Stage primaryStage;
+
     public LoginController(Stage _primaryStage) {
         this.primaryStage = _primaryStage;
     }
@@ -154,14 +155,14 @@ public class LoginController implements Initializable {
 
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("Dashboard.fxml"));
                     // Create a controller instance
-                    DashboardController dashboardController = new DashboardController(primaryStage,playerName);
+                    DashboardController dashboardController = new DashboardController(primaryStage, playerName);
                     // Set it in the FXMLLoader
                     loader.setController(dashboardController);
                     primaryStage.setTitle("XO Dashboard");
                     Scene scene = new Scene((Parent) loader.load());
                     primaryStage.setScene(scene);
 //                    primaryStage.show();
-                    
+
                 } catch (IOException ex) {
                     Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -191,5 +192,26 @@ public class LoginController implements Initializable {
                 System.out.println("Pressed OK.");
             }
         });
+    }
+
+    public void playWithAi() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("SinglePlayer.fxml"));
+        // Create a controller instance
+        SinglePlayerController singlePlayerController = new SinglePlayerController(primaryStage);
+        // Set it in the FXMLLoader
+        loader.setController(singlePlayerController);
+        primaryStage.setTitle("XO Dashboard");
+        Scene scene = new Scene((Parent) loader.load());
+        primaryStage.setScene(scene);
+    }
+    public void playWithFriend() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("MultiPlayer.fxml"));
+        // Create a controller instance
+        MultiPlayerController multiPlayerController = new MultiPlayerController(primaryStage);
+        // Set it in the FXMLLoader
+        loader.setController(multiPlayerController);
+        primaryStage.setTitle("XO Dashboard");
+        Scene scene = new Scene((Parent) loader.load());
+        primaryStage.setScene(scene);
     }
 }
