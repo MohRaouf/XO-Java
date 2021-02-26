@@ -5,26 +5,43 @@
  */
 package xoclient;
 
+import java.io.IOException;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 /**
  *
  * @author mohpr
  */
 public class XOClient extends Application {
-    
+
+    static ClientThread client;
+
     @Override
-    public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
+    public void start(Stage primaryStage) throws IOException {
         
-        Scene scene = new Scene(root);
+        //Close all sub thread with exit the program
+        primaryStage.setOnCloseRequest((WindowEvent e) -> {
+            Platform.exit();
+            System.exit(0);
+        });
+          
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("Login.fxml"));
+        // Create a controller instance
+        LoginController loginController = new LoginController(primaryStage);
+        // Set it in the FXMLLoader
+        loader.setController(loginController);
         
-        stage.setScene(scene);
-        stage.show();
+        primaryStage.setTitle("XO Prime");
+        Scene scene = new Scene((Parent)loader.load());
+        primaryStage.setScene(scene);
+        //primaryStage.initStyle(StageStyle.TRANSPARENT);
+        primaryStage.show();
     }
 
     /**
@@ -33,5 +50,5 @@ public class XOClient extends Application {
     public static void main(String[] args) {
         launch(args);
     }
-    
+
 }
