@@ -9,6 +9,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.StringTokenizer;
 import javafx.event.ActionEvent;
@@ -128,7 +130,7 @@ public class DashboardController implements Initializable {
             Circle cir2 = new Circle(25, 25, 11);
             Image im = new Image("xoclient/user.png", false);
             cir2.setFill(new ImagePattern(im));
-            Circle c=null;
+            Circle c = null;
             if ((data[i][1]).equals("online"))//get status
             {
                 cir2.setStroke(Color.SEAGREEN);
@@ -181,39 +183,58 @@ public class DashboardController implements Initializable {
 
     }
 
-    public void ask_to_play(String msg) {
-        System.out.println(msg);
-        String confirm = msg.split("[$]")[1];
-        Alert a = new Alert(AlertType.NONE);
-        // set alert type 
-        a.setAlertType(AlertType.CONFIRMATION);
-        // set content text 
-        a.initStyle(StageStyle.TRANSPARENT);
-        a.setContentText("Confirmation To play with: " + confirm);
-        DialogPane dialogPane = a.getDialogPane();
-        dialogPane.lookup(".content.label").setStyle("-fx-font-size: 16px; "
-                + "-fx-font-weight: bold;"
-                + "-fx-background-color: #f7f6e7;"
-                + "-fx-text-fill:#03506f;"
-                + "-fx-border-color:#fb743e;"
-                + "-fx-border-width: 5;");
-        GridPane grid = (GridPane) dialogPane.lookup(".header-panel");
-        grid.setStyle("-fx-background-color: #f7f6e7; "
-                + "-fx-font-style: italic;");
-        ButtonBar buttonBar = (ButtonBar) a.getDialogPane().lookup(".button-bar");
-        buttonBar.setStyle("-fx-font-size: 14px;"
-                + "-fx-background-color: #f7f6e7;");
-        buttonBar.getButtons().forEach(b -> b.setStyle("-fx-background-color: #fb743e;"
-                + "-fx-text-fill:#ffffff;\n"
-                + "-fx-background-radius: 20;"));
-        if (a.showAndWait().get() == ButtonType.OK) {
-            a.setContentText("Accept To Play with:" + confirm);
-            String accept_to_play = "$yes," + confirm;
-            client.sendMsg("$yes," + confirm);
-            System.out.println(accept_to_play);
-        }
-        // show the dialog 
-        //a.show();
+    public void refusedToPlay(String msg) {
+        String opponentName = msg.split(",")[1];
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle("Refused");
+        alert.setHeaderText("Invitation Refused");
+        alert.setContentText(opponentName + " Refused Your Invitation!");
+        alert.showAndWait().ifPresent(rs -> {
+            if (rs == ButtonType.OK) {
+                System.out.println("Pressed OK.");
+            }
+        });
+    }
+    
+        public void offlineOpponent(String msg) {
+        String opponentName = msg.split(",")[1];
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle("Offline");
+        alert.setHeaderText("Offline Opponent");
+        alert.setContentText(opponentName + " Is Offline!");
+        alert.showAndWait().ifPresent(rs -> {
+            if (rs == ButtonType.OK) {
+                System.out.println("Pressed OK.");
+            }
+        });
+    }
+        public void inGameOpponent(String msg) {
+        String opponentName = msg.split(",")[1];
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle("InGame");
+        alert.setHeaderText("InGame Opponent");
+        alert.setContentText(opponentName + " Is Already in a Game !");
+        alert.showAndWait().ifPresent(rs -> {
+            if (rs == ButtonType.OK) {
+                System.out.println("Pressed OK.");
+            }
+        });
+    }
+
+    public void invitedToPlay(String msg) {
+        String opponentName = msg.split("[$]")[1];
+        Alert alert = new Alert(AlertType.CONFIRMATION);
+        alert.getButtonTypes().setAll(ButtonType.YES, ButtonType.NO);
+        alert.setTitle("Invitation");
+        alert.setHeaderText("You Have Been Invited");
+        alert.setContentText(opponentName + " Invite you to Play a Game !");
+        alert.showAndWait().ifPresent(rs -> {
+            if (rs == ButtonType.YES) {
+                client.sendMsg("$yes," + opponentName);
+            } else if (rs == ButtonType.NO) {
+                client.sendMsg("$no," + opponentName);
+            }
+        });
     }
 
     public void play_game(String listplayer) throws IOException {
@@ -222,26 +243,26 @@ public class DashboardController implements Initializable {
         String cleanGameInfo = listplayer.split("\\$yes,")[1];
         String[] player = (cleanGameInfo).split(",");
         for (int i = 0; i < player.length; i++) {
-            System.out.println("-->"+player[i]);
+            System.out.println("-->" + player[i]);
         }
         //controller.send_data(player[0],player[1],player[2],player[3])
-        
-         FXMLLoader loader = new FXMLLoader(getClass().getResource("GameScreen.fxml"));
-                    // Create a controller instance
-                    GameGLobalController gameController = new GameGLobalController(primaryStage,username,player[0],player[1].charAt(0),player[2],player[3].charAt(0));
-                    //System.out.println(username+"+"+player[0]+"+"+player[1].charAt(0)+"+"+player[2]+"+"+player[3].charAt(0));
-                    // Set it in the FXMLLoader
-                    loader.setController(gameController);
-                    primaryStage.setTitle("XO Global Game");
-                    Scene scene = new Scene((Parent) loader.load());
-                    primaryStage.setScene(scene);
-         /* GameGLobalController Controller = new GameGLobalController(primaryStage);
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("GameScreen.fxml"));
+        // Create a controller instance
+        GameGLobalController gameController = new GameGLobalController(primaryStage, username, player[0], player[1].charAt(0), player[2], player[3].charAt(0));
+        //System.out.println(username+"+"+player[0]+"+"+player[1].charAt(0)+"+"+player[2]+"+"+player[3].charAt(0));
+        // Set it in the FXMLLoader
+        loader.setController(gameController);
+        primaryStage.setTitle("XO Global Game");
+        Scene scene = new Scene((Parent) loader.load());
+        primaryStage.setScene(scene);
+        /* GameGLobalController Controller = new GameGLobalController(primaryStage);
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLGameDocument.fxml"));
                       loader.setController(Controller);
                       Scene scene = new Scene((Parent) loader.load());
                     primaryStage.setScene(scene);*/
-                   //   Create a controller instance*
-                
+        //   Create a controller instance*
+
 //                 
     }
 

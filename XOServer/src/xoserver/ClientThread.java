@@ -17,7 +17,8 @@ class ClientThread extends Thread {
     String playerUsername = "Player";
     ClientThread opponentThread;
     FXMLDocumentController controls;
-    boolean authenticated;
+    boolean isAuthorized;
+    boolean isReady;
     static List<ClientThread> clientsList = new ArrayList<ClientThread>();
 
     public ClientThread(Socket clientSocket, FXMLDocumentController _controls) {
@@ -52,6 +53,9 @@ class ClientThread extends Thread {
                     } else if (clientMsg.contains("=")) {
                         //get the players info from the DB, send formatted info string
                         gameResultAction(clientMsg);
+                    } else if (clientMsg.contains("logout")) {
+                        //throw exception manually to go to catch clause to remove the Client Thread
+                        throw new Exception("Player Logged Out");
                     } else {
                         //game move detected forward to the opponent
                         this.opponentThread.ps.println(clientMsg);
@@ -74,6 +78,7 @@ class ClientThread extends Thread {
 
     public void gameResultAction(String playerMsg) {
         try {
+
             PreparedStatement pst = dbConnection.prepareStatement("update players_info set score=score+? where username=?;");
             pst.setString(2, this.playerUsername);
             if (playerMsg.equals("=win")) {
@@ -84,6 +89,8 @@ class ClientThread extends Thread {
                 pst.setInt(1, -5);
             }
             pst.executeUpdate();
+            opponentThread = null; //remove the opponent Thread
+
         } catch (SQLException sqlEx) {
             sqlEx.printStackTrace();
 
@@ -94,27 +101,49 @@ class ClientThread extends Thread {
 
     public void requestGame(String playerMsg) {
         //filter the message either a request with player name $player or respond to game request $yes,player
-        String opponentName = (playerMsg.contains("$yes")) ? playerMsg.split(",")[1] : playerMsg.split("\\$")[1];
+        String opponentName = (playerMsg.contains("$yes") || playerMsg.contains("$no")) ? playerMsg.split(",")[1] : playerMsg.split("\\$")[1];
         //Find the opponent Thread using stream
         Optional< ClientThread> findOpponentThread = clientsList.stream().filter(client -> client.playerUsername.equals(opponentName)).findFirst();
         ClientThread opponentThread;
-        if (findOpponentThread.isPresent()) {          //if Online
-            opponentThread = findOpponentThread.get(); //set reference to the opponent thread
-            if (!playerMsg.contains("$yes")) {         // if received message = $opponentUsername
-                //Find the opponent Thread using stream
-                opponentThread.ps.println("$" + this.playerUsername);   //send the player name who asked to play to his opponent
-                System.out.println(this.playerUsername);
-            } else { // received message = $yes,opponentUsername
-                String startGame = "$yes," + opponentName + ",X," + this.playerUsername + ",O"; //game info
-                opponentThread.ps.println(startGame);   //send yes and game info to both players
-                this.ps.println(startGame);
 
-                //assign the players Thread to both players objects
-                this.opponentThread = opponentThread;
-                opponentThread.opponentThread = this;
+        if (findOpponentThread.isPresent()) {          //if Online
+
+            opponentThread = findOpponentThread.get(); //set reference to the opponent thread
+
+            if (opponentThread.opponentThread == null) {   //if the opponent is not in a game
+
+                //mark the player thread as not ready so no other players request play with him 
+                if (playerMsg.contains("$yes")) {  // received message = $yes,opponentUsername      
+
+                    String startGame = "$yes," + opponentName + ",X," + this.playerUsername + ",O"; //game info
+                    opponentThread.ps.println(startGame);   //send yes and game info to both players
+                    this.ps.println(startGame);
+
+                    //assign the players Thread to both players objects
+                    this.opponentThread = opponentThread;
+                    opponentThread.opponentThread = this;
+                    isReady = false;
+
+                } else if (playerMsg.contains("$no")) {         // if received message = $no,username
+
+                    opponentThread.ps.println("$no," + this.playerUsername);   //forward to the opponent
+                    isReady = true;
+                    opponentThread.isReady = true;
+                    
+                } else {  // if received message = $opponentUsername
+                    if (opponentThread.isReady) {
+                        opponentThread.ps.println("$" + this.playerUsername);   //send the player name who asked to play to his opponent
+                        System.out.println(this.playerUsername);
+                        isReady = false;
+                    }
+                }
+            } else {
+                this.ps.println("$ingame," + opponentName);  //opponent is already in game
+                isReady = true;  //mark the current playerThread as ready to be open to accept others requests
             }
         } else {
-            this.ps.println("$offline");  //not available - Offline
+            this.ps.println("$offline," + opponentName);  //not available - Offline
+            isReady = true;     //mark the current playerThread as ready to be open to accept others requests
         }
 
     }
@@ -122,6 +151,8 @@ class ClientThread extends Thread {
     //Send the Game Info : Available - Status - Score
     public void sendInfo() {
         try {
+            isReady = true;
+            opponentThread=null;
             Statement stmt = dbConnection.createStatement();
             String query = "select * from players_info order by score desc ;";
             ResultSet rs = stmt.executeQuery(query);
@@ -137,6 +168,7 @@ class ClientThread extends Thread {
                     playerInfo = username + "|" + "offline" + "|" + rs.getString(3);
                 }
                 infoList.add(playerInfo);
+                isReady = true;
             }
             //format the final string to match @player1|status|score,player2|status|score,.....
             String info = "@" + String.join(",", infoList);
@@ -155,25 +187,32 @@ class ClientThread extends Thread {
     public void authorize(String playerMsg) {
         String username = playerMsg.split(",")[1];
         String password = playerMsg.split(",")[2];
-        if (playerMsg.contains("#login")) {
-            //Authenticate user
-            if (authenticate(username, password)) {
-                this.playerUsername = username;
-                authenticated = true;
-                //Confirm
-                this.ps.println("#done");
-            } else {
-                this.ps.println("#no");
-            }
-        } else if (playerMsg.contains("#register")) {
-            //register user
-            if (register(username, password)) {
-                this.playerUsername = username;
-                authenticated = true;
-                //Confirm
-                this.ps.println("#done");
-            } else {
-                this.ps.println("#no");
+
+        boolean isAuthenticated = clientsList.stream().anyMatch(client -> client.playerUsername.equals(username) && client.isAuthorized);
+        if (isAuthenticated) {
+            this.ps.println("#already");
+        } else {
+
+            if (playerMsg.contains("#login")) {
+                //Authenticate user
+                if (authenticate(username, password)) {
+                    this.playerUsername = username;
+                    isAuthorized = true;
+                    //Confirm
+                    this.ps.println("#done");
+                } else {
+                    this.ps.println("#no");
+                }
+            } else if (playerMsg.contains("#register")) {
+                //register user
+                if (register(username, password)) {
+                    this.playerUsername = username;
+                    isAuthorized = true;
+                    //Confirm
+                    this.ps.println("#done");
+                } else {
+                    this.ps.println("#no");
+                }
             }
         }
     }

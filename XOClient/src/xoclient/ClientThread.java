@@ -39,6 +39,7 @@ public class ClientThread extends Thread {
         }
     }
   
+    @Override
     public void run() {
         while (true) {
             try {
@@ -51,17 +52,31 @@ public class ClientThread extends Thread {
                         populateInfo(msg);
                     } else if (msg.startsWith("$yes")) {
                         gameInfo(msg);
+                    } else if (msg.startsWith("$no")) {
+                        inviteRefused(msg);
+                    }else if (msg.startsWith("$offline")) {
+                        offlineOpponent(msg);
+                    }else if (msg.startsWith("$ingame")) {
+                        inGameOpponent(msg);
                     } else if (msg.startsWith("$")) {
                         offerToPlay(msg);
                     } else if (msg.startsWith(">")) {
                         gameMove(msg);
-
                     }
                 }
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
+    }
+    
+    private void inviteRefused(String msg) {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                dashboardController.refusedToPlay(msg);
+            }
+        });
     }
     private void loginResult(String msg) {
         Platform.runLater(new Runnable() {
@@ -88,11 +103,25 @@ public class ClientThread extends Thread {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                dashboardController.ask_to_play(msg);
+                dashboardController.invitedToPlay(msg);
             }
         });
     }
-  
+      private void offlineOpponent(String msg) {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                dashboardController.offlineOpponent(msg);
+            }
+        });
+    }    private void inGameOpponent(String msg) {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                dashboardController.inGameOpponent(msg);
+            }
+        });
+    }
     private void gameInfo(String msg) {
         Platform.runLater(new Runnable() {
             @Override
