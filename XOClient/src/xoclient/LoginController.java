@@ -222,4 +222,14 @@ public class LoginController implements Initializable {
         Scene scene = new Scene((Parent) loader.load());
         primaryStage.setScene(scene);
     }
+    public void playWithFriend() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("MultiPlayer.fxml"));
+        // Create a controller instance
+        MultiPlayerController multiPlayerController = new MultiPlayerController(primaryStage);
+        // Set it in the FXMLLoader
+        loader.setController(multiPlayerController);
+        primaryStage.setTitle("XO Dashboard");
+        Scene scene = new Scene((Parent) loader.load());
+        primaryStage.setScene(scene);
+    }
 }

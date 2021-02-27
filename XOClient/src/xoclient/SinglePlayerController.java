@@ -13,6 +13,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -27,6 +28,9 @@ import javafx.stage.Stage;
  */
 public class SinglePlayerController implements Initializable {
 
+    char player1Pattern;
+    char player2Pattern;
+    String name;
     public boolean hard = false;
     public boolean easy = false;
     @FXML
@@ -41,64 +45,65 @@ public class SinglePlayerController implements Initializable {
     private ToggleButton OButton;
     @FXML
     private BorderPane parent;
-    
+  
     private Stage primaryStage;
-    
-    public SinglePlayerController(Stage _primaryStage){
-        primaryStage=_primaryStage;
+
+    public SinglePlayerController(Stage _primaryStage) {
+        primaryStage = _primaryStage;
     }
 
     @FXML
     private void handleNextAction(ActionEvent event) throws IOException {
-//        String name = playerName.getText();
-//        warning.setVisible(false);
-//        if (name.length() < 3) {
-//            showErrorMessage(warning, "please enter player  name");
-//            return;
-//        } else if (!XButton.selectedProperty().getValue() && !OButton.selectedProperty().getValue()) {
-//            showErrorMessage(warning, "please select player  Symbol");
-//            return;
-//        } else if (OButton.selectedProperty().getValue()) {
-//            Player.player1Symbol = 'o';
-//
-//        } else if (XButton.selectedProperty().getValue()) {
-//            Player.player1Symbol = 'x';
-//        }
-//        Player.player1Name = name;
-//        //send data to Game Logic Class             Player.player2Name=secondPlayerName;
-//        Player.player2Name = "AI";
-//        if (Player.player1Symbol == 'x') {
-//            Player.player2Symbol = 'o';
-//        } else {
-//            Player.player2Symbol = 'x';
-//        }
-//        //send data to Game Logic Class             Player.player2Name=secondPlayerName;
-//        if (hard) {
-//            HardLevelController controller = new HardLevelController();
-//            FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLGameDocument.fxml"));
-//            loader.setController(controller);
-//            Parent root2 = loader.load();
-//            parent.getChildren().add(root2);
-//        }
-//        if (easy) {
-//            GameComputerController controller = new GameComputerController();
-//            FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLGameDocument.fxml"));
-//            loader.setController(controller);
-//            Parent root2 = loader.load();
-//            parent.getChildren().add(root2);
-//        }
-//        else{
-//            System.out.println("please Select level");
-//        }
-        //Parent root2 = FXMLLoader.load(getClass().getResource("FXMLGameDocument.fxml"));
-        //      parent.getChildren().add(root2);
+        name = playerName.getText();
+        warning.setVisible(false);
+        if (name.length() < 3) {
+            showErrorMessage(warning, "please enter player  name");
+            return;
+        } else if (!XButton.selectedProperty().getValue() && !OButton.selectedProperty().getValue()) {
+            showErrorMessage(warning, "please select player  Symbol");
+            return;
+        } else if (OButton.selectedProperty().getValue()) {
+            player1Pattern = 'o';
 
-        /*(hardController controller = new hardController();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLGameDocument.fxml"));
-        loader.setController(controller);
-        Parent root2 = loader.load();
-        parent.getChildren().add(root2);*/
+        } else if (XButton.selectedProperty().getValue()) {
+            player1Pattern = 'x';
+        }
+
+        //send data to Game Logic Class             Player.player2Name=secondPlayerName;
+        if (player1Pattern == 'x') {
+            player2Pattern = 'o';
+        } else {
+            player2Pattern = 'x';
+        }
+        //send data to Game Logic Class             Player.player2Name=secondPlayerName;
+        if (hard) {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("GameScreen.fxml"));
+            HardLevelController hardLevelController = new HardLevelController(primaryStage, name, player1Pattern, "Computer", player2Pattern);
+            loader.setController(hardLevelController);
+            primaryStage.setTitle("Game");
+            Scene scene = new Scene((Parent) loader.load());
+            primaryStage.setScene(scene);
+        }
+        if (easy) {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("GameScreen.fxml"));
+            GameComputerController gameComputerController = new GameComputerController(primaryStage, name, player1Pattern, "Computer", player2Pattern);
+            loader.setController(gameComputerController);
+            primaryStage.setTitle("Game");
+            Scene scene = new Scene((Parent) loader.load());
+            primaryStage.setScene(scene);
+        } else {
+            System.out.println("please Select level");
+        }
+//        Parent root2 = FXMLLoader.load(getClass().getResource("FXMLGameDocument.fxml"));
+//        parent.getChildren().add(root2);
+
+//        hardController controller = new hardController(name,);
+//        FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLGameDocument.fxml"));
+//        loader.setController(controller);
+//        Parent root2 = loader.load();
+//        parent.getChildren().add(root2);
     }
+
     @FXML
     private void hardLevel(ActionEvent event) {
         hard = !hard;

@@ -124,7 +124,7 @@
                   <Image url="@cup.gif" />
                </image>
             </ImageView>
-            <Button fx:id="backButton1" alignment="CENTER" layoutX="519.0" layoutY="27.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="52.0" style="-fx-background-radius: 10; -fx-background-color: #03506f; -fx-background-image:  url('.back.png');">
+            <Button fx:id="recordButton" alignment="CENTER" layoutX="519.0" layoutY="27.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="52.0" style="-fx-background-radius: 10; -fx-background-color: #03506f; -fx-background-image:  url('.back.png');">
                <graphic>
                   <ImageView fitHeight="24.0" fitWidth="43.0" pickOnBounds="true" preserveRatio="true">
                      <image>
