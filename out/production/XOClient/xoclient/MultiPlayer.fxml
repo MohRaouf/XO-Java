@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane fx:id="parent" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #f7f6e7 ;" stylesheets="@multiPlayer.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" >
+   <left>
+      <AnchorPane prefHeight="400.0" prefWidth="294.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label id="Player1XButton" fx:id="Player1XButton" alignment="CENTER" layoutX="84.0" layoutY="38.0" prefHeight="47.0" prefWidth="138.0" text="Player1">
+               <font>
+                  <Font size="37.0" />
+               </font>
+            </Label>
+            <ToggleButton fx:id="player1XButton" layoutX="42.0" layoutY="218.0" mnemonicParsing="false" onAction="#handleXButtonsPlayer1" prefHeight="67.0" prefWidth="72.0" style="-fx-background-color: #9fb8ad;" styleClass="symbolButtons"  text="X" textFill="#08048a">
+               <font>
+                  <Font name="System Bold" size="40.0" />
+               </font>
+            </ToggleButton>
+            <ToggleButton fx:id="player1OButton" layoutX="155.0" layoutY="218.0" mnemonicParsing="false" onAction="#handleOButtonsPlayer1" prefHeight="67.0" prefWidth="72.0" style="-fx-background-color: #9fb8ad;" styleClass="symbolButtons"  text="O" textFill="#ff5700">
+               <font>
+                  <Font name="System Bold" size="40.0" />
+               </font>
+            </ToggleButton>
+            <TextField fx:id="player1Name" layoutX="31.0" layoutY="133.0" prefHeight="37.0" prefWidth="224.0" promptText="Player1 Name" />
+            <Text fx:id="firstWarning" fill="RED" layoutX="30.0" layoutY="347.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Please Enter Player Name" visible="false" wrappingWidth="234.6708984375">
+               <font>
+                  <Font name="System Bold Italic" size="17.0" />
+               </font>
+            </Text>
+         </children>
+      </AnchorPane>
+   </left>
+   <right>
+      <AnchorPane prefHeight="400.0" prefWidth="300.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label id="Player1XButton" alignment="CENTER" layoutX="84.0" layoutY="40.0" prefHeight="47.0" prefWidth="138.0" text="Player2">
+               <font>
+                  <Font size="37.0" />
+               </font>
+            </Label>
+            <ToggleButton fx:id="player2XButton" layoutX="50.0" layoutY="222.0" mnemonicParsing="false" onAction="#handleXButtonsPlayer2" prefHeight="67.0" prefWidth="72.0" style="-fx-background-color: #9fb8ad;" styleClass="symbolButtons" text="X" textFill="#08048a">
+               <font>
+                  <Font name="System Bold" size="40.0" />
+               </font>
+            </ToggleButton>
+            <ToggleButton fx:id="player2OButton" layoutX="165.0" layoutY="222.0" mnemonicParsing="false" onAction="#handleOButtonsPlayer2" prefHeight="67.0" prefWidth="72.0" style="-fx-background-color: #9fb8ad;" styleClass="symbolButtons" text="O" textFill="#ff5700">
+               <font>
+                  <Font name="System Bold" size="40.0" />
+               </font>
+            </ToggleButton>
+            <TextField fx:id="player2Name" layoutX="40.0" layoutY="134.0" prefHeight="37.0" prefWidth="224.0" promptText="Player2 Name" />
+            <Text fx:id="secondWarning" fill="RED" layoutX="48.0" layoutY="349.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Please Enter Player Name" visible="false" wrappingWidth="234.6708984375">
+               <font>
+                  <Font name="System Bold Italic" size="17.0" />
+               </font>
+            </Text>
+         </children>
+      </AnchorPane>
+   </right>
+   <bottom>
+      <AnchorPane prefHeight="57.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button layoutX="237.0" layoutY="6.0" mnemonicParsing="false" onAction="#handleNextAction" prefHeight="45.0" prefWidth="113.0" style="-fx-background-color: #03506f;" text="Next" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font></Button>
+         </children>
+      </AnchorPane>
+   </bottom>
+</BorderPane>
