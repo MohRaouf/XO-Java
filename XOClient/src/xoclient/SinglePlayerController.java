@@ -45,7 +45,7 @@ public class SinglePlayerController implements Initializable {
     private ToggleButton OButton;
     @FXML
     private BorderPane parent;
-
+  
     private Stage primaryStage;
 
     public SinglePlayerController(Stage _primaryStage) {

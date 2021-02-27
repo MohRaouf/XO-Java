@@ -132,15 +132,21 @@ public class LoginController implements Initializable {
     }
 
     public void authorizeResult(String msg) {
-        if (msg.equals("#done")) {
-            successLogin();
-        } else if (msg.equals("#no")) {
-            if (login) {
-                failedLogin();
-            } else {
-                failedRegister();
-            }
-
+        switch (msg) {
+            case "#done":
+                successLogin();
+                break;
+            case "#no":
+                if (login) {
+                    failedLogin();
+                } else {
+                    failedRegister();
+                }   break;
+            case "#already":
+                alreadyLoggedIn();
+                break;
+            default:
+                break;
         }
     }
 
@@ -175,6 +181,18 @@ public class LoginController implements Initializable {
         alert.setTitle("Athentication");
         alert.setHeaderText("Login Failed");
         alert.setContentText("Wrong Username or Password !");
+        alert.showAndWait().ifPresent(rs -> {
+            if (rs == ButtonType.OK) {
+                System.out.println("Pressed OK.");
+            }
+        });
+    }
+
+    public void alreadyLoggedIn() {
+        Alert alert = new Alert(AlertType.ERROR);
+        alert.setTitle("Login");
+        alert.setHeaderText("Login Failed");
+        alert.setContentText("Username Already Logged in !");
         alert.showAndWait().ifPresent(rs -> {
             if (rs == ButtonType.OK) {
                 System.out.println("Pressed OK.");
