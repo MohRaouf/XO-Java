@@ -1,9 +1,7 @@
 #ap2{
     -fx-background-color:#ffffff;
 }
-#loader{
-   visibility: hidden;
-}
+
 #hbox-custom-ava{
     -fx-spacing: 15;
 }
@@ -47,30 +45,35 @@
     -fx-background-radius: 20 0  20 0;
     -fx-border-radius:20 0  20 0;
 }
-/*refrsh button*/
-#connect{
-    -fx-font-family:Berlin Sans FB;
-    -fx-text-fill: #FE4451;
-    -fx-background-radius: 15;
+.refresh{
+    -fx-background-color:#FE4451;
+    -fx-background-radius:0 0 20 0;
 }
-#back{
-    -fx-font-family:Berlin Sans FB;
-    -fx-background-color:#ffffff;
-    -fx-text-fill: #FE4451;
+.refresh:hover{
+    -fx-background-color:#f14668;
+    -fx-cursor: hand;
+}
+.refresh:pressed{
+    -fx-background-color:#f14668;
+    -fx-cursor: hand;
+}
+.closex:hover{
+    -fx-cursor: hand;
+}
+.askbtn{
     -fx-background-radius: 10;
+    -fx-background-color:#FE4451;
+    -fx-text-fill:#ffffff;
 }
-#ask{
-    -fx-font-family:Berlin Sans FB;
-    -fx-background-color:#ffffff;
-    -fx-text-fill: #FE4451;
-    -fx-background-radius: 15;
+.askbtn:hover{
+    -fx-background-color:#f14668;
+    -fx-cursor: hand;
 }
-#ask:pressed{
-    -fx-background-color:#ffffff;
-    -fx-font-family:Berlin Sans FB;
-    -fx-font-weight:bold;
-    -fx-text-fill: #26de81;
+.askbtn:pressed{
+    -fx-background-color:#f14668;
+    -fx-cursor: hand;
 }
+
 /*.list-view .list-cell*/
 #available .list-cell:selected {
         -fx-background-color: #fe7c86;

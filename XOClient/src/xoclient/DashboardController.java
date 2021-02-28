@@ -5,20 +5,16 @@
  */
 package xoclient;
 
-import javafx.geometry.Insets;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 import java.util.StringTokenizer;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -28,7 +24,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
@@ -36,9 +31,9 @@ import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import javafx.scene.shape.Circle;
 import static xoclient.XOClient.client;
+import static xoclient.XOClient.setMoveListener;
 
 /**
  * FXML Controller class
@@ -86,7 +81,7 @@ public class DashboardController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         login_user(username);
-
+        setMoveListener(ap2,primaryStage);
     }
 
     public void login_user(String user) {
@@ -194,8 +189,6 @@ public class DashboardController implements Initializable {
         avplayer.setOnMouseClicked(event -> {
             String select_player = avplayer.getSelectionModel().getSelectedItem().getChildren().get(1).toString();
             selected_Player = "$" + select_player.split("[']")[1];
-
-//            tf.setText(select_player.split("[']")[1]);//split string name from labal class
         });
 
     }
@@ -286,7 +279,7 @@ public class DashboardController implements Initializable {
             }
         });
     }
-
+    @FXML 
     public void play_game(String listplayer) throws IOException {
         /// FXMLFriendController controller= new FXMLFriendController();//move to global game scene
 
@@ -300,26 +293,20 @@ public class DashboardController implements Initializable {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("GameScreen.fxml"));
         // Create a controller instance
         GameGLobalController gameController = new GameGLobalController(primaryStage, username, player[0], player[1].charAt(0), player[2], player[3].charAt(0));
-        //System.out.println(username+"+"+player[0]+"+"+player[1].charAt(0)+"+"+player[2]+"+"+player[3].charAt(0));
+
         // Set it in the FXMLLoader
         loader.setController(gameController);
         primaryStage.setTitle("XO Global Game");
         Scene scene = new Scene((Parent) loader.load());
-        primaryStage.setScene(scene);
-        /* GameGLobalController Controller = new GameGLobalController(primaryStage);
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLGameDocument.fxml"));
-                      loader.setController(Controller);
-                      Scene scene = new Scene((Parent) loader.load());
-                    primaryStage.setScene(scene);*/
-        //   Create a controller instance*
-
-//                 
+        primaryStage.setScene(scene);              
     }
 
     @FXML
     private void closescene(MouseEvent event) {
-        Stage stage = (Stage) close.getScene().getWindow();
-        stage.close();
+//        Stage stage = (Stage) close.getScene().getWindow();
+//        stage.close();
+        Platform.exit();
+        System.exit(0);
     }
 
     @FXML
@@ -329,9 +316,6 @@ public class DashboardController implements Initializable {
             System.out.println("Selected Player : " + selected_Player);
             client.sendMsg(selected_Player);
         }
-
-        loader.setStyle("visibility: visible;");
-
     }
 
     @FXML

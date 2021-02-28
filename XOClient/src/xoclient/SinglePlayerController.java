@@ -45,9 +45,16 @@ public class SinglePlayerController implements Initializable {
     private ToggleButton OButton;
     @FXML
     private BorderPane parent;
-  
+    @FXML
+    private Button easyButton;
+    @FXML
+    private Button hardButton;
+    @FXML
     private Stage primaryStage;
-
+    @FXML
+    private ToggleButton record;
+     
+    public boolean recordGame=false;
     public SinglePlayerController(Stage _primaryStage) {
         primaryStage = _primaryStage;
     }
@@ -78,7 +85,7 @@ public class SinglePlayerController implements Initializable {
         //send data to Game Logic Class             Player.player2Name=secondPlayerName;
         if (hard) {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("GameScreen.fxml"));
-            HardLevelController hardLevelController = new HardLevelController(primaryStage, name, player1Pattern, "Computer", player2Pattern);
+            HardLevelController hardLevelController = new HardLevelController(primaryStage, name, player1Pattern, "Computer", player2Pattern,recordGame);
             loader.setController(hardLevelController);
             primaryStage.setTitle("Game");
             Scene scene = new Scene((Parent) loader.load());
@@ -86,7 +93,7 @@ public class SinglePlayerController implements Initializable {
         }
         if (easy) {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("GameScreen.fxml"));
-            GameComputerController gameComputerController = new GameComputerController(primaryStage, name, player1Pattern, "Computer", player2Pattern);
+            GameComputerController gameComputerController = new GameComputerController(primaryStage, name, player1Pattern, "Computer", player2Pattern,recordGame);
             loader.setController(gameComputerController);
             primaryStage.setTitle("Game");
             Scene scene = new Scene((Parent) loader.load());
@@ -105,13 +112,74 @@ public class SinglePlayerController implements Initializable {
     }
 
     @FXML
+    private void handleOButtons(ActionEvent event) {
+        XButton.disableProperty().set(false);
+        if (OButton.selectedProperty().getValue()) {
+            OButton.getStyleClass().add("selectedButtonXO");
+            XButton.getStyleClass().removeAll("selectedButtonXO");
+            XButton.selectedProperty().set(false);
+        } else {
+            OButton.getStyleClass().removeAll("selectedButtonXO");
+        }
+    }
+
+    @FXML
+    private void handleXButtons(ActionEvent event) {
+        OButton.disableProperty().set(false);
+        if (XButton.selectedProperty().getValue()) {
+            XButton.getStyleClass().add("selectedButtonXO");
+            OButton.getStyleClass().removeAll("selectedButtonXO");
+            OButton.selectedProperty().set(false);
+        } else {
+            XButton.getStyleClass().removeAll("selectedButtonXO");
+        }
+    }
+
+    @FXML
+    private void back(ActionEvent e) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("Login.fxml"));
+        LoginController loginController = new LoginController(primaryStage);
+        loader.setController(loginController);
+        primaryStage.setTitle("XO Prime");
+        Scene scene = new Scene((Parent) loader.load());
+        primaryStage.setScene(scene);
+    }
+
+    @FXML
+    private void recordAction(ActionEvent event) {
+        if (record.selectedProperty().getValue()) {
+            recordGame = true;
+            record.getStyleClass().add("selectedButtonLevel");
+        } else {
+            recordGame = false;
+            record.getStyleClass().removeAll("selectedButtonLevel");
+
+        }
+
+    }
+
+    @FXML
     private void hardLevel(ActionEvent event) {
         hard = !hard;
+        if (hard) {
+            hardButton.getStyleClass().add("selectedButtonLevel");
+            easy = false;
+            easyButton.getStyleClass().removeAll("selectedButtonLevel");
+        } else {
+            hardButton.getStyleClass().removeAll("selectedButtonLevel");
+        }
     }
 
     @FXML
     private void easyLevel(ActionEvent event) {
         easy = !easy;
+        if (easy) {
+            easyButton.getStyleClass().add("selectedButtonLevel");
+            hard = false;
+            hardButton.getStyleClass().remove("selectedButtonLevel");
+        } else {
+            easyButton.getStyleClass().remove("selectedButtonLevel");
+        }
     }
 
     private void showErrorMessage(Text messageContainer, String message) {

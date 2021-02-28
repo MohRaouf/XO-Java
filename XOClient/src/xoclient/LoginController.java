@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -19,8 +20,11 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import static xoclient.XOClient.client;
+import static xoclient.XOClient.setMoveListener;
+
 
 /**
  * FXML Controller class
@@ -34,6 +38,9 @@ public class LoginController implements Initializable {
     Validation valid = new Validation();
     @FXML
     public TextField userName;
+    public AnchorPane ap2;
+    public AnchorPane apsign;
+
     public TextField password;
     public Button loginBtn;
     public Button registerBtn;
@@ -85,10 +92,17 @@ public class LoginController implements Initializable {
         return Data;
     }
 
+    double xOffset = 0;
+    double yOffset = 0;
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        setMoveListener(ap2,primaryStage);
+        setMoveListener(apsign,primaryStage);
     }
+
+
 
     @FXML
     private void min(MouseEvent event) {
@@ -111,10 +125,10 @@ public class LoginController implements Initializable {
 
     @FXML
     private void login(ActionEvent event) {
-        if (client == null) {
-            client = new ClientThread("127.0.0.1", 4433, this);
-        }
         if (validation()) {
+            if (client == null) {
+                client = new ClientThread("127.0.0.1", 4433, this);
+            }
             client.sendMsg(sendData_login());
             login = true;
         }
@@ -122,10 +136,10 @@ public class LoginController implements Initializable {
 
     @FXML
     private void register() {
-        if (client == null) {
-            client = new ClientThread("127.0.0.1", 4433, this);
-        }
         if (validation()) {
+            if (client == null) {
+                client = new ClientThread("127.0.0.1", 4433, this);
+            }
             client.sendMsg(sendData_register());
             login = false;
         }
@@ -141,7 +155,8 @@ public class LoginController implements Initializable {
                     failedLogin();
                 } else {
                     failedRegister();
-                }   break;
+                }
+                break;
             case "#already":
                 alreadyLoggedIn();
                 break;
@@ -222,6 +237,7 @@ public class LoginController implements Initializable {
         Scene scene = new Scene((Parent) loader.load());
         primaryStage.setScene(scene);
     }
+
     public void playWithFriend() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("MultiPlayer.fxml"));
         // Create a controller instance
