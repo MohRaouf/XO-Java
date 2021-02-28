@@ -14,6 +14,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.application.Platform;
 
 /**
  *
@@ -27,19 +30,16 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     public Button start_button;
     @FXML
-    public TextArea available_players_area,received_data_area;
+    public TextArea available_players_area, received_data_area;
 
     @FXML
     private void handleButtonAction(ActionEvent event) throws IOException, SQLException {
 
-        //Connect to the DB
-        DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
-        dbConnection = DriverManager.getConnection("jdbc:mysql://localhost:3306/xo_database", "root", "root");
+        Thread dbThread = new Thread(() -> dbAction());
+        dbThread.start();
         //Start listening on a separate Thread to not block the GUI
         Thread listenThread = new Thread(() -> startListening());
         listenThread.start();
-
-        populateAvailablePlayers();
     }
 
     @Override
@@ -47,12 +47,24 @@ public class FXMLDocumentController implements Initializable {
         // TODO
     }
 
-    public void populateAvailablePlayers() {
+    public void dbConnect() {
+
+        try {
+            //Connect to the DB
+            DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
+            dbConnection = DriverManager.getConnection("jdbc:mysql://localhost:3306/xo_database", "root", "root");
+        } catch (SQLException ex) {
+            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void dbAction() {
+        dbConnect();
         try {
             Statement stmt = dbConnection.createStatement();
             ResultSet rs = stmt.executeQuery("select * from players_info");
             while (rs.next()) {
-                available_players_area.appendText(rs.getString(1)+"\n");
+                available_players_area.appendText(rs.getString(1) + "\n");
             }
         } catch (SQLException sqlEx) {
             sqlEx.printStackTrace();
@@ -60,6 +72,7 @@ public class FXMLDocumentController implements Initializable {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+
     }
 
     public void startListening() {
@@ -68,7 +81,7 @@ public class FXMLDocumentController implements Initializable {
             while (true) {
                 start_button.setDisable(true); //disable the start button, only one thread from listening to incomming
                 Socket socket = myServerSocket.accept(); //blocking listening method
-                new ClientThread(socket,this); //start new thread for each client
+                new ClientThread(socket, this); //start new thread for each client
             }
         } catch (Exception e) {
             start_button.setDisable(false); //activate the start button if the listen thread exit

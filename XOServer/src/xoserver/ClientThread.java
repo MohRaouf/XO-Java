@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.*;
 import java.util.ArrayList;
+import javafx.application.Platform;
 import static xoserver.FXMLDocumentController.dbConnection;
 
 class ClientThread extends Thread {
@@ -39,7 +40,14 @@ class ClientThread extends Thread {
             while (true) {
                 String clientMsg = dis.readLine();
                 if (clientMsg != null) {
-                    this.controls.received_data_area.appendText(this.playerUsername + " : " + clientMsg + "\n");
+                    
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            controls.received_data_area.appendText(playerUsername + " : " + clientMsg + "\n");
+                        }
+                    });
+                    
                     //String with # means the authentication message
                     if (clientMsg.contains("#")) {
                         //authorize the player either login or register
@@ -129,7 +137,7 @@ class ClientThread extends Thread {
                     opponentThread.ps.println("$no," + this.playerUsername);   //forward to the opponent
                     isReady = true;
                     opponentThread.isReady = true;
-                    
+
                 } else {  // if received message = $opponentUsername
                     if (opponentThread.isReady) {
                         opponentThread.ps.println("$" + this.playerUsername);   //send the player name who asked to play to his opponent
@@ -152,7 +160,7 @@ class ClientThread extends Thread {
     public void sendInfo() {
         try {
             isReady = true;
-            opponentThread=null;
+            opponentThread = null;
             Statement stmt = dbConnection.createStatement();
             String query = "select * from players_info order by score desc ;";
             ResultSet rs = stmt.executeQuery(query);
