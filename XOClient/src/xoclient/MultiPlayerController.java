@@ -115,7 +115,7 @@ public class MultiPlayerController implements Initializable {
             player2OButton.getStyleClass().add("selectedButtonXO");
         } else {
             player1XButton.getStyleClass().removeAll("selectedButtonXO");
-            player1OButton.disableProperty().set(false);
+//            player1OButton.disableProperty().set(false);
         }
 
     }
@@ -131,7 +131,7 @@ public class MultiPlayerController implements Initializable {
             player2XButton.getStyleClass().add("selectedButtonXO");
         } else {
             player1OButton.getStyleClass().removeAll("selectedButtonXO");
-            player1XButton.disableProperty().set(false);
+//            player1XButton.disableProperty().set(false);
         }
     }
 
@@ -156,8 +156,8 @@ public class MultiPlayerController implements Initializable {
             player1XButton.getStyleClass().add("selectedButtonXO");
         } else {
             player2OButton.getStyleClass().removeAll("selectedButtonXO");
-            player1XButton.getStyleClass().removeAll("selectedButtonXO");
-            player2XButton.disableProperty().set(false);
+//            player1XButton.getStyleClass().removeAll("selectedButtonXO");
+//            player2XButton.disableProperty().set(false);
         }
     }
 
@@ -166,6 +166,11 @@ public class MultiPlayerController implements Initializable {
         handleVisablity(player1XButton);
         if (player2XButton.selectedProperty().getValue()) {
             player2XButton.getStyleClass().add("selectedButtonXO");
+            player2OButton.disableProperty().set(true);
+            player1OButton.selectedProperty().set(true);
+            player1OButton.getStyleClass().add("selectedButtonXO");
+        }else{
+            player2XButton.getStyleClass().removeAll("selectedButtonXO");
         }
     }
 
