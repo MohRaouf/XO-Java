@@ -20,6 +20,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -171,7 +172,7 @@ public class GameComputerController implements Initializable {
             });
             Game = new GameLogic(player1Name, player2Name, player1Pattern, player2Pattern);
         }
-
+initScreen(Game.player1, Game.player2, Game.player1symbol, Game.player2symbol);
     }
 
     @FXML
@@ -185,9 +186,41 @@ public class GameComputerController implements Initializable {
     }
        @FXML
     private void RecordAction(ActionEvent event) throws IOException {
-        String str = "2021-02-28 00:18:53.465,feby,pola,o,x,4,0,3,1,5";
-        playRecord Play = new playRecord(str, this);
-        Play.start();
+         BufferedReader reader;
+        List<String> choices=new ArrayList<>();
+        List<String> Lines = new ArrayList<>();
+        try {
+            reader = new BufferedReader(new FileReader("RecordFile.txt"));
+            String line = reader.readLine();
+            String[] LineSplitted;
+            while (line != null) {
+                //System.out.println(line);
+                LineSplitted = line.split(",");
+                choices.add(LineSplitted[0]);
+                Lines.add(line);
+                //  comboBox.getItems().add(LineSplitted[0]);
+                line = reader.readLine();
+            }
+            reader.close();
+        } catch (IOException e) {
+        }
+         System.out.println(choices);
+        ChoiceDialog<String> dialog = new ChoiceDialog(choices.get(0),choices);
+               dialog.setTitle("choose from Records");
+
+        java.util.Optional<String> result = dialog.showAndWait();
+        System.out.println(choices.indexOf(dialog.getSelectedItem())); 
+         if(result.isPresent()) 
+      {
+           int LineIndex = choices.indexOf(dialog.getSelectedItem());
+        //String str = "2021-02-28 00:18:53.465,feby,pola,o,x,4,0,3,1,5";
+        playRecord Play = new playRecord(Lines.get(LineIndex), this);
+       
+         Play.start();
+      }else{
+          
+      }
+       
     }
 
     @Override
@@ -210,6 +243,8 @@ public class GameComputerController implements Initializable {
         Pattern2.setText(Character.toString(Symbol2));
         score1.setText(Integer.toString(GameLogic.scoreOfPlayer1));
         score2.setText(Integer.toString(GameLogic.scoreOfPlayer2));
+         celebratedImg.setVisible(false);
+            cupOfwinner.setVisible(false);
     }
 
     void WinnerAction() throws IOException {

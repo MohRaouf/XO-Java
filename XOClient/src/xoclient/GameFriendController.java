@@ -5,8 +5,10 @@ package xoclient;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -18,6 +20,7 @@ import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -29,14 +32,20 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceDialog;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-
+import java.util.Optional;
+import javafx.scene.control.ButtonType;
+import javafx.stage.StageStyle;
 /**
  *
  * @author ITI
@@ -139,15 +148,6 @@ public class GameFriendController implements Initializable {
             cupOfwinner.setVisible(false);
             play.setTextFill(Color.valueOf(Game.Player1Color));
             play.setText(Game.player1 + " turn");
-            /*   if (Winner == 1) {
-                X_or_O = 0;
-                play.setTextFill(Color.valueOf(Game.Player1Color));
-                play.setText(Game.player1 + " turn");
-            } else if (Winner == 2) {
-                X_or_O = 1;
-                play.setTextFill(Color.valueOf(Game.Player2Color));
-                play.setText(Game.player2 + " turn");
-            }*/
             PlayAgain = false;
             Winner = 0;
             PlayButton.setDisable(true);
@@ -156,8 +156,9 @@ public class GameFriendController implements Initializable {
             });
             Game = new GameLogic(player1Name, player2Name, player1Pattern, player2Pattern);
         }
-
+initScreen(Game.player1, Game.player2, Game.player1symbol, Game.player2symbol);
     }
+     
 
     @FXML
     private void back(ActionEvent event) throws IOException {
@@ -173,9 +174,43 @@ public class GameFriendController implements Initializable {
 
     @FXML
     private void RecordAction(ActionEvent event) throws IOException {
-        String str = "2021-02-28 00:18:53.465,feby,pola,o,x,4,0,3,1,5";
-        playRecord Play = new playRecord(str, this);
-        Play.start();
+        BufferedReader reader;
+        List<String> choices=new ArrayList<>();
+        List<String> Lines = new ArrayList<>();
+        try {
+            reader = new BufferedReader(new FileReader("RecordFile.txt"));
+            String line = reader.readLine();
+            String[] LineSplitted;
+            while (line != null) {
+                //System.out.println(line);
+                LineSplitted = line.split(",");
+                choices.add(LineSplitted[0]);
+                Lines.add(line);
+                //  comboBox.getItems().add(LineSplitted[0]);
+                line = reader.readLine();
+            }
+            reader.close();
+        } catch (IOException e) {
+        }
+         System.out.println(choices);
+        ChoiceDialog<String> dialog = new ChoiceDialog(choices.get(0),choices);
+        dialog.setTitle("choose from Records");
+       
+        
+      //Showing the choice dialog on clicking the button
+      
+         Optional<String> result = dialog.showAndWait();
+      if(result.isPresent()) 
+      {
+           int LineIndex = choices.indexOf(dialog.getSelectedItem());
+        //String str = "2021-02-28 00:18:53.465,feby,pola,o,x,4,0,3,1,5";
+        playRecord Play = new playRecord(Lines.get(LineIndex), this);
+       
+         Play.start();
+      }else{
+          
+      }
+       
     }
 
     @Override
@@ -198,6 +233,8 @@ public class GameFriendController implements Initializable {
         Pattern2.setText(Character.toString(Symbol2));
         score1.setText(Integer.toString(GameLogic.scoreOfPlayer1));
         score2.setText(Integer.toString(GameLogic.scoreOfPlayer2));
+         celebratedImg.setVisible(false);
+            cupOfwinner.setVisible(false);
     }
 
     void DrawOnButton(Button btn, int yourNum) {
@@ -269,5 +306,3 @@ public class GameFriendController implements Initializable {
 
     }
 }
-
-
