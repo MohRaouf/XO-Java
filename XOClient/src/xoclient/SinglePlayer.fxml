@@ -15,64 +15,60 @@
    <top>
       <AnchorPane prefHeight="412.0" prefWidth="641.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
          <children>
-            <Button layoutX="19.0" layoutY="18.0" mnemonicParsing="false" onAction="#back" prefHeight="39.0" prefWidth="43.0" style="-fx-background-color: #FE4451;">
+            <ToggleButton fx:id="OButton" layoutX="370.0" layoutY="168.0" mnemonicParsing="false" onAction="#handleOButtons" prefHeight="67.0" prefWidth="72.0" styleClass="symbolButtons2" stylesheets="@multiPlayer.css" text="O" textFill="WHITE" AnchorPane.rightAnchor="185.0">
+               <font>
+                  <Font name="System Bold" size="40.0" />
+               </font>
+            </ToggleButton>
+            <Button fx:id="hardButton" layoutX="361.0" layoutY="284.0" mnemonicParsing="false" onAction="#hardLevel" prefHeight="45.0" prefWidth="113.0" styleClass="symbolButtons3" text="Hard" textFill="WHITE" AnchorPane.rightAnchor="170.0">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Button>
+            <Button layoutX="548.0" layoutY="36.0" mnemonicParsing="false" onAction="#handleNextAction" prefHeight="39.0" prefWidth="43.0" styleClass="symbolButtons2" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="35.0">
                <graphic>
                   <ImageView fitHeight="38.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@next%20(2).png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button layoutX="36.0" layoutY="38.0" mnemonicParsing="false" onAction="#back" prefHeight="39.0" prefWidth="43.0" styleClass="symbolButtons2" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="35.0">
+               <graphic>
+                  <ImageView fitHeight="34.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@back.png" />
                      </image>
                   </ImageView>
                </graphic>
             </Button>
-            <Label id="Player1XButton" fx:id="Player1XButton" alignment="CENTER" layoutX="240.0" layoutY="14.0" prefHeight="47.0" prefWidth="138.0" text="Player" textFill="#fe4451">
+            <Label id="Player1XButton" fx:id="Player1XButton" alignment="CENTER" layoutX="248.0" layoutY="14.0" prefHeight="47.0" prefWidth="138.0" text="Player" textFill="#fe4451" AnchorPane.leftAnchor="248.0">
                <font>
                   <Font size="37.0" />
                </font>
             </Label>
-            <ToggleButton fx:id="XButton" layoutX="212.0" layoutY="150.0" mnemonicParsing="false" onAction="#handleXButtons" prefHeight="67.0" prefWidth="72.0" styleClass="symbolButtons2" stylesheets="@multiPlayer.css" text="X" textFill="WHITE">
+            <ToggleButton fx:id="XButton" layoutX="185.0" layoutY="166.0" mnemonicParsing="false" onAction="#handleXButtons" prefHeight="67.0" prefWidth="72.0" styleClass="symbolButtons2" stylesheets="@multiPlayer.css" text="X" textFill="WHITE" AnchorPane.leftAnchor="185.0">
                <font>
                   <Font name="System Bold" size="40.0" />
                </font>
             </ToggleButton>
             <TextField fx:id="playerName" layoutX="168.0" layoutY="82.0" prefHeight="37.0" prefWidth="298.0" promptText="Player Name" />
-            <Text fx:id="warning" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="Please Enter Player Name" visible="false" wrappingWidth="234.6708984375">
+            <Text fx:id="warning" fill="RED" layoutX="214.0" layoutY="148.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Please Enter Player Name" visible="false" wrappingWidth="234.6708984375">
                <font>
                   <Font name="System Bold Italic" size="17.0" />
                </font>
             </Text>
-            <Button fx:id="easyButton" layoutX="197.0" layoutY="301.0" mnemonicParsing="false" onAction="#easyLevel" prefHeight="45.0" prefWidth="113.0" styleClass="symbolButtons3" text="Easy" textFill="WHITE">
+            <Button fx:id="easyButton" layoutX="170.0" layoutY="284.0" mnemonicParsing="false" onAction="#easyLevel" prefHeight="45.0" prefWidth="113.0" styleClass="symbolButtons3" text="Easy" textFill="WHITE" AnchorPane.leftAnchor="170.0">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>
             </Button>
-            <Text fx:id="secondWarning" fill="WHITE" layoutX="116.0" layoutY="275.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Please Enter Player Name" visible="false" wrappingWidth="234.6708984375">
+            <ToggleButton fx:id="record" layoutX="271.0" layoutY="346.0" mnemonicParsing="false" onAction="#recordAction" prefHeight="44.0" prefWidth="110.0" styleClass="symbolButtons3" text="Record" textFill="WHITE">
                <font>
-                  <Font name="System Bold Italic" size="17.0" />
+                  <Font name="System Bold" size="23.0" />
                </font>
-            </Text>
-            <AnchorPane layoutX="375.0" layoutY="10.0" prefHeight="412.0" prefWidth="261.0">
-               <children>
-                  <Button layoutX="184.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleNextAction" prefHeight="39.0" prefWidth="43.0" styleClass="symbolButtons2">
-                     <graphic>
-                        <ImageView fitHeight="38.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@next%20(2).png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </Button>
-                  <ToggleButton fx:id="OButton" layoutX="-28.0" layoutY="140.0" mnemonicParsing="false" onAction="#handleOButtons" prefHeight="67.0" prefWidth="72.0" styleClass="symbolButtons2" stylesheets="@multiPlayer.css" text="O" textFill="WHITE">
-                     <font>
-                        <Font name="System Bold" size="40.0" />
-                     </font>
-                  </ToggleButton>
-                  <Button fx:id="hardButton" layoutX="-41.0" layoutY="291.0" mnemonicParsing="false" onAction="#hardLevel" prefHeight="45.0" prefWidth="113.0" styleClass="symbolButtons3" text="Hard" textFill="WHITE">
-                     <font>
-                        <Font name="System Bold" size="20.0" />
-                     </font>
-                  </Button>
-               </children>
-            </AnchorPane>
+            </ToggleButton>
          </children>
       </AnchorPane>
    </top>

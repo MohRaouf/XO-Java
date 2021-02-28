@@ -49,9 +49,12 @@ public class SinglePlayerController implements Initializable {
     private Button easyButton;
     @FXML
     private Button hardButton;
-
+    @FXML
     private Stage primaryStage;
-
+    @FXML
+    private ToggleButton record;
+     
+    public boolean recordGame;
     public SinglePlayerController(Stage _primaryStage) {
         primaryStage = _primaryStage;
     }
@@ -115,8 +118,8 @@ public class SinglePlayerController implements Initializable {
             OButton.getStyleClass().add("selectedButtonXO");
             XButton.getStyleClass().removeAll("selectedButtonXO");
             XButton.selectedProperty().set(false);
-        }else{
-             OButton.getStyleClass().removeAll("selectedButtonXO");
+        } else {
+            OButton.getStyleClass().removeAll("selectedButtonXO");
         }
     }
 
@@ -127,9 +130,8 @@ public class SinglePlayerController implements Initializable {
             XButton.getStyleClass().add("selectedButtonXO");
             OButton.getStyleClass().removeAll("selectedButtonXO");
             OButton.selectedProperty().set(false);
-        }
-        else{
-             XButton.getStyleClass().removeAll("selectedButtonXO");
+        } else {
+            XButton.getStyleClass().removeAll("selectedButtonXO");
         }
     }
 
@@ -144,14 +146,27 @@ public class SinglePlayerController implements Initializable {
     }
 
     @FXML
+    private void recordAction(ActionEvent event) {
+        if (record.selectedProperty().getValue()) {
+            recordGame = true;
+            record.getStyleClass().add("selectedButtonLevel");
+        } else {
+            recordGame = false;
+            record.getStyleClass().removeAll("selectedButtonLevel");
+
+        }
+
+    }
+
+    @FXML
     private void hardLevel(ActionEvent event) {
         hard = !hard;
         if (hard) {
-            hardButton.getStyleClass().add("selectedButtonXO");
+            hardButton.getStyleClass().add("selectedButtonLevel");
             easy = false;
-            easyButton.getStyleClass().removeAll("selectedButtonXO");
+            easyButton.getStyleClass().removeAll("selectedButtonLevel");
         } else {
-            hardButton.getStyleClass().removeAll("selectedButtonXO");
+            hardButton.getStyleClass().removeAll("selectedButtonLevel");
         }
     }
 
@@ -159,11 +174,11 @@ public class SinglePlayerController implements Initializable {
     private void easyLevel(ActionEvent event) {
         easy = !easy;
         if (easy) {
-            easyButton.getStyleClass().add("selectedButtonXO");
+            easyButton.getStyleClass().add("selectedButtonLevel");
             hard = false;
-            hardButton.getStyleClass().removeAll("selectedButtonXO");
+            hardButton.getStyleClass().remove("selectedButtonLevel");
         } else {
-            easyButton.getStyleClass().removeAll("selectedButtonXO");
+            easyButton.getStyleClass().remove("selectedButtonLevel");
         }
     }
 

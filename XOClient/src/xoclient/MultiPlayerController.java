@@ -14,6 +14,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.BorderPane;
@@ -25,7 +26,7 @@ import javafx.stage.Stage;
  * @author mohamedbassiouny
  */
 public class MultiPlayerController implements Initializable {
-
+    boolean recordGame;
     String name1;
     char player1Pattern;
     String name2;
@@ -49,10 +50,13 @@ public class MultiPlayerController implements Initializable {
     private ToggleButton player2OButton;
     @FXML
     private BorderPane parent;
-
-    /**
-     *
-     */
+    @FXML
+    private Label Player1XButton;
+    @FXML
+    private ToggleButton record ;/**
+             *
+             */
+    
     public MultiPlayerController(Stage _primaryStage) {
         primaryStage = _primaryStage;
     }
@@ -169,8 +173,19 @@ public class MultiPlayerController implements Initializable {
             player2OButton.disableProperty().set(true);
             player1OButton.selectedProperty().set(true);
             player1OButton.getStyleClass().add("selectedButtonXO");
-        }else{
+        } else {
             player2XButton.getStyleClass().removeAll("selectedButtonXO");
+        }
+    }
+
+    @FXML
+    private void recordAction(ActionEvent event) {
+        if (record.selectedProperty().getValue()) {
+            recordGame=true;
+            record.getStyleClass().add("selectedButtonLevel");
+        } else {
+             recordGame=false;
+             record.getStyleClass().remove("selectedButtonLevel");
         }
     }
 

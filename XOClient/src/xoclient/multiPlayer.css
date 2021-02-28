@@ -30,15 +30,19 @@ and open the template in the editor.
 
 .symbolButtons3 {
     -fx-background-color: #26de81;
+     -fx-text-fill: #fff;
 }
 
 .symbolButtons3:hover {
-    -fx-background-color: #26de81;
+    -fx-background-color: #26de34 ;
     -fx-text-fill: #ffffff;
-    -fx-background-radius: 5px 20px;
-    -fx-padding: 10px;
     -fx-cursor: hand;
 }
 .selectedButtonXO {
     -fx-background-color: #f14668;
+    -fx-text-fill: #ffffff;
+}
+.selectedButtonLevel {
+    -fx-background-color:#26de34 ;
+    -fx-text-fill: #ffffff;
 }

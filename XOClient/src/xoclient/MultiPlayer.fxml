@@ -14,7 +14,7 @@
 
 <BorderPane fx:id="parent" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #f7f6e7 ;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <left>
-      <AnchorPane prefHeight="400.0" prefWidth="294.0" style="-fx-background-color: #FE4451;" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="406.0" prefWidth="298.0" style="-fx-background-color: #FE4451;" BorderPane.alignment="CENTER">
          <children>
             <Label id="Player1XButton" fx:id="Player1XButton" alignment="CENTER" layoutX="76.0" layoutY="72.0" prefHeight="47.0" prefWidth="138.0" text="Player1" textFill="WHITE">
                <font>
@@ -82,6 +82,7 @@
                   </ImageView>
                </graphic>
             </Button>
+            <ToggleButton fx:id="record" layoutX="114.0" layoutY="335.0" mnemonicParsing="false" onAction="#recordAction" prefHeight="31.0" prefWidth="72.0" styleClass="symbolButtons3" text="record" textFill="WHITE" />
          </children>
       </AnchorPane>
    </right>
