@@ -56,7 +56,7 @@
             <Image url="@loader.gif" />
          </image>
       </ImageView>
-      <Label fx:id="close" alignment="CENTER" layoutX="678.0" layoutY="-4.0" onMouseClicked="#closescene" prefHeight="36.0" prefWidth="16.0" text="x" textAlignment="CENTER" textFill="#fe4451">
+      <Label fx:id="close" alignment="CENTER" layoutX="678.0" layoutY="-4.0" onMouseClicked="#closescene" prefHeight="36.0" prefWidth="16.0" styleClass="closex" text="x" textAlignment="CENTER" textFill="#fe4451">
          <font>
             <Font name="System Bold" size="25.0" />
          </font>
