@@ -1,0 +1,100 @@
+#ap2{
+    -fx-background-color:#ffffff;
+}
+#loader{
+   visibility: hidden;
+}
+#hbox-custom-ava{
+    -fx-spacing: 15;
+}
+#hbox-custom-ava:hover{
+        -fx-background-color: #fe7c86;
+        -fx-background-radius: 20;
+        -fx-scale-x: 1.1;   
+}
+#hbox-custom-top{
+    -fx-spacing: 10;
+}
+#hbox-custom-top:hover{
+        -fx-background-color: #fe7c86;
+        -fx-background-radius: 20;
+        -fx-scale-x: 1;
+}
+#loginuser{
+    -fx-padding-left: 20px;
+}
+/*toplable*/
+#label{
+    -fx-background-color: #FE4451;
+    -fx-text-fill:#ffffff;
+    -fx-font-family:Berlin Sans FB;
+    -fx-background-radius: 0 20  0 20;
+    -fx-border-radius:0 20  0 20;
+}
+#availableLable{
+    -fx-background-color: #FE4451;
+    -fx-text-fill:#ffffff;
+    -fx-font-family:Berlin Sans FB;
+    -fx-background-radius: 20 0  20 0;
+    -fx-border-radius:20 0  20 0;
+}
+#top{
+    -fx-background-radius: 0 20  0 20;
+    -fx-border-radius:0 20  0 20;
+     
+}
+#available{
+    -fx-background-radius: 20 0  20 0;
+    -fx-border-radius:20 0  20 0;
+}
+/*refrsh button*/
+#connect{
+    -fx-font-family:Berlin Sans FB;
+    -fx-text-fill: #FE4451;
+    -fx-background-radius: 15;
+}
+#back{
+    -fx-font-family:Berlin Sans FB;
+    -fx-background-color:#ffffff;
+    -fx-text-fill: #FE4451;
+    -fx-background-radius: 10;
+}
+#ask{
+    -fx-font-family:Berlin Sans FB;
+    -fx-background-color:#ffffff;
+    -fx-text-fill: #FE4451;
+    -fx-background-radius: 15;
+}
+#ask:pressed{
+    -fx-font-family:Berlin Sans FB;
+    -fx-font-weight:bold;
+    -fx-font-size: 12pt ;
+    -fx-text-fill: #26de81;
+    -fx-background-radius: 15;
+    -fx-scale-y: 1.2;
+}
+/*.list-view .list-cell*/
+#available .list-cell:selected {
+        -fx-background-color: #fe7c86;
+        -fx-background-radius: 20;
+        -fx-scale-y: 1.1;
+}
+#avaPlayer{
+    -fx-font-family:Berlin Sans FB;
+    -fx-font-weight:bold;
+    -fx-font-size: 12pt ;
+    -fx-text-fill:#ffffff;
+}
+#topPlayer{
+    -fx-font-family:Berlin Sans FB;
+    -fx-font-weight:bold;
+    -fx-font-size: 12pt ;
+    -fx-text-fill:#ffffff;
+}
+.list-view .list-cell {
+    -fx-font-family:Berlin Sans FB;
+    -fx-background-color: #FE4451;
+    -fx-text-fill: #fff;
+}
+
+
