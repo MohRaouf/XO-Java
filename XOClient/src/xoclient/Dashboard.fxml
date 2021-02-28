@@ -36,7 +36,7 @@
          <font>
             <Font size="18.0" />
          </font></Label>
-      <Button id="connect" fx:id="Refresh" alignment="CENTER" contentDisplay="CENTER" layoutX="638.0" layoutY="45.0" mnemonicParsing="false" onAction="#rrefresh_sceen" prefHeight="35.0" prefWidth="49.0" style="-fx-background-color: #FE4451; -fx-background-radius: 0 0 20 0;">
+      <Button id="connect" fx:id="Refresh" alignment="CENTER" contentDisplay="CENTER" layoutX="638.0" layoutY="45.0" mnemonicParsing="false" onAction="#refresh" prefHeight="35.0" prefWidth="49.0" style="-fx-background-color: #FE4451; -fx-background-radius: 0 0 20 0;">
          <font>
             <Font name="Gabriola" size="14.0" />
          </font>
@@ -72,7 +72,7 @@
             <Image url="@xoxo.gif" />
          </image>
       </ImageView>
-      <Button fx:id="back" layoutX="23.0" layoutY="475.0" mnemonicParsing="false" onAction="#backPage" prefHeight="37.0" prefWidth="84.0" text="Logout">
+      <Button fx:id="back" layoutX="23.0" layoutY="475.0" mnemonicParsing="false" onAction="#logout" prefHeight="37.0" prefWidth="84.0" text="Logout">
          <font>
             <Font size="16.0" />
          </font></Button>

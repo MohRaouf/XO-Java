@@ -66,12 +66,10 @@
     -fx-background-radius: 15;
 }
 #ask:pressed{
+    -fx-background-color:#ffffff;
     -fx-font-family:Berlin Sans FB;
     -fx-font-weight:bold;
-    -fx-font-size: 12pt ;
     -fx-text-fill: #26de81;
-    -fx-background-radius: 15;
-    -fx-scale-y: 1.2;
 }
 /*.list-view .list-cell*/
 #available .list-cell:selected {

@@ -5,7 +5,7 @@
  */
 package xoclient;
 
-import javafx.geometry.Insets; 
+import javafx.geometry.Insets;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -97,12 +97,12 @@ public class DashboardController implements Initializable {
         cir2.setEffect(new DropShadow(+25d, 0d, +2d, Color.CORNSILK));
         Label lbName = new Label(user);///get name 
         lbName.setStyle("fx-background-radius: 20;"
-                    + "-fx-text-fill:#FE4451;"
-                    +"-fx-font-size: 12pt ;"
-                    + "-fx-background-insets:10 0 1 0;"
-                    + "-fx-padding:0 0 10 0;"
-                    + "-fx-font-weight: bold;"
-                    +"-fx-margin-left:30px;");
+                + "-fx-text-fill:#FE4451;"
+                + "-fx-font-size: 12pt ;"
+                + "-fx-background-insets:10 0 1 0;"
+                + "-fx-padding:0 0 10 0;"
+                + "-fx-font-weight: bold;"
+                + "-fx-margin-left:30px;");
         lbName.setGraphic(cir2);
         loginuser.getChildren().addAll(lbName);
         loginuser.setStyle("visibility: visible;");
@@ -134,7 +134,9 @@ public class DashboardController implements Initializable {
             arrOfStr = (player[i]).split("[|]");
         }
 
-// Available list player
+        // Available list player
+        avplayer.getItems().clear();
+        topplayer.getItems().clear();
         for (int i = 0; i < player.length; i++) {
             Label lbl = new Label(data[i][0]);///get name 
             lbl.setId("availablePlayer");
@@ -155,7 +157,6 @@ public class DashboardController implements Initializable {
                 c = new Circle(5, javafx.scene.paint.Color.GRAY);
             }
             lbl.setGraphic(c);
-//            lbl.setId("avaPlayer");
             HBox box = new HBox();
             box.setId("hbox-custom-ava");
             box.getChildren().addAll(cir2, lbl, c);
@@ -177,7 +178,7 @@ public class DashboardController implements Initializable {
             Label lb2 = new Label(data[i][2]);
             lb2.setStyle("fx-background-radius: 20;"
                     + "-fx-text-fill:#fff;"
-                    +"-fx-font-size: 12pt ;"
+                    + "-fx-font-size: 12pt ;"
                     + "-fx-background-insets:0 0 1 0;"
                     + "-fx-font-weight: bold;");
             lb2.setId("score");
@@ -185,7 +186,7 @@ public class DashboardController implements Initializable {
             Region r = new Region();
             HBox.setHgrow(r, Priority.ALWAYS);
             box.setId("hbox-custom-top");
-            box.getChildren().addAll(cir2, lbl,r, lb2);
+            box.getChildren().addAll(cir2, lbl, r, lb2);
             topplayer.getItems().add(box);
 
         }
@@ -219,8 +220,8 @@ public class DashboardController implements Initializable {
             }
         });
     }
-    
-        public void offlineOpponent(String msg) {
+
+    public void offlineOpponent(String msg) {
         String opponentName = msg.split(",")[1];
         Alert alert = new Alert(AlertType.INFORMATION);
         alert.setTitle("Offline");
@@ -240,7 +241,8 @@ public class DashboardController implements Initializable {
             }
         });
     }
-        public void inGameOpponent(String msg) {
+
+    public void inGameOpponent(String msg) {
         String opponentName = msg.split(",")[1];
         Alert alert = new Alert(AlertType.INFORMATION);
         alert.setTitle("InGame");
@@ -290,8 +292,8 @@ public class DashboardController implements Initializable {
 
         String cleanGameInfo = listplayer.split("\\$yes,")[1];
         String[] player = (cleanGameInfo).split(",");
-        for (int i = 0; i < player.length; i++) {
-            System.out.println("-->" + player[i]);
+        for (String player1 : player) {
+            System.out.println("-->" + player1);
         }
         //controller.send_data(player[0],player[1],player[2],player[3])
 
@@ -322,7 +324,8 @@ public class DashboardController implements Initializable {
 
     @FXML
     private void ask_player(ActionEvent event) {
-        if (selected_Player != null) {
+        System.out.println("Username : " + username + " , Selected : " + selected_Player);
+        if (selected_Player != null && !selected_Player.equals("$" + username)) {
             System.out.println("Selected Player : " + selected_Player);
             client.sendMsg(selected_Player);
         }
@@ -332,11 +335,23 @@ public class DashboardController implements Initializable {
     }
 
     @FXML
-    private void rrefresh_sceen(ActionEvent event) {
+    private void refresh(ActionEvent event) {
+        client.sendMsg("get info");
     }
 
     @FXML
-    private void backPage(ActionEvent event) {
+    private void logout(ActionEvent event) throws IOException {
+        client.sendMsg("logout");
+        client.end();
+        client=null;
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("Login.fxml"));
+        // Create a controller instance
+        LoginController loginController = new LoginController(primaryStage);
+        // Set it in the FXMLLoader
+        loader.setController(loginController);
+        primaryStage.setTitle("XO Login");
+        Scene scene = new Scene((Parent) loader.load());
+        primaryStage.setScene(scene);
     }
 
 }

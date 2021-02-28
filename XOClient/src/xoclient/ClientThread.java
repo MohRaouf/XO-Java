@@ -18,6 +18,7 @@ public class ClientThread extends Thread {
     LoginController loginController;
     public DashboardController dashboardController;
     public GameGLobalController gameController;
+    boolean run=true;
     
     public ClientThread(String ip, int port, LoginController _loginController) {
         try {
@@ -38,10 +39,14 @@ public class ClientThread extends Thread {
             e.printStackTrace();
         }
     }
+    
+    public void end(){
+        run=false;
+    }
   
     @Override
     public void run() {
-        while (true) {
+        while (run) {
             try {
                 String msg = dis.readLine();
                 System.out.println("Received Message : " + msg);
