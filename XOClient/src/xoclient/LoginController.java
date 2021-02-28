@@ -62,7 +62,7 @@ public class LoginController implements Initializable {
                 errorLb.setText("Name must be charachters only [3,20] digit");
             }
             if (!check_pass) {
-                passError.setText("Password must be 8 digit at least upTo 20");
+                passError.setText("Password must be 4 digit at least up To 20");
             }
             return false;
         }

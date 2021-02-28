@@ -13,7 +13,7 @@
 
 <AnchorPane fx:id="mainPane" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Pane fx:id="recordButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #f7f6e7;">
+      <Pane  maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #f7f6e7;">
          <children>
             <GridPane fx:id="GridpaneForButton" alignment="CENTER" layoutX="132.0" layoutY="64.0" prefHeight="272.0" prefWidth="337.0" style="-fx-background-color:#9fb8ad;">
               <columnConstraints>
@@ -124,7 +124,7 @@
                   <Image url="@cup.gif" />
                </image>
             </ImageView>
-            <Button fx:id="recordButton" alignment="CENTER" layoutX="519.0" layoutY="27.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="52.0" style="-fx-background-radius: 10; -fx-background-color: #03506f; -fx-background-image:  url('.back.png');">
+            <Button fx:id="recordButton" alignment="CENTER" layoutX="519.0" layoutY="27.0" mnemonicParsing="false" onAction="#RecordAction" prefHeight="40.0" prefWidth="52.0" style="-fx-background-radius: 10; -fx-background-color: #03506f; -fx-background-image:  url('.back.png');">
                <graphic>
                   <ImageView fitHeight="24.0" fitWidth="43.0" pickOnBounds="true" preserveRatio="true">
                      <image>

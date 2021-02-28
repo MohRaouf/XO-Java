@@ -85,7 +85,7 @@ public class MultiPlayerController implements Initializable {
             player2Pattern='x';
         }
         FXMLLoader loader = new FXMLLoader(getClass().getResource("GameScreen.fxml"));
-        GameFriendController gameFriendController = new GameFriendController(primaryStage, name1, player1Pattern, name2, player2Pattern);
+        GameFriendController gameFriendController = new GameFriendController(primaryStage, name1, player1Pattern, name2, player2Pattern,true);
         loader.setController(gameFriendController);
         primaryStage.setTitle("Game");
         Scene scene = new Scene((Parent) loader.load());

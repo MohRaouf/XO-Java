@@ -78,7 +78,7 @@ public class SinglePlayerController implements Initializable {
         //send data to Game Logic Class             Player.player2Name=secondPlayerName;
         if (hard) {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("GameScreen.fxml"));
-            HardLevelController hardLevelController = new HardLevelController(primaryStage, name, player1Pattern, "Computer", player2Pattern);
+            HardLevelController hardLevelController = new HardLevelController(primaryStage, name, player1Pattern, "Computer", player2Pattern,true);
             loader.setController(hardLevelController);
             primaryStage.setTitle("Game");
             Scene scene = new Scene((Parent) loader.load());
@@ -86,7 +86,7 @@ public class SinglePlayerController implements Initializable {
         }
         if (easy) {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("GameScreen.fxml"));
-            GameComputerController gameComputerController = new GameComputerController(primaryStage, name, player1Pattern, "Computer", player2Pattern);
+            GameComputerController gameComputerController = new GameComputerController(primaryStage, name, player1Pattern, "Computer", player2Pattern,true);
             loader.setController(gameComputerController);
             primaryStage.setTitle("Game");
             Scene scene = new Scene((Parent) loader.load());

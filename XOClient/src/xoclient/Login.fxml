@@ -5,58 +5,113 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #fbeeac;" stylesheets="@Login.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
-   <top>
-      <HBox alignment="TOP_RIGHT" prefHeight="39.0" prefWidth="600.0" style="-fx-background-color: #28527a;" BorderPane.alignment="CENTER">
-      </HBox>
-   </top>
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="419.0" prefWidth="700.0" stylesheets="@Login.css" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <left>
-      <AnchorPane fx:id="apsign" prefHeight="380.0" prefWidth="290.0" BorderPane.alignment="CENTER">
+      <AnchorPane fx:id="apsign" prefHeight="419.0" prefWidth="350.0" style="-fx-background-color: #FE4451;" BorderPane.alignment="CENTER_LEFT">
          <children>
-            <Label fx:id="local" alignment="CENTER" layoutX="40.0" layoutY="42.0" prefHeight="34.0" prefWidth="188.0" text="Play Locally" textFill="WHITE" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="40.0">
+            <Label fx:id="local" alignment="CENTER" layoutX="103.0" layoutY="84.0" prefHeight="43.0" prefWidth="165.0" text="Play Locally" textFill="WHITE" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="80.0" AnchorPane.topAnchor="80.0">
                <font>
-                  <Font size="18.0" />
+                  <Font name="Berlin Sans FB Demi Bold" size="30.0" />
                </font>
             </Label>
-            <AnchorPane layoutX="84.0" layoutY="88.0" prefHeight="4.0" prefWidth="117.0" style="-fx-background-color: #28527a;" AnchorPane.leftAnchor="75.0" AnchorPane.rightAnchor="75.0" AnchorPane.topAnchor="90.0" />
-            <Button id="register" fx:id="registerBtn1" layoutX="58.0" layoutY="128.0" mnemonicParsing="false" onAction="#playWithFriend" prefHeight="32.0" prefWidth="173.0" styleClass="play" text="Play With Friend" AnchorPane.leftAnchor="58.0" AnchorPane.rightAnchor="58.0">
+            <AnchorPane layoutX="100.0" layoutY="134.0" prefHeight="4.0" prefWidth="156.0" style="-fx-background-color: #fff;" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="135.0" />
+            <Button id="register" fx:id="registerBtn1" layoutX="80.0" layoutY="172.0" mnemonicParsing="false" onAction="#playWithFriend" prefHeight="36.0" prefWidth="204.0" style="-fx-border-color: none;" styleClass="play" text="With Friend" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="60.0">
                <font>
-                  <Font size="15.0" />
-               </font></Button>
-            <Button id="register" fx:id="registerBtn11" layoutX="58.0" layoutY="183.0" mnemonicParsing="false" onAction="#playWithAi" prefHeight="32.0" prefWidth="172.0" styleClass="play" text="Play With AI" AnchorPane.leftAnchor="58.0" AnchorPane.rightAnchor="58.0">
+                  <Font name="Berlin Sans FB" size="20.0" />
+               </font>
+            </Button>
+            <Button id="register" fx:id="registerBtn11" layoutX="80.0" layoutY="253.0" mnemonicParsing="false" onAction="#playWithAi" prefHeight="36.0" prefWidth="201.0" styleClass="play" text="With AI" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="60.0">
                <font>
-                  <Font size="15.0" />
-               </font></Button>
-         </children></AnchorPane>
+                  <Font name="Berlin Sans FB" size="20.0" />
+               </font>
+            </Button>
+            <ImageView fitHeight="38.0" fitWidth="50.0" layoutX="23.0" layoutY="171.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="23.0">
+               <image>
+                  <Image url="@imgs/community.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="38.0" fitWidth="50.0" layoutX="23.0" layoutY="247.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="23.0">
+               <image>
+                  <Image url="@imgs/data-transfer.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="12.0" layoutY="387.0" text="© Open Source - IoT - InTake 41" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
    </left>
    <right>
-       <AnchorPane fx:id="ap2" prefHeight="380.0" prefWidth="290.0" BorderPane.alignment="CENTER">
+       <AnchorPane fx:id="ap2" prefHeight="419.0" prefWidth="350.0" style="-fx-background-color: #fff;" BorderPane.alignment="CENTER_RIGHT">
          <children>
-            <Label fx:id="passError" layoutX="21.0" layoutY="298.0" styleClass="error" textAlignment="CENTER">
-               <padding>
-                  <Insets left="10.0" />
-               </padding></Label>
-            <Label fx:id="play_remotely" alignment="CENTER" layoutX="56.0" layoutY="42.0" prefHeight="34.0" prefWidth="188.0" text="Play Remotely" textFill="WHITE" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="40.0">
+            <Label fx:id="play_remotely" alignment="CENTER" layoutX="77.0" layoutY="79.0" prefHeight="43.0" prefWidth="197.0" text="Play Remotely" textFill="WHITE" AnchorPane.leftAnchor="70.0" AnchorPane.rightAnchor="70.0" AnchorPane.topAnchor="80.0">
                <font>
-                  <Font size="18.0" />
+                  <Font name="Berlin Sans FB Demi Bold" size="30.0" />
                </font>
             </Label>
-            <TextField fx:id="userName" layoutX="48.0" layoutY="130.0" prefHeight="30.0" prefWidth="200.0" promptText="username" styleClass="text-field" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" />
-            <PasswordField fx:id="password" layoutX="47.0" layoutY="181.0" prefHeight="30.0" prefWidth="200.0" promptText="password" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" />
-            <AnchorPane layoutX="92.0" layoutY="90.0" prefHeight="4.0" prefWidth="117.0" style="-fx-background-color: #28527a;" AnchorPane.leftAnchor="75.0" AnchorPane.rightAnchor="75.0" AnchorPane.topAnchor="90.0" />
-            <Button id="login" fx:id="loginBtn" layoutX="52.0" layoutY="228.0" mnemonicParsing="false" onAction="#login" prefHeight="30.0" prefWidth="80.0" styleClass="login" text="login" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="50.0" />
-            <Button id="register" fx:id="registerBtn" layoutX="151.0" layoutY="226.0" mnemonicParsing="false" onAction="#register" prefHeight="30.0" prefWidth="80.0" styleClass="login" text="Register" AnchorPane.bottomAnchor="100.0" AnchorPane.rightAnchor="50.0" />
-            <Label id="errorLb" fx:id="errorLb" layoutX="37.0" layoutY="330.0" styleClass="error" textAlignment="CENTER" />
+            <TextField fx:id="userName" layoutX="50.0" layoutY="162.0" prefHeight="38.0" prefWidth="222.0" promptText="username" style="-fx-border-color: #a2a2a2; -fx-border-width: 0 0 2px 0; -fx-background-color: #fff;" styleClass="text-field" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </TextField>
+            <PasswordField fx:id="password" layoutX="50.0" layoutY="210.0" prefHeight="38.0" prefWidth="222.0" promptText="password" style="-fx-background-color: #fff; -fx-border-color: #a2a2a2; -fx-border-width: 0 0 2px  0;" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </PasswordField>
+            <Button id="login" fx:id="loginBtn" layoutX="50.0" layoutY="288.0" mnemonicParsing="false" onAction="#login" prefHeight="35.0" prefWidth="100.0" styleClass="login" text="login" AnchorPane.bottomAnchor="101.0" AnchorPane.leftAnchor="50.0">
+               <font>
+                  <Font name="Berlin Sans FB Demi Bold" size="14.0" />
+               </font>
+            </Button>
+            <Button id="register" fx:id="registerBtn" layoutX="202.0" layoutY="288.0" mnemonicParsing="false" onAction="#register" prefHeight="35.0" prefWidth="100.0" styleClass="login" text="Register" AnchorPane.bottomAnchor="101.0" AnchorPane.rightAnchor="50.0">
+               <font>
+                  <Font name="Berlin Sans FB Demi Bold" size="14.0" />
+               </font>
+            </Button>
+            <Label id="errorLb" fx:id="errorLb" alignment="CENTER" contentDisplay="CENTER" layoutX="50.0" layoutY="341.0" prefHeight="17.0" prefWidth="249.0" styleClass="error" textAlignment="CENTER" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" />
+            <HBox alignment="CENTER_RIGHT" layoutX="223.0" prefHeight="41.0" prefWidth="98.0">
+               <children>
+                  <Label id="min" fx:id="minBtn" onMouseClicked="#min" style="-fx-border-color: #26de81; -fx-padding: 10px; -fx-border-radius: 5px 20px;" text="-" textFill="#26de81">
+                     <HBox.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font name="Bernard MT Condensed" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label id="max" fx:id="closeBtn" onMouseClicked="#close" style="-fx-border-color: #ff3649; -fx-border-radius: 20px 5px; -fx-padding: 10px;" text="x" textFill="#ff3649">
+                     <HBox.margin>
+                        <Insets bottom="10.0" right="10.0" top="10.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font name="Bernard MT Condensed" size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <ImageView fitHeight="28.0" fitWidth="48.0" layoutX="238.0" layoutY="215.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@imgs/padlock.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="28.0" fitWidth="48.0" layoutX="238.0" layoutY="167.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@imgs/user.png" />
+               </image>
+            </ImageView>
+            <AnchorPane layoutX="73.0" layoutY="131.0" prefHeight="4.0" prefWidth="195.0" style="-fx-background-color: #FE4451;" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="135.0" />
+            <Label id="errorLb" fx:id="passError" alignment="CENTER" contentDisplay="CENTER" layoutX="50.0" layoutY="367.0" prefHeight="17.0" prefWidth="254.0" styleClass="error" textAlignment="CENTER" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" />
          </children>
       </AnchorPane>
    </right>
-   <center>
-        
-     <AnchorPane fx:id="" layoutX="56.0" layoutY="64.0" prefHeight="361.0" prefWidth="57.0" style="-fx-background-color: #28527a;" BorderPane.alignment="CENTER" />
-   </center>
 </BorderPane>

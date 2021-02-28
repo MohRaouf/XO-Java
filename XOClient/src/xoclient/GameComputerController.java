@@ -7,6 +7,10 @@ package xoclient;
 
 import java.io.*;
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -35,6 +39,7 @@ public class GameComputerController implements Initializable {
     char player1Pattern;
     char player2Pattern;
     Stage primaryStage;
+    String RecordLine;
     int X_or_O = 0;
     int row, column;
     int oneArrayIndex;
@@ -42,21 +47,37 @@ public class GameComputerController implements Initializable {
     int colComp = 0;
     int Winner = 0;
     boolean PlayAgain = true;
+    boolean isRecorded = false;
+    FileWriter fileWriter = null;
+    PrintWriter printWriter = null;
+    File recordFile;
     int[] intArray;
     GameLogic Game;
+    List<Integer> RecordSteps;
     @FXML
     public Label play, player1Lb, player2Lb, Pattern1, Pattern2, score1, score2;
     public GridPane GridpaneForButton;
-    public Button PlayButton;
+    public Button PlayButton,recordButton, backButton;
     public ImageView celebratedImg, cupOfwinner;
     public AnchorPane mainPane;
 
-    public GameComputerController(Stage _primaryStage, String player1Name, char player1Pattern, String player2Name, char player2Pattern) {
+    public GameComputerController(Stage _primaryStage, String player1Name, char player1Pattern, String player2Name, char player2Pattern,boolean recordIt) throws IOException {
         this.player1Name = player1Name;
         this.player2Name = player2Name;
         this.player1Pattern = player1Pattern;
         this.player2Pattern = player2Pattern;
         this.primaryStage = _primaryStage;
+        this.isRecorded = recordIt;
+            if (isRecorded == true) {
+            RecordLine = "";
+            StartRecording(player1Name, player2Name, Character.toString(player1Pattern), Character.toString(player2Pattern));
+            recordFile = new File("RecordFile.txt");
+            if (recordFile.createNewFile()) {
+                System.out.println("File is created!");
+            } else {
+                System.out.println("File already exists.");
+            }
+        }
     }
 
     @FXML
@@ -71,6 +92,9 @@ public class GameComputerController implements Initializable {
                     oneArrayIndex = (row) * 3 + column;
 
                     if ("".equals(SelectedButton.getText())) {
+                        if (isRecorded == true) {
+                                RecordSteps.add(oneArrayIndex);
+                            }
                         SelectedButton.setTextFill(Color.valueOf(Game.Player1Color));
                         SelectedButton.setText(Character.toString(Game.player1symbol));
                         Winner = Game.checkWinner(1, oneArrayIndex);
@@ -90,6 +114,9 @@ public class GameComputerController implements Initializable {
                             int randomIndex = r.nextInt(intArray.length);
 
                             int Index = intArray[randomIndex];
+                            if (isRecorded == true) {
+                                RecordSteps.add(Index);
+                            }
                             System.out.println(Index);
                             while (Index >= 3) {
                                 Index -= 3;
@@ -130,6 +157,7 @@ public class GameComputerController implements Initializable {
     @FXML
     private void handlePlayAction(ActionEvent event) {
         if (PlayAgain == true) {
+            backButton.setDisable(true);
             celebratedImg.setVisible(false);
             cupOfwinner.setVisible(false);
             play.setTextFill(Color.valueOf(Game.Player1Color));
@@ -155,6 +183,12 @@ public class GameComputerController implements Initializable {
         Scene scene = new Scene((Parent) loader.load());
         primaryStage.setScene(scene);
     }
+       @FXML
+    private void RecordAction(ActionEvent event) throws IOException {
+        String str = "2021-02-28 00:18:53.465,feby,pola,o,x,4,0,3,1,5";
+        playRecord Play = new playRecord(str, this);
+        Play.start();
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -162,19 +196,23 @@ public class GameComputerController implements Initializable {
 
         GameLogic.scoreOfPlayer1 = 0;
         GameLogic.scoreOfPlayer2 = 0;
-        player1Lb.setText(Game.player1);
-        player2Lb.setText(Game.player2);
+         initScreen(Game.player1, Game.player2, Game.player1symbol, Game.player2symbol);
+
+    }
+    void initScreen(String Name1, String Name2, char Symbol1, char Symbol2) {
+        player1Lb.setText(Name1);
+        player2Lb.setText(Name2);
         Pattern1.setTextFill(Color.valueOf(Game.Player1Color));
         Pattern2.setTextFill(Color.valueOf(Game.Player2Color));
         score1.setTextFill(Color.valueOf(Game.Player1Color));
         score2.setTextFill(Color.valueOf(Game.Player2Color));
-        Pattern1.setText(Character.toString(Game.player1symbol));
-        Pattern2.setText(Character.toString(Game.player2symbol));
+        Pattern1.setText(Character.toString(Symbol1));
+        Pattern2.setText(Character.toString(Symbol2));
         score1.setText(Integer.toString(GameLogic.scoreOfPlayer1));
         score2.setText(Integer.toString(GameLogic.scoreOfPlayer2));
     }
 
-    void WinnerAction() {
+    void WinnerAction() throws IOException {
 
         if (Winner != 0) {
             switch (Winner) {
@@ -196,8 +234,31 @@ public class GameComputerController implements Initializable {
                     play.setText("There is no Winner");
                     break;
             }
+             backButton.setDisable(false);
+
+            if (isRecorded == true) {
+                for (int i : RecordSteps) {
+                    RecordLine += "," + i;
+                }
+                System.out.println(RecordLine);
+                fileWriter = new FileWriter(recordFile, true);
+                BufferedWriter Buffered = new BufferedWriter(fileWriter);
+                Buffered.write(RecordLine + "\n");
+                //printWriter  = new PrintWriter(Buffered);
+                //printWriter.println(RecordLine);
+                Buffered.close();
+            }
+            isRecorded = false;
             PlayAgain = true;
             PlayButton.setDisable(false);
         }
+    }
+    void StartRecording(String Player1Name, String Player2Name, String Player1Symbol, String Player2Symbol) {
+        RecordLine = "";
+        RecordSteps = new ArrayList<>();
+        LocalDate date = LocalDate.now();
+        LocalTime time = LocalTime.now();
+        RecordLine = date + " " + time + "," + Player1Name + "," + Player2Name + "," + Player1Symbol + "," + Player2Symbol;
+
     }
 }
