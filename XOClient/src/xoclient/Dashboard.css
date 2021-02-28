@@ -1,44 +1,98 @@
 #ap2{
-    -fx-background-color:#f7f6e7;
-
+    -fx-background-color:#ffffff;
 }
 #loader{
    visibility: hidden;
-    visibility: hidden;
+}
+#hbox-custom-ava{
+    -fx-spacing: 15;
+}
+#hbox-custom-ava:hover{
+        -fx-background-color: #fe7c86;
+        -fx-background-radius: 20;
+        -fx-scale-x: 1.1;   
+}
+#hbox-custom-top{
+    -fx-spacing: 10;
+}
+#hbox-custom-top:hover{
+        -fx-background-color: #fe7c86;
+        -fx-background-radius: 20;
+        -fx-scale-x: 1;
 }
 #loginuser{
-    
+    -fx-padding-left: 20px;
 }
+/*toplable*/
 #label{
-    -fx-background-color:#03506f;
+    -fx-background-color: #FE4451;
     -fx-text-fill:#ffffff;
-    -fx-background-radius: 20;
+    -fx-font-family:Berlin Sans FB;
+    -fx-background-radius: 0 20  0 20;
+    -fx-border-radius:0 20  0 20;
+}
+#availableLable{
+    -fx-background-color: #FE4451;
+    -fx-text-fill:#ffffff;
+    -fx-font-family:Berlin Sans FB;
+    -fx-background-radius: 20 0  20 0;
+    -fx-border-radius:20 0  20 0;
 }
 #top{
     -fx-background-radius: 0 20  0 20;
     -fx-border-radius:0 20  0 20;
-    -fx-border-color:#fb743e;
+     
 }
 #available{
-   -fx-background-radius: 0 20  0 20;
-    -fx-border-radius:0 20  0 20;
-    -fx-border-color:#fb743e;
-    
+    -fx-background-radius: 20 0  20 0;
+    -fx-border-radius:20 0  20 0;
 }
-#connect,#ask{
-    -fx-background-color:#fb743e;
-    -fx-text-fill:#ffffff;
-    -fx-background-radius: 20;
+/*refrsh button*/
+#connect{
+    -fx-font-family:Berlin Sans FB;
+    -fx-text-fill: #FE4451;
+    -fx-background-radius: 15;
+}
+#back{
+    -fx-font-family:Berlin Sans FB;
+    -fx-background-color:#ffffff;
+    -fx-text-fill: #FE4451;
+    -fx-background-radius: 10;
+}
+#ask{
+    -fx-font-family:Berlin Sans FB;
+    -fx-background-color:#ffffff;
+    -fx-text-fill: #FE4451;
+    -fx-background-radius: 15;
+}
+#ask:pressed{
+    -fx-background-color:#ffffff;
+    -fx-font-family:Berlin Sans FB;
+    -fx-font-weight:bold;
+    -fx-text-fill: #26de81;
 }
 /*.list-view .list-cell*/
 #available .list-cell:selected {
-        -fx-background-color: #fb743e;
-        -fx-text-fill:#ffffff;
+        -fx-background-color: #fe7c86;
         -fx-background-radius: 20;
         -fx-scale-y: 1.1;
 }
-.list-view .list-cell {
--fx-background-color: #f7f6e7;
--fx-text-fill: #ffffff;
+#avaPlayer{
+    -fx-font-family:Berlin Sans FB;
+    -fx-font-weight:bold;
+    -fx-font-size: 12pt ;
+    -fx-text-fill:#ffffff;
 }
+#topPlayer{
+    -fx-font-family:Berlin Sans FB;
+    -fx-font-weight:bold;
+    -fx-font-size: 12pt ;
+    -fx-text-fill:#ffffff;
+}
+.list-view .list-cell {
+    -fx-font-family:Berlin Sans FB;
+    -fx-background-color: #FE4451;
+    -fx-text-fill: #fff;
+}
+
 

@@ -4,7 +4,6 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -13,47 +12,69 @@
 
 <AnchorPane id="ap2" fx:id="ap2" prefHeight="539.0" prefWidth="700.0" stylesheets="@Dashboard.css" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <ListView id="top" fx:id="topplayer" layoutX="25.0" layoutY="79.0" prefHeight="446.0" prefWidth="200.0" style="-fx-background-color: #f7f6e7;">
+      <ListView id="top" fx:id="topplayer" layoutX="10.0" layoutY="87.0" prefHeight="438.0" prefWidth="215.0" style="-fx-background-color: #FE4451;">
          <padding>
-            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-         </padding>
-      </ListView>
-      <Label id="label" alignment="CENTER" layoutX="25.0" layoutY="44.0" prefHeight="31.0" prefWidth="200.0" text="Top Player">
-         <font>
-            <Font name="Gabriola" size="25.0" />
-         </font></Label>
-      <ListView id="available" fx:id="avplayer" layoutX="473.0" layoutY="79.0" prefHeight="407.0" prefWidth="215.0" style="-fx-background-color: #f7f6e7;">
-         <padding>
-            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+            <Insets bottom="10.0" right="10.0" top="20.0" />
          </padding>
          <opaqueInsets>
             <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
          </opaqueInsets>
       </ListView>
-      <Label id="label" alignment="CENTER" layoutX="473.0" layoutY="44.0" prefHeight="31.0" prefWidth="200.0" text="Available Player">
+      <Label id="label" alignment="CENTER" layoutX="10.0" layoutY="44.0" prefHeight="35.0" prefWidth="200.0" text="Top Players">
          <font>
-            <Font name="Gabriola" size="26.0" />
+            <Font name="Gabriola" size="18.0" />
          </font></Label>
-      <TextField fx:id="tf" layoutX="243.0" layoutY="166.0" prefHeight="25.0" prefWidth="215.0" />
-      <Label id="label" alignment="CENTER" layoutX="302.0" layoutY="141.0" prefHeight="25.0" prefWidth="96.0" text="selected item" />
-      <Button id="connect" fx:id="Refresh" layoutX="325.0" layoutY="42.0" mnemonicParsing="false" onAction="#rrefresh_sceen" prefHeight="36.0" prefWidth="65.0" text="Refresh">
+      <ListView id="available" fx:id="avplayer" layoutX="473.0" layoutY="87.0" prefHeight="438.0" prefWidth="215.0" style="-fx-background-color: #FE4451;">
+         <opaqueInsets>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         </opaqueInsets>
+         <padding>
+            <Insets top="20.0" />
+         </padding>
+      </ListView>
+      <Label id="availableLable" alignment="CENTER" layoutX="480.0" layoutY="45.0" prefHeight="35.0" prefWidth="156.0" style="-fx-background-radius: 20 0 0 0;" text="Available Players">
+         <font>
+            <Font size="18.0" />
+         </font></Label>
+      <Button id="connect" fx:id="Refresh" alignment="CENTER" contentDisplay="CENTER" layoutX="638.0" layoutY="45.0" mnemonicParsing="false" onAction="#refresh" prefHeight="35.0" prefWidth="49.0" style="-fx-background-color: #FE4451; -fx-background-radius: 0 0 20 0;">
          <font>
             <Font name="Gabriola" size="14.0" />
-         </font></Button>
-      <Button id="ask" fx:id="ask" layoutX="500.0" layoutY="430.0" mnemonicParsing="false" onAction="#ask_player" prefHeight="44.0" prefWidth="162.0" text="Ask Player">
+         </font>
+         <graphic>
+            <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Refresh%20.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
+      <Button id="ask" fx:id="ask" layoutX="500.0" layoutY="468.0" mnemonicParsing="false" onAction="#ask_player" prefHeight="44.0" prefWidth="162.0" text="Invite Player">
          <font>
-            <Font name="Gabriola" size="23.0" />
+            <Font name="Constantia" size="18.0" />
          </font></Button>
       <ImageView id="loader" fx:id="loader" fitHeight="31.0" fitWidth="36.0" layoutX="464.0" layoutY="459.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@loader.gif" />
          </image>
       </ImageView>
-      <Label fx:id="close" alignment="CENTER" layoutX="678.0" layoutY="-4.0" onMouseClicked="#closescene" prefHeight="36.0" prefWidth="16.0" text="x" textAlignment="CENTER" textFill="#fb743e">
+      <Label fx:id="close" alignment="CENTER" layoutX="678.0" layoutY="-4.0" onMouseClicked="#closescene" prefHeight="36.0" prefWidth="16.0" text="x" textAlignment="CENTER" textFill="#fe4451">
          <font>
             <Font name="System Bold" size="25.0" />
          </font>
       </Label>
-      <Pane id="loginuser" fx:id="loginuser" prefHeight="45.0" prefWidth="190.0" />
+      <Pane id="loginuser" fx:id="loginuser" layoutX="23.0" prefHeight="45.0" prefWidth="190.0" />
+      <ImageView fitHeight="189.0" fitWidth="200.0" layoutX="256.0" layoutY="212.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@XO2.gif" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="167.0" fitWidth="227.0" layoutX="267.0" layoutY="80.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@xoxo.gif" />
+         </image>
+      </ImageView>
+      <Button fx:id="back" layoutX="23.0" layoutY="475.0" mnemonicParsing="false" onAction="#logout" prefHeight="37.0" prefWidth="84.0" text="Logout">
+         <font>
+            <Font size="16.0" />
+         </font></Button>
    </children>
 </AnchorPane>

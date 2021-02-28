@@ -5,35 +5,60 @@ package xoclient;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
+import static java.lang.Thread.sleep;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceDialog;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-//import localplayersmenu.Player;
-//import localplayersmenu.GameLogic;
+import java.util.Optional;
+import javafx.scene.control.ButtonType;
+import javafx.stage.StageStyle;
 
 /**
  *
  * @author ITI
  */
 public class GameFriendController implements Initializable {
+
     Stage primaryStage;
     String player1Name;
     char player1Pattern;
     String player2Name;
     char player2Pattern;
+    String RecordLine;
     int X_or_O = 0;
     int row, column;
     int oneArrayIndex;
@@ -41,21 +66,37 @@ public class GameFriendController implements Initializable {
     int colComp = 0;
     int Winner = 0;
     boolean PlayAgain = true;
+    boolean isRecorded = false;
+    FileWriter fileWriter = null;
+    PrintWriter printWriter = null;
+    File recordFile;
     int[] intArray;
     GameLogic Game;
+    List<Integer> RecordSteps;
     @FXML
     public Label play, player1Lb, player2Lb, Pattern1, Pattern2, score1, score2;
     public GridPane GridpaneForButton;
-    public Button PlayButton;
+    public Button PlayButton, recordButton, backButton;
     public ImageView celebratedImg, cupOfwinner;
     public AnchorPane mainPane;
 
-    public GameFriendController(Stage _primaryStage, String player1Name, char player1Pattern, String player2Name, char player2Pattern) {
-        this.player1Name=player1Name;
-        this.player2Name=player2Name;
-        this.player1Pattern=player1Pattern;
-        this.player2Pattern=player2Pattern;
-        this.primaryStage=_primaryStage;
+    public GameFriendController(Stage _primaryStage, String player1Name, char player1Pattern, String player2Name, char player2Pattern, boolean recordIt) throws IOException {
+        this.player1Name = player1Name;
+        this.player2Name = player2Name;
+        this.player1Pattern = player1Pattern;
+        this.player2Pattern = player2Pattern;
+        this.primaryStage = _primaryStage;
+        this.isRecorded = recordIt;
+        if (isRecorded == true) {
+            RecordLine = "";
+            StartRecording(player1Name, player2Name, Character.toString(player1Pattern), Character.toString(player2Pattern));
+            recordFile = new File("RecordFile.txt");
+            if (recordFile.createNewFile()) {
+                System.out.println("File is created!");
+            } else {
+                System.out.println("File already exists.");
+            }
+        }
     }
 
     @FXML
@@ -71,12 +112,18 @@ public class GameFriendController implements Initializable {
 
                     if ("".equals(SelectedButton.getText())) {
                         if (X_or_O == 0) {
+                            if (isRecorded == true) {
+                                RecordSteps.add(oneArrayIndex);
+                            }
                             DrawOnButton(SelectedButton, 1);
                             Winner = Game.checkWinner(1, oneArrayIndex);
                             System.out.println(Winner);
-                            
+
                             X_or_O = 1;
                         } else if (X_or_O == 1) {
+                            if (isRecorded == true) {
+                                RecordSteps.add(oneArrayIndex);
+                            }
                             DrawOnButton(SelectedButton, 2);
                             Winner = Game.checkWinner(2, oneArrayIndex);
                             System.out.println(Winner);
@@ -84,30 +131,27 @@ public class GameFriendController implements Initializable {
                         }
                     }
 
-                   WinnerAction();
+                    WinnerAction();
                 }
             }
 
-        } catch (Exception ex) {
+        } catch (IOException ex) {
         }
     }
 
     @FXML
     private void handlePlayAction(ActionEvent event) {
         if (PlayAgain == true) {
+            if (isRecorded) {
+                RecordLine = "";
+                StartRecording(player1Name, player2Name, Character.toString(player1Pattern), Character.toString(player2Pattern));
+            }
+            // recordButton.setDisable(true);
+            backButton.setDisable(true);
             celebratedImg.setVisible(false);
             cupOfwinner.setVisible(false);
             play.setTextFill(Color.valueOf(Game.Player1Color));
             play.setText(Game.player1 + " turn");
-            if (Winner == 1) {
-                X_or_O = 0;
-                play.setTextFill(Color.valueOf(Game.Player1Color));
-                play.setText(Game.player1 + " turn");
-            } else if (Winner == 2) {
-                X_or_O = 1;
-                play.setTextFill(Color.valueOf(Game.Player2Color));
-                play.setText(Game.player2 + " turn");
-            }
             PlayAgain = false;
             Winner = 0;
             PlayButton.setDisable(true);
@@ -116,37 +160,84 @@ public class GameFriendController implements Initializable {
             });
             Game = new GameLogic(player1Name, player2Name, player1Pattern, player2Pattern);
         }
+        initScreen(Game.player1, Game.player2, Game.player1symbol, Game.player2symbol);
+    }
+
+    @FXML
+    private void back(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("MultiPlayer.fxml"));
+        // Create a controller instance
+        MultiPlayerController multiplayerController = new MultiPlayerController(primaryStage);
+        // Set it in the FXMLLoader
+        loader.setController(multiplayerController);
+        primaryStage.setTitle("XO Dashboard");
+        Scene scene = new Scene((Parent) loader.load());
+        primaryStage.setScene(scene);
+    }
+
+    @FXML
+    private void RecordAction(ActionEvent event) throws IOException {
+        BufferedReader reader;
+        List<String> choices = new ArrayList<>();
+        List<String> Lines = new ArrayList<>();
+        try {
+            reader = new BufferedReader(new FileReader("RecordFile.txt"));
+            String line = reader.readLine();
+            String[] LineSplitted;
+            while (line != null) {
+                //System.out.println(line);
+                LineSplitted = line.split(",");
+                choices.add(LineSplitted[0]);
+                Lines.add(line);
+                //  comboBox.getItems().add(LineSplitted[0]);
+                line = reader.readLine();
+            }
+            reader.close();
+        } catch (IOException e) {
+        }
+        System.out.println(choices);
+        ChoiceDialog<String> dialog = new ChoiceDialog(choices.get(0), choices);
+        dialog.setTitle("choose from Records");
+
+        //Showing the choice dialog on clicking the button
+        Optional<String> result = dialog.showAndWait();
+        if (result.isPresent()) {
+            int LineIndex = choices.indexOf(dialog.getSelectedItem());
+            //String str = "2021-02-28 00:18:53.465,feby,pola,o,x,4,0,3,1,5";
+            playRecord Play = new playRecord(Lines.get(LineIndex), this);
+
+            Play.start();
+        } else {
+
+        }
 
     }
- @FXML
-     private void back(ActionEvent event) throws IOException {
-           FXMLLoader loader = new FXMLLoader(getClass().getResource("MultiPlayer.fxml"));
-                    // Create a controller instance
-                    MultiPlayerController multiplayerController = new MultiPlayerController(primaryStage);
-                    // Set it in the FXMLLoader
-                    loader.setController(multiplayerController);
-                    primaryStage.setTitle("XO Dashboard");
-                    Scene scene = new Scene((Parent) loader.load());
-                    primaryStage.setScene(scene);
-     }
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         Game = new GameLogic(player1Name, player2Name, player1Pattern, player2Pattern);
-
         GameLogic.scoreOfPlayer1 = 0;
         GameLogic.scoreOfPlayer2 = 0;
-        player1Lb.setText(Game.player1);
-        player2Lb.setText(Game.player2);
+        initScreen(Game.player1, Game.player2, Game.player1symbol, Game.player2symbol);
+
+    }
+
+    void initScreen(String Name1, String Name2, char Symbol1, char Symbol2) {
+        player1Lb.setText(Name1);
+        player2Lb.setText(Name2);
         Pattern1.setTextFill(Color.valueOf(Game.Player1Color));
         Pattern2.setTextFill(Color.valueOf(Game.Player2Color));
         score1.setTextFill(Color.valueOf(Game.Player1Color));
         score2.setTextFill(Color.valueOf(Game.Player2Color));
-        Pattern1.setText(Character.toString(Game.player1symbol));
-        Pattern2.setText(Character.toString(Game.player2symbol));
+        Pattern1.setText(Character.toString(Symbol1));
+        Pattern2.setText(Character.toString(Symbol2));
         score1.setText(Integer.toString(GameLogic.scoreOfPlayer1));
         score2.setText(Integer.toString(GameLogic.scoreOfPlayer2));
+        celebratedImg.setVisible(false);
+        cupOfwinner.setVisible(false);
     }
-  void DrawOnButton(Button btn, int yourNum) {
+
+    void DrawOnButton(Button btn, int yourNum) {
         switch (yourNum) {
             case 1:
                 btn.setTextFill(Color.valueOf(Game.Player1Color));
@@ -162,30 +253,57 @@ public class GameFriendController implements Initializable {
                 break;
         }
     }
-   void WinnerAction() {
-   
-                    if (Winner != 0) {
-                        switch (Winner) {
-                            case 1:
-                                play.setTextFill(Color.valueOf(Game.Player1Color));
-                                play.setText(Game.player1 + " is the Winner");
-                                score1.setText(Integer.toString(++GameLogic.scoreOfPlayer1));
-                                celebratedImg.setVisible(true);
-                                cupOfwinner.setVisible(true);
-                                break;
-                            case 2:
-                                play.setTextFill(Color.valueOf(Game.Player2Color));
-                                play.setText(Game.player2 + " is the Winner");
-                                score2.setText(Integer.toString(++GameLogic.scoreOfPlayer2));
-                                celebratedImg.setVisible(true);
-                                cupOfwinner.setVisible(true);
-                                break;
-                            case 3:
-                                play.setText("There is no Winner");
-                                break;
-                        }
-                        PlayAgain = true;
-                        PlayButton.setDisable(false);
-                    }
-   }
+
+    void WinnerAction() throws IOException {
+
+        if (Winner != 0) {
+            switch (Winner) {
+                case 1:
+                    play.setTextFill(Color.valueOf(Game.Player1Color));
+                    play.setText(Game.player1 + " is the Winner");
+                    score1.setText(Integer.toString(++GameLogic.scoreOfPlayer1));
+                    celebratedImg.setVisible(true);
+                    cupOfwinner.setVisible(true);
+                    break;
+                case 2:
+                    play.setTextFill(Color.valueOf(Game.Player2Color));
+                    play.setText(Game.player2 + " is the Winner");
+                    score2.setText(Integer.toString(++GameLogic.scoreOfPlayer2));
+                    celebratedImg.setVisible(true);
+                    cupOfwinner.setVisible(true);
+                    break;
+                case 3:
+                    play.setText("There is no Winner");
+                    break;
+            }
+            PlayAgain = true;
+            PlayButton.setDisable(false);
+            //recordButton.setDisable(false);
+            backButton.setDisable(false);
+
+            if (isRecorded == true) {
+                for (int i : RecordSteps) {
+                    RecordLine += "," + i;
+                }
+                System.out.println(RecordLine);
+                fileWriter = new FileWriter(recordFile, true);
+                BufferedWriter Buffered = new BufferedWriter(fileWriter);
+                Buffered.write(RecordLine + "\n");
+                System.out.println(RecordLine);
+                //printWriter  = new PrintWriter(Buffered);
+                //printWriter.println(RecordLine);
+                Buffered.close();
+            }
+            isRecorded = false;
+        }
+    }
+
+    void StartRecording(String Player1Name, String Player2Name, String Player1Symbol, String Player2Symbol) {
+        RecordLine = "";
+        RecordSteps = new ArrayList<>();
+        LocalDate date = LocalDate.now();
+        LocalTime time = LocalTime.now();
+        RecordLine = date + " " + time + "," + Player1Name + "," + Player2Name + "," + Player1Symbol + "," + Player2Symbol;
+
+    }
 }

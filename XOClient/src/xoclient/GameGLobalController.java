@@ -52,7 +52,7 @@ public class GameGLobalController implements Initializable {
     @FXML
     public Label play, player1Lb, player2Lb, Pattern1, Pattern2, score1, score2;
     public GridPane GridpaneForButton;
-    public Button PlayButton,backButton;
+    public Button PlayButton,backButton,recordButton;
     public ImageView celebratedImg, cupOfwinner, LoseImage;
     public AnchorPane mainPane;
 
@@ -66,6 +66,7 @@ public class GameGLobalController implements Initializable {
         this.userName = username;
         Game = new GameLogic(this.userName, this.Player1Name, this.Player2Name, this.Player1Pattern, this.Player2Pattern);
         System.out.println(Game.youNumber + "+" + userName);
+        recordButton.setVisible(false);
     }
 
     @FXML
