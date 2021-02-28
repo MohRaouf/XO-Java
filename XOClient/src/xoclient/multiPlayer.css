@@ -8,7 +8,37 @@ and open the template in the editor.
     Author     : mohamedbassiouny
 */
 
-symbolButtons:hover{
-    -fx-background-color:#f14668;
+.symbolButtons:hover {
+    -fx-background-color: #f14668;
     -fx-cursor: hand;
+}
+
+.symbolButtons {
+    -fx-background-color: white;
+}
+
+.symbolButtons2 {
+    -fx-background-color: #FE4451;
+    -fx-cursor: hand;
+    -fx-text-fill: #fff;
+}
+
+.symbolButtons2:hover {
+    -fx-background-color: #f14668;
+    -fx-cursor: hand;
+}
+
+.symbolButtons3 {
+    -fx-background-color: #26de81;
+}
+
+.symbolButtons3:hover {
+    -fx-background-color: #26de81;
+    -fx-text-fill: #ffffff;
+    -fx-background-radius: 5px 20px;
+    -fx-padding: 10px;
+    -fx-cursor: hand;
+}
+.selectedButtonXO {
+    -fx-background-color: #f14668;
 }

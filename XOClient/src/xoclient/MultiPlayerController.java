@@ -5,6 +5,7 @@
  */
 package xoclient;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -25,10 +26,10 @@ import javafx.stage.Stage;
  */
 public class MultiPlayerController implements Initializable {
 
-    String name1 ;
-    char player1Pattern ;
-    String name2 ;
-    char player2Pattern ;
+    String name1;
+    char player1Pattern;
+    String name2;
+    char player2Pattern;
     private Stage primaryStage;
     @FXML
     private TextField player1Name;
@@ -77,12 +78,12 @@ public class MultiPlayerController implements Initializable {
             showErrorMessage(secondWarning, "please select player 2 symbol");
             return;
         }
-        if(player1XButton.selectedProperty().getValue()){
-            player1Pattern='x';
-            player2Pattern='o';
-        }else{
-            player1Pattern='x';
-            player2Pattern='o';
+        if (player1XButton.selectedProperty().getValue()) {
+            player1Pattern = 'x';
+            player2Pattern = 'o';
+        } else {
+            player1Pattern = 'o';
+            player2Pattern = 'x';
         }
         FXMLLoader loader = new FXMLLoader(getClass().getResource("GameScreen.fxml"));
         GameFriendController gameFriendController = new GameFriendController(primaryStage, name1, player1Pattern, name2, player2Pattern);
@@ -107,24 +108,65 @@ public class MultiPlayerController implements Initializable {
     private void handleXButtonsPlayer1(ActionEvent event) {
         handleVisablity(player2XButton);
         firstWarning.setVisible(false);
+        if (player1XButton.selectedProperty().getValue()) {
+            player1XButton.getStyleClass().add("selectedButtonXO");
+            player1OButton.disableProperty().set(true);
+            player2OButton.selectedProperty().set(true);
+            player2OButton.getStyleClass().add("selectedButtonXO");
+        } else {
+            player1XButton.getStyleClass().removeAll("selectedButtonXO");
+            player1OButton.disableProperty().set(false);
+        }
+
     }
 
     @FXML
     private void handleOButtonsPlayer1(ActionEvent event) {
         handleVisablity(player2OButton);
         firstWarning.setVisible(false);
+        if (player1OButton.selectedProperty().getValue()) {
+            player1OButton.getStyleClass().add("selectedButtonXO");
+            player1XButton.disableProperty().set(true);
+            player2XButton.selectedProperty().set(true);
+            player2XButton.getStyleClass().add("selectedButtonXO");
+        } else {
+            player1OButton.getStyleClass().removeAll("selectedButtonXO");
+            player1XButton.disableProperty().set(false);
+        }
+    }
+
+    @FXML
+    private void back(ActionEvent e) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("Login.fxml"));
+        LoginController loginController = new LoginController(primaryStage);
+        loader.setController(loginController);
+        primaryStage.setTitle("XO Prime");
+        Scene scene = new Scene((Parent) loader.load());
+        primaryStage.setScene(scene);
     }
 
     @FXML
     private void handleOButtonsPlayer2(ActionEvent event) {
         handleVisablity(player1OButton);
         secondWarning.setVisible(false);
+        if (player2OButton.selectedProperty().getValue()) {
+            player2OButton.getStyleClass().add("selectedButtonXO");
+            player2XButton.disableProperty().set(true);
+            player1XButton.selectedProperty().set(true);
+            player1XButton.getStyleClass().add("selectedButtonXO");
+        } else {
+            player2OButton.getStyleClass().removeAll("selectedButtonXO");
+            player1XButton.getStyleClass().removeAll("selectedButtonXO");
+            player2XButton.disableProperty().set(false);
+        }
     }
 
     @FXML
     private void handleXButtonsPlayer2(ActionEvent event) {
         handleVisablity(player1XButton);
-        secondWarning.setVisible(false);
+        if (player2XButton.selectedProperty().getValue()) {
+            player2XButton.getStyleClass().add("selectedButtonXO");
+        }
     }
 
     private void showErrorMessage(Text messageContainer, String message) {
@@ -138,6 +180,10 @@ public class MultiPlayerController implements Initializable {
         } else {
             button.setDisable(false);
         }
+    }
+
+    private void setClass(ToggleButton button, String className) {
+        button.getStyleClass().add(className);
     }
 
     @Override

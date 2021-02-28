@@ -5,10 +5,8 @@
  */
 package xoclient;
 
-import java.net.*;
 import java.io.*;
 import java.net.URL;
-import java.util.Arrays;
 import java.util.Random;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -121,29 +119,7 @@ public class GameComputerController implements Initializable {
                         }
                     }
 
-                    if (Winner != 0) {
-                        switch (Winner) {
-                            case 1:
-                                play.setTextFill(Color.valueOf(Game.Player1Color));
-                                play.setText(Game.player1 + " is the Winner");
-                                score1.setText(Integer.toString(++GameLogic.scoreOfPlayer1));
-                                celebratedImg.setVisible(true);
-                                cupOfwinner.setVisible(true);
-                                break;
-                            case 2:
-                                play.setTextFill(Color.valueOf(Game.Player2Color));
-                                play.setText(Game.player2 + " is the Winner");
-                                score2.setText(Integer.toString(++GameLogic.scoreOfPlayer2));
-                                celebratedImg.setVisible(true);
-                                cupOfwinner.setVisible(true);
-                                break;
-                            case 3:
-                                play.setText("There is no Winner");
-                                break;
-                        }
-                        PlayAgain = true;
-                        PlayButton.setDisable(false);
-                    }
+                    WinnerAction();
                 }
             }
 
@@ -159,15 +135,6 @@ public class GameComputerController implements Initializable {
             play.setTextFill(Color.valueOf(Game.Player1Color));
             play.setText(Game.player1 + " turn");
             intArray = new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8};
-//            if (Winner == 1) {
-//                X_or_O = 0;
-//                play.setTextFill(Color.valueOf(Game.Player1Color));
-//                play.setText(Game.player1 + " turn");
-//            } else if (Winner == 2) {
-//                X_or_O = 1;
-//                play.setTextFill(Color.valueOf(Game.Player2Color));
-//                play.setText(Game.player2 + " turn");
-//            }
             PlayAgain = false;
             Winner = 0;
             PlayButton.setDisable(true);
@@ -207,4 +174,30 @@ public class GameComputerController implements Initializable {
         score2.setText(Integer.toString(GameLogic.scoreOfPlayer2));
     }
 
+    void WinnerAction() {
+
+        if (Winner != 0) {
+            switch (Winner) {
+                case 1:
+                    play.setTextFill(Color.valueOf(Game.Player1Color));
+                    play.setText(Game.player1 + " is the Winner");
+                    score1.setText(Integer.toString(++GameLogic.scoreOfPlayer1));
+                    celebratedImg.setVisible(true);
+                    cupOfwinner.setVisible(true);
+                    break;
+                case 2:
+                    play.setTextFill(Color.valueOf(Game.Player2Color));
+                    play.setText(Game.player2 + " is the Winner");
+                    score2.setText(Integer.toString(++GameLogic.scoreOfPlayer2));
+                    celebratedImg.setVisible(true);
+                    cupOfwinner.setVisible(true);
+                    break;
+                case 3:
+                    play.setText("There is no Winner");
+                    break;
+            }
+            PlayAgain = true;
+            PlayButton.setDisable(false);
+        }
+    }
 }

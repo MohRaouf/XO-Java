@@ -7,8 +7,6 @@ package xoclient;
  */
 import java.io.IOException;
 import java.net.URL;
-import java.util.Arrays;
-import java.util.Random;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -73,47 +71,20 @@ public class GameFriendController implements Initializable {
 
                     if ("".equals(SelectedButton.getText())) {
                         if (X_or_O == 0) {
-                            SelectedButton.setTextFill(Color.valueOf(Game.Player1Color));
-                            SelectedButton.setText(Character.toString(Game.player1symbol));
+                            DrawOnButton(SelectedButton, 1);
                             Winner = Game.checkWinner(1, oneArrayIndex);
                             System.out.println(Winner);
-                            play.setTextFill(Color.valueOf(Game.Player2Color));
-                            play.setText(Game.player2 + " turn");
+                            
                             X_or_O = 1;
                         } else if (X_or_O == 1) {
-                            SelectedButton.setTextFill(Color.valueOf(Game.Player2Color));
-                            SelectedButton.setText(Character.toString(Game.player2symbol));
+                            DrawOnButton(SelectedButton, 2);
                             Winner = Game.checkWinner(2, oneArrayIndex);
                             System.out.println(Winner);
-                            play.setTextFill(Color.valueOf(Game.Player1Color));
-                            play.setText(Game.player1 + " turn");
                             X_or_O = 0;
                         }
                     }
 
-                    if (Winner != 0) {
-                        switch (Winner) {
-                            case 1:
-                                play.setTextFill(Color.valueOf(Game.Player1Color));
-                                play.setText(Game.player1 + " is the Winner");
-                                score1.setText(Integer.toString(++GameLogic.scoreOfPlayer1));
-                                celebratedImg.setVisible(true);
-                                cupOfwinner.setVisible(true);
-                                break;
-                            case 2:
-                                play.setTextFill(Color.valueOf(Game.Player2Color));
-                                play.setText(Game.player2 + " is the Winner");
-                                score2.setText(Integer.toString(++GameLogic.scoreOfPlayer2));
-                                celebratedImg.setVisible(true);
-                                cupOfwinner.setVisible(true);
-                                break;
-                            case 3:
-                                play.setText("There is no Winner");
-                                break;
-                        }
-                        PlayAgain = true;
-                        PlayButton.setDisable(false);
-                    }
+                   WinnerAction();
                 }
             }
 
@@ -175,5 +146,46 @@ public class GameFriendController implements Initializable {
         score1.setText(Integer.toString(GameLogic.scoreOfPlayer1));
         score2.setText(Integer.toString(GameLogic.scoreOfPlayer2));
     }
-
+  void DrawOnButton(Button btn, int yourNum) {
+        switch (yourNum) {
+            case 1:
+                btn.setTextFill(Color.valueOf(Game.Player1Color));
+                btn.setText(Character.toString(Game.player1symbol));
+                play.setTextFill(Color.valueOf(Game.Player2Color));
+                play.setText(Game.player2 + " turn");
+                break;
+            case 2:
+                btn.setTextFill(Color.valueOf(Game.Player2Color));
+                btn.setText(Character.toString(Game.player2symbol));
+                play.setTextFill(Color.valueOf(Game.Player1Color));
+                play.setText(Game.player1 + " turn");
+                break;
+        }
+    }
+   void WinnerAction() {
+   
+                    if (Winner != 0) {
+                        switch (Winner) {
+                            case 1:
+                                play.setTextFill(Color.valueOf(Game.Player1Color));
+                                play.setText(Game.player1 + " is the Winner");
+                                score1.setText(Integer.toString(++GameLogic.scoreOfPlayer1));
+                                celebratedImg.setVisible(true);
+                                cupOfwinner.setVisible(true);
+                                break;
+                            case 2:
+                                play.setTextFill(Color.valueOf(Game.Player2Color));
+                                play.setText(Game.player2 + " is the Winner");
+                                score2.setText(Integer.toString(++GameLogic.scoreOfPlayer2));
+                                celebratedImg.setVisible(true);
+                                cupOfwinner.setVisible(true);
+                                break;
+                            case 3:
+                                play.setText("There is no Winner");
+                                break;
+                        }
+                        PlayAgain = true;
+                        PlayButton.setDisable(false);
+                    }
+   }
 }
