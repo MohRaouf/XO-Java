@@ -1,33 +1,45 @@
+
+#ap{
+    -fx-background-color:#252525;
+}
 .login
 {
-    -fx-background-radius: 10;
-    -fx-background-color:#FE4451;
+    -fx-background-radius: 20;
+    -fx-background-color:#28527a;
     -fx-text-fill:#ffffff;
 }
 .play {
-    -fx-background-radius: 10;
-    -fx-text-fill:#26de81;
-    -fx-background-color:  #fff;
-    -fx-border:none;
+    -fx-background-radius: 20;
+    -fx-text-fill:#ffffff;
+    -fx-background-color:#28527a;
 }
-
+.play:hover,
 .login:hover{
      -fx-background-color:#f14668;
      -fx-cursor: hand;
 }
 #play_remotely{
-    
-    -fx-background-color: #fff;
-    -fx-text-fill:#FE4451;
+    -fx-background-radius: 20;
+    -fx-background-color:#28527a;
+    -fx-text-fill:#ffffff;
 }
 #local{
-    -fx-background-color: #FE4451;
-    -fx-text-fill:#fff;
+    -fx-background-radius: 20;
+    -fx-background-color:#28527a;
+    -fx-text-fill:#ffffff;
 }
-
+#ap2{
+   -fx-border-color: #28527a;
+   -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
+}
+#apsign{
+    -fx-border-color: #28527a;   
+   -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
+}
 .text-field {
-    
-    -fx-text-fill:#000;
+    -fx-border-color:#383e56;
+    -fx-background-color:#16334f;
+    -fx-text-fill:#ffffff;
 }
 #loginbtn{
     -fx-background-radius: 10;
@@ -36,7 +48,7 @@
 }
 #signupbtn{
     -fx-background-radius: 10;
-    -fx-background-color: #a2a2a2;
+    -fx-background-color:#6930c3;
     -fx-text-fill:#ffffff;
 }
 
@@ -44,23 +56,4 @@
     -fx-text-fill:#6b011f;
 }
 
-#max:hover{
 
--fx-background-color:#ff3649;
--fx-text-fill:#ffffff;
- -fx-background-radius: 20px 5px;
--fx-padding:10px;
- -fx-cursor: hand;
-
-}
-.play:hover{
- -fx-cursor: hand;
-}
-#min:hover{
--fx-background-color:#26de81;
--fx-text-fill:#ffffff;
- -fx-background-radius: 5px 20px;
--fx-padding:10px;
- -fx-cursor: hand;
-
-}
