@@ -156,6 +156,7 @@ public class GameFriendController implements Initializable {
             });
             Game = new GameLogic(player1Name, player2Name, player1Pattern, player2Pattern);
         }
+        if(isRecorded==true){StartRecording(player1Name, player2Name,Character.toString(player1Pattern), Character.toString(player2Pattern));}
 initScreen(Game.player1, Game.player2, Game.player1symbol, Game.player2symbol);
     }
      
@@ -174,7 +175,7 @@ initScreen(Game.player1, Game.player2, Game.player1symbol, Game.player2symbol);
 
     @FXML
     private void RecordAction(ActionEvent event) throws IOException {
-        BufferedReader reader;
+      BufferedReader reader;
         List<String> choices=new ArrayList<>();
         List<String> Lines = new ArrayList<>();
         try {
@@ -293,7 +294,7 @@ initScreen(Game.player1, Game.player2, Game.player1symbol, Game.player2symbol);
                 //printWriter.println(RecordLine);
                 Buffered.close();
             }
-            isRecorded = false;
+          
         }
     }
 

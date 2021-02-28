@@ -157,6 +157,7 @@ public class HardLevelController implements Initializable {
             Game = new GameLogic(player1Name, player2Name, player1Pattern, player2Pattern);
         }
 initScreen(Game.player1, Game.player2, Game.player1symbol, Game.player2symbol);
+ if(isRecorded==true){StartRecording(player1Name, player2Name,Character.toString(player1Pattern), Character.toString(player2Pattern));}
     }
 
     @FXML
@@ -267,7 +268,7 @@ initScreen(Game.player1, Game.player2, Game.player1symbol, Game.player2symbol);
                 //printWriter.println(RecordLine);
                 Buffered.close();
             }
-            isRecorded = false;
+            
         }
     }
       void StartRecording(String Player1Name, String Player2Name, String Player1Symbol, String Player2Symbol) {
