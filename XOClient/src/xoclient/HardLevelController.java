@@ -59,18 +59,18 @@ public class HardLevelController implements Initializable {
     @FXML
     public Label play, player1Lb, player2Lb, Pattern1, Pattern2, score1, score2;
     public GridPane GridpaneForButton;
-    public Button PlayButton, recordButton, backButton;
+    public Button PlayButton,recordButton, backButton;
     public ImageView celebratedImg, cupOfwinner;
     public AnchorPane mainPane;
 
-    HardLevelController(Stage _primaryStage, String player1Name, char player1Pattern, String player2Name, char player2Pattern, boolean recordIt) throws IOException {
+    HardLevelController(Stage _primaryStage, String player1Name, char player1Pattern, String player2Name, char player2Pattern,boolean recordIt) throws IOException {
         this.player1Name = player1Name;
         this.player1Pattern = player1Pattern;
         this.player2Name = player2Name;
         this.player2Pattern = player2Pattern;
         primaryStage = _primaryStage;
         this.isRecorded = recordIt;
-        if (isRecorded == true) {
+            if (isRecorded == true) {
             RecordLine = "";
             StartRecording(player1Name, player2Name, Character.toString(player1Pattern), Character.toString(player2Pattern));
             recordFile = new File("RecordFile.txt");
@@ -95,8 +95,8 @@ public class HardLevelController implements Initializable {
 
                     if ("".equals(SelectedButton.getText())) {
                         if (isRecorded == true) {
-                            RecordSteps.add(oneArrayIndex);
-                        }
+                                RecordSteps.add(oneArrayIndex);
+                            }
                         SelectedButton.setTextFill(Color.valueOf(Game.Player1Color));
                         SelectedButton.setText(Character.toString(Game.player1symbol));
                         Winner = Game.checkWinner(1, oneArrayIndex);
@@ -131,7 +131,7 @@ public class HardLevelController implements Initializable {
                         }
                     }
 
-                    WinnerAction();
+                  WinnerAction();
                 }
             }
 
@@ -142,10 +142,6 @@ public class HardLevelController implements Initializable {
     @FXML
     private void handlePlayAction(ActionEvent event) {
         if (PlayAgain == true) {
-            if (isRecorded) {
-                RecordLine = "";
-                StartRecording(player1Name, player2Name, Character.toString(player1Pattern), Character.toString(player2Pattern));
-            }
             backButton.setDisable(true);
             celebratedImg.setVisible(false);
             cupOfwinner.setVisible(false);
@@ -160,7 +156,8 @@ public class HardLevelController implements Initializable {
             });
             Game = new GameLogic(player1Name, player2Name, player1Pattern, player2Pattern);
         }
-        initScreen(Game.player1, Game.player2, Game.player1symbol, Game.player2symbol);
+initScreen(Game.player1, Game.player2, Game.player1symbol, Game.player2symbol);
+ if(isRecorded==true){StartRecording(player1Name, player2Name,Character.toString(player1Pattern), Character.toString(player2Pattern));}
     }
 
     @FXML
@@ -172,11 +169,10 @@ public class HardLevelController implements Initializable {
         Scene scene = new Scene((Parent) loader.load());
         primaryStage.setScene(scene);
     }
-
-    @FXML
+   @FXML
     private void RecordAction(ActionEvent event) throws IOException {
         BufferedReader reader;
-        List<String> choices = new ArrayList<>();
+        List<String> choices=new ArrayList<>();
         List<String> Lines = new ArrayList<>();
         try {
             reader = new BufferedReader(new FileReader("RecordFile.txt"));
@@ -193,24 +189,24 @@ public class HardLevelController implements Initializable {
             reader.close();
         } catch (IOException e) {
         }
-        System.out.println(choices);
-        ChoiceDialog<String> dialog = new ChoiceDialog(choices.get(0), choices);
-        dialog.setTitle("choose from Records");
+         System.out.println(choices);
+        ChoiceDialog<String> dialog = new ChoiceDialog(choices.get(0),choices);
+                dialog.setTitle("choose from Records");
 
         java.util.Optional<String> result = dialog.showAndWait();
-        System.out.println(choices.indexOf(dialog.getSelectedItem()));
-        if (result.isPresent()) {
-            int LineIndex = choices.indexOf(dialog.getSelectedItem());
-            //String str = "2021-02-28 00:18:53.465,feby,pola,o,x,4,0,3,1,5";
-            playRecord Play = new playRecord(Lines.get(LineIndex), this);
-
-            Play.start();
-        } else {
-
-        }
+        System.out.println(choices.indexOf(dialog.getSelectedItem())); 
+         if(result.isPresent()) 
+      {
+           int LineIndex = choices.indexOf(dialog.getSelectedItem());
+        //String str = "2021-02-28 00:18:53.465,feby,pola,o,x,4,0,3,1,5";
+        playRecord Play = new playRecord(Lines.get(LineIndex), this);
+       
+         Play.start();
+      }else{
+          
+      }
 
     }
-
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         Game = new GameLogic(player1Name, player2Name, player1Pattern, player2Pattern);
@@ -219,7 +215,6 @@ public class HardLevelController implements Initializable {
         GameLogic.scoreOfPlayer2 = 0;
         initScreen(Game.player1, Game.player2, Game.player1symbol, Game.player2symbol);
     }
-
     void initScreen(String Name1, String Name2, char Symbol1, char Symbol2) {
         player1Lb.setText(Name1);
         player2Lb.setText(Name2);
@@ -231,11 +226,11 @@ public class HardLevelController implements Initializable {
         Pattern2.setText(Character.toString(Symbol2));
         score1.setText(Integer.toString(GameLogic.scoreOfPlayer1));
         score2.setText(Integer.toString(GameLogic.scoreOfPlayer2));
-        celebratedImg.setVisible(false);
-        cupOfwinner.setVisible(false);
+         celebratedImg.setVisible(false);
+            cupOfwinner.setVisible(false);
     }
 
-    void WinnerAction() throws IOException {
+      void WinnerAction() throws IOException {
 
         if (Winner != 0) {
             switch (Winner) {
@@ -259,7 +254,7 @@ public class HardLevelController implements Initializable {
             }
             PlayAgain = true;
             PlayButton.setDisable(false);
-            backButton.setDisable(false);
+             backButton.setDisable(false);
 
             if (isRecorded == true) {
                 for (int i : RecordSteps) {
@@ -273,11 +268,10 @@ public class HardLevelController implements Initializable {
                 //printWriter.println(RecordLine);
                 Buffered.close();
             }
-            isRecorded = false;
+            
         }
     }
-
-    void StartRecording(String Player1Name, String Player2Name, String Player1Symbol, String Player2Symbol) {
+      void StartRecording(String Player1Name, String Player2Name, String Player1Symbol, String Player2Symbol) {
         RecordLine = "";
         RecordSteps = new ArrayList<>();
         LocalDate date = LocalDate.now();

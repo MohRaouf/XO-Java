@@ -68,9 +68,9 @@ public class GameGLobalController implements Initializable {
         System.out.println(Game.youNumber + "+" + userName);
 //        recordButton.setVisible(false);
     }
-    @FXML
-    private void RecordAction(ActionEvent e){}
 
+    @FXML 
+    private void RecordAction(ActionEvent event) {}
     @FXML
     private void handleButtonAction(ActionEvent event) {
         try {

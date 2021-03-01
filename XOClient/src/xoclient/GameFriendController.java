@@ -46,7 +46,6 @@ import javafx.stage.Stage;
 import java.util.Optional;
 import javafx.scene.control.ButtonType;
 import javafx.stage.StageStyle;
-
 /**
  *
  * @author ITI
@@ -142,10 +141,7 @@ public class GameFriendController implements Initializable {
     @FXML
     private void handlePlayAction(ActionEvent event) {
         if (PlayAgain == true) {
-            if (isRecorded) {
-                RecordLine = "";
-                StartRecording(player1Name, player2Name, Character.toString(player1Pattern), Character.toString(player2Pattern));
-            }
+
             // recordButton.setDisable(true);
             backButton.setDisable(true);
             celebratedImg.setVisible(false);
@@ -160,8 +156,10 @@ public class GameFriendController implements Initializable {
             });
             Game = new GameLogic(player1Name, player2Name, player1Pattern, player2Pattern);
         }
-        initScreen(Game.player1, Game.player2, Game.player1symbol, Game.player2symbol);
+        if(isRecorded==true){StartRecording(player1Name, player2Name,Character.toString(player1Pattern), Character.toString(player2Pattern));}
+initScreen(Game.player1, Game.player2, Game.player1symbol, Game.player2symbol);
     }
+     
 
     @FXML
     private void back(ActionEvent event) throws IOException {
@@ -177,8 +175,8 @@ public class GameFriendController implements Initializable {
 
     @FXML
     private void RecordAction(ActionEvent event) throws IOException {
-        BufferedReader reader;
-        List<String> choices = new ArrayList<>();
+      BufferedReader reader;
+        List<String> choices=new ArrayList<>();
         List<String> Lines = new ArrayList<>();
         try {
             reader = new BufferedReader(new FileReader("RecordFile.txt"));
@@ -195,22 +193,25 @@ public class GameFriendController implements Initializable {
             reader.close();
         } catch (IOException e) {
         }
-        System.out.println(choices);
-        ChoiceDialog<String> dialog = new ChoiceDialog(choices.get(0), choices);
+         System.out.println(choices);
+        ChoiceDialog<String> dialog = new ChoiceDialog(choices.get(0),choices);
         dialog.setTitle("choose from Records");
-
-        //Showing the choice dialog on clicking the button
-        Optional<String> result = dialog.showAndWait();
-        if (result.isPresent()) {
-            int LineIndex = choices.indexOf(dialog.getSelectedItem());
-            //String str = "2021-02-28 00:18:53.465,feby,pola,o,x,4,0,3,1,5";
-            playRecord Play = new playRecord(Lines.get(LineIndex), this);
-
-            Play.start();
-        } else {
-
-        }
-
+       
+        
+      //Showing the choice dialog on clicking the button
+      
+         Optional<String> result = dialog.showAndWait();
+      if(result.isPresent()) 
+      {
+           int LineIndex = choices.indexOf(dialog.getSelectedItem());
+        //String str = "2021-02-28 00:18:53.465,feby,pola,o,x,4,0,3,1,5";
+        playRecord Play = new playRecord(Lines.get(LineIndex), this);
+       
+         Play.start();
+      }else{
+          
+      }
+       
     }
 
     @Override
@@ -233,8 +234,8 @@ public class GameFriendController implements Initializable {
         Pattern2.setText(Character.toString(Symbol2));
         score1.setText(Integer.toString(GameLogic.scoreOfPlayer1));
         score2.setText(Integer.toString(GameLogic.scoreOfPlayer2));
-        celebratedImg.setVisible(false);
-        cupOfwinner.setVisible(false);
+         celebratedImg.setVisible(false);
+            cupOfwinner.setVisible(false);
     }
 
     void DrawOnButton(Button btn, int yourNum) {
@@ -289,12 +290,11 @@ public class GameFriendController implements Initializable {
                 fileWriter = new FileWriter(recordFile, true);
                 BufferedWriter Buffered = new BufferedWriter(fileWriter);
                 Buffered.write(RecordLine + "\n");
-                System.out.println(RecordLine);
                 //printWriter  = new PrintWriter(Buffered);
                 //printWriter.println(RecordLine);
                 Buffered.close();
             }
-            isRecorded = false;
+          
         }
     }
 

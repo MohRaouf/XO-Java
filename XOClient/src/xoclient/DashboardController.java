@@ -279,7 +279,7 @@ public class DashboardController implements Initializable {
             }
         });
     }
-    @FXML 
+
     public void play_game(String listplayer) throws IOException {
         /// FXMLFriendController controller= new FXMLFriendController();//move to global game scene
 
